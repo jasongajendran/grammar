@@ -242,7 +242,7 @@ export const Header: React.FC<HeaderProps> = ({
                         {topic.levelStage} • {topic.categoryLabel}
                       </div>
                     </div>
-                    <span className="text-[10px] bg-amber-500/25 text-amber-950 dark:text-amber-100 px-2 py-0.5 rounded-full font-bold border border-amber-500/40">
+                    <span className="text-[10px] bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-950 px-2 py-0.5 rounded-full font-extrabold">
                       {topic.levelLabel.split(':')[0]}
                     </span>
                   </button>

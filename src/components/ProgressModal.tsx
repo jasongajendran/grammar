@@ -101,9 +101,9 @@ export const ProgressModal: React.FC<ProgressModalProps> = ({
           {/* Key Metrics Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <div className={`p-3.5 rounded-2xl border text-center ${
-              isDark ? 'bg-amber-950/60 border-amber-700/60 text-amber-100' : 'bg-amber-100/90 border-amber-300 text-amber-950'
+              isDark ? 'bg-slate-800/80 border-slate-700 text-slate-100' : 'bg-slate-100/90 border-slate-300 text-slate-950'
             }`}>
-              <div className="text-3xl font-heading font-extrabold text-amber-800 dark:text-amber-200">
+              <div className="text-3xl font-heading font-extrabold text-slate-900 dark:text-white">
                 {overallPercent}%
               </div>
               <div className="text-xs font-bold uppercase tracking-wider mt-1 opacity-80">
@@ -112,9 +112,9 @@ export const ProgressModal: React.FC<ProgressModalProps> = ({
             </div>
 
             <div className={`p-3.5 rounded-2xl border text-center ${
-              isDark ? 'bg-emerald-950/30 border-emerald-800/50 text-emerald-300' : 'bg-emerald-100/70 border-emerald-300 text-emerald-950'
+              isDark ? 'bg-emerald-950/40 border-emerald-800/60 text-emerald-100' : 'bg-emerald-100/80 border-emerald-300 text-emerald-950'
             }`}>
-              <div className="text-3xl font-heading font-extrabold text-emerald-700 dark:text-emerald-400">
+              <div className="text-3xl font-heading font-extrabold text-emerald-700 dark:text-emerald-300">
                 {avgScore}%
               </div>
               <div className="text-xs font-bold uppercase tracking-wider mt-1 opacity-80">
@@ -123,9 +123,9 @@ export const ProgressModal: React.FC<ProgressModalProps> = ({
             </div>
 
             <div className={`p-3.5 rounded-2xl border text-center ${
-              isDark ? 'bg-orange-950/30 border-orange-800/50 text-orange-300' : 'bg-orange-100/70 border-orange-300 text-orange-950'
+              isDark ? 'bg-orange-950/40 border-orange-800/60 text-orange-100' : 'bg-orange-100/80 border-orange-300 text-orange-950'
             }`}>
-              <div className="text-3xl font-heading font-extrabold text-orange-700 dark:text-orange-400 flex items-center justify-center gap-1">
+              <div className="text-3xl font-heading font-extrabold text-orange-600 dark:text-orange-300 flex items-center justify-center gap-1">
                 <Flame size={22} className="fill-orange-500" />
                 {progress.streakCount}d
               </div>
@@ -135,9 +135,9 @@ export const ProgressModal: React.FC<ProgressModalProps> = ({
             </div>
 
             <div className={`p-3.5 rounded-2xl border text-center ${
-              isDark ? 'bg-purple-950/30 border-purple-800/50 text-purple-300' : 'bg-purple-100/70 border-purple-300 text-purple-950'
+              isDark ? 'bg-purple-950/40 border-purple-800/60 text-purple-100' : 'bg-purple-100/80 border-purple-300 text-purple-950'
             }`}>
-              <div className="text-3xl font-heading font-extrabold text-purple-700 dark:text-purple-400 flex items-center justify-center gap-1">
+              <div className="text-3xl font-heading font-extrabold text-purple-700 dark:text-purple-300 flex items-center justify-center gap-1">
                 <Award size={22} />
                 {progress.earnedBadges.length}
               </div>

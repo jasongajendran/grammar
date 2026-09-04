@@ -42,16 +42,16 @@ export const BadgeUnlockToast: React.FC<BadgeUnlockToastProps> = ({
       <div className="flex items-start gap-3">
         <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border ${
           isDark
-            ? 'bg-amber-950/60 text-amber-100 border-amber-700/60'
-            : 'bg-amber-200 text-amber-950 border-amber-400'
+            ? 'bg-slate-800 text-slate-100 border-slate-700'
+            : 'bg-amber-100 text-slate-950 border-amber-300'
         }`}>
-          <Award size={22} className="text-amber-700 dark:text-amber-300 animate-bounce" />
+          <Award size={22} className="text-amber-600 dark:text-amber-400 animate-bounce" />
         </div>
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between">
-            <span className="text-xs uppercase font-extrabold tracking-wider text-amber-900 dark:text-amber-200 flex items-center gap-1">
-              <Sparkles size={13} className="text-amber-700 dark:text-amber-300" /> New Digital Badge!
+            <span className="text-xs uppercase font-extrabold tracking-wider text-slate-900 dark:text-slate-100 flex items-center gap-1">
+              <Sparkles size={13} className="text-amber-600 dark:text-amber-400" /> New Digital Badge!
             </span>
             <button
               type="button"
@@ -63,7 +63,7 @@ export const BadgeUnlockToast: React.FC<BadgeUnlockToastProps> = ({
             </button>
           </div>
 
-          <h4 className="font-bold text-sm sm:text-base mt-0.5">
+          <h4 className="font-bold text-sm sm:text-base mt-0.5 text-slate-950 dark:text-white">
             {badge.title}
           </h4>
           <p className="text-xs sm:text-sm opacity-80 mt-0.5 line-clamp-2">
@@ -76,7 +76,7 @@ export const BadgeUnlockToast: React.FC<BadgeUnlockToastProps> = ({
               onDismiss();
               onViewBadges();
             }}
-            className="mt-2 text-xs sm:text-sm font-bold text-amber-900 dark:text-amber-200 hover:text-amber-950 dark:hover:text-amber-100 underline cursor-pointer inline-flex items-center gap-1"
+            className="mt-2 text-xs sm:text-sm font-bold text-amber-700 dark:text-amber-300 hover:text-amber-800 dark:hover:text-amber-200 underline cursor-pointer inline-flex items-center gap-1"
           >
             View in Trophy Cabinet →
           </button>
