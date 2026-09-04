@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { DifficultyLevel, GrammarTopic, UserProgress } from './types';
+import { DifficultyLevel, GrammarTopic, UserProgress, StudyTheme, FontSizePreference } from './types';
 import { ALL_TOPICS, LEVEL_METADATA, getTopicById } from './data/curriculum';
 import { loadUserProgress, saveUserProgress, checkAndAwardBadges } from './utils/storage';
 import { Header } from './components/Header';
@@ -24,6 +24,33 @@ export default function App() {
   const [isProgressModalOpen, setIsProgressModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [newlyAwardedBadgeId, setNewlyAwardedBadgeId] = useState<string | null>(null);
+
+  const currentTheme: StudyTheme = progress.studyTheme || 'pastel-warm';
+  const currentFontSize: FontSizePreference = progress.fontSize || 'large';
+
+  // Apply theme and font-size attributes to root
+  useEffect(() => {
+    document.documentElement.setAttribute('data-study-theme', currentTheme);
+    document.documentElement.setAttribute('data-font-size', currentFontSize);
+
+    const isDark = currentTheme === 'pastel-night' || currentTheme === 'dark-study';
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+      document.body.className = 'bg-[#171B22] text-[#E5EAF2] antialiased overflow-x-hidden min-h-screen selection:bg-amber-600 selection:text-white';
+    } else {
+      document.documentElement.classList.remove('dark');
+      if (currentTheme === 'pastel-sage' || currentTheme === 'calm-sage') {
+        document.body.className = 'bg-[#EBF2EC] text-[#1C2922] antialiased overflow-x-hidden min-h-screen selection:bg-emerald-200 selection:text-emerald-950';
+      } else if (currentTheme === 'pastel-lavender') {
+        document.body.className = 'bg-[#EFEAF4] text-[#241E2F] antialiased overflow-x-hidden min-h-screen selection:bg-purple-200 selection:text-purple-950';
+      } else if (currentTheme === 'pastel-peach') {
+        document.body.className = 'bg-[#F7EEE4] text-[#2C211B] antialiased overflow-x-hidden min-h-screen selection:bg-orange-200 selection:text-orange-950';
+      } else {
+        // Default pastel warm linen / oatmeal - gentle and glare-free
+        document.body.className = 'bg-[#F4EFE6] text-[#252830] antialiased overflow-x-hidden min-h-screen selection:bg-amber-200 selection:text-amber-950';
+      }
+    }
+  }, [currentTheme, currentFontSize]);
 
   // Sync current level when topic changes
   const activeTopic = getTopicById(currentTopicId) || ALL_TOPICS[0];
@@ -56,6 +83,13 @@ export default function App() {
 
     // Update last studied topic
     const updated = { ...progress, lastStudiedTopicId: topicId };
+    setProgress(updated);
+    saveUserProgress(updated);
+  };
+
+  // Handle Theme Change
+  const handleChangeTheme = (theme: StudyTheme) => {
+    const updated = { ...progress, studyTheme: theme };
     setProgress(updated);
     saveUserProgress(updated);
   };
@@ -122,6 +156,13 @@ export default function App() {
     saveUserProgress(updated);
   };
 
+  // Change Font Size
+  const handleChangeFontSize = (size: FontSizePreference) => {
+    const updated = { ...progress, fontSize: size };
+    setProgress(updated);
+    saveUserProgress(updated);
+  };
+
   // Reset Progress
   const handleResetProgress = () => {
     const resetState: UserProgress = {
@@ -133,6 +174,8 @@ export default function App() {
       bookmarkedTopics: [],
       totalCorrectAnswers: 0,
       speechRate: 1.0,
+      studyTheme: 'pastel-warm',
+      fontSize: 'large',
       soundEffectsEnabled: true,
       streakCount: 1,
       lastActiveDate: new Date().toISOString().split('T')[0],
@@ -142,10 +185,34 @@ export default function App() {
     setIsProgressModalOpen(false);
   };
 
+  // Background style classes based on pastel study theme
+  const getThemeBgClass = () => {
+    switch (currentTheme) {
+      case 'pastel-night':
+      case 'dark-study':
+        return 'bg-[#171B22] text-[#E5EAF2]';
+      case 'pastel-sage':
+      case 'calm-sage':
+        return 'bg-[#EBF2EC] text-[#1C2922]';
+      case 'pastel-lavender':
+        return 'bg-[#EFEAF4] text-[#241E2F]';
+      case 'pastel-peach':
+        return 'bg-[#F7EEE4] text-[#2C211B]';
+      case 'pastel-warm':
+      case 'warm-paper':
+      default:
+        return 'bg-[#F4EFE6] text-[#252830]';
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col antialiased selection:bg-amber-200">
+    <div 
+      data-study-theme={currentTheme}
+      data-font-size={currentFontSize}
+      className={`min-h-screen ${getThemeBgClass()} flex flex-col antialiased overflow-x-hidden transition-colors duration-200`}
+    >
       
-      {/* 1. Header with minimal banner space */}
+      {/* 1. Header with study mode toggle & navigation */}
       <Header
         currentLevel={currentLevel}
         onSelectLevel={handleSelectLevel}
@@ -159,30 +226,45 @@ export default function App() {
         onSelectTopic={handleSelectTopic}
         speechRate={progress.speechRate}
         onChangeSpeechRate={handleChangeSpeechRate}
+        studyTheme={currentTheme}
+        onChangeStudyTheme={handleChangeTheme}
+        fontSize={currentFontSize}
+        onChangeFontSize={handleChangeFontSize}
       />
 
-      {/* 2. Main Content Layout (Desktop sidebar + Main content area) */}
-      <div className="flex-1 max-w-7xl w-full mx-auto flex overflow-hidden">
+      {/* 2. Main Content Layout: Native Window Scroll for zero mobile wobble */}
+      <div className="flex-1 max-w-7xl w-full mx-auto flex items-start overflow-visible px-0 sm:px-4">
         
-        {/* Desktop Sidebar Navigation */}
-        <div className="hidden md:block w-72 lg:w-80 shrink-0 h-[calc(100vh-3.5rem)] sticky top-14">
+        {/* Desktop Sidebar Navigation: Sticky in view */}
+        <div className="hidden md:block w-72 lg:w-80 shrink-0 h-[calc(100vh-3.5rem)] sticky top-14 z-20">
           <ChapterNav
             currentTopicId={currentTopicId}
             onSelectTopic={handleSelectTopic}
             currentLevel={currentLevel}
             onSelectLevel={handleSelectLevel}
             progress={progress}
+            studyTheme={currentTheme}
           />
         </div>
 
         {/* Mobile Navigation Drawer */}
         {isSidebarOpen && (
           <div 
-            className="fixed inset-0 z-50 md:hidden bg-slate-900/60 backdrop-blur-xs flex"
+            className="fixed inset-0 z-50 md:hidden bg-black/50 backdrop-blur-xs flex"
             onClick={() => setIsSidebarOpen(false)}
           >
             <div 
-              className="w-4/5 max-w-xs h-full bg-white shadow-2xl flex flex-col"
+              className={`w-4/5 max-w-xs h-full ${
+                currentTheme === 'pastel-night' || currentTheme === 'dark-study'
+                  ? 'bg-[#202630]'
+                  : currentTheme === 'pastel-sage' || currentTheme === 'calm-sage'
+                  ? 'bg-[#DEECE2]'
+                  : currentTheme === 'pastel-lavender'
+                  ? 'bg-[#E4DCED]'
+                  : currentTheme === 'pastel-peach'
+                  ? 'bg-[#EFE1D4]'
+                  : 'bg-[#ECE5DA]'
+              } shadow-2xl flex flex-col`}
               onClick={e => e.stopPropagation()}
             >
               <ChapterNav
@@ -191,14 +273,15 @@ export default function App() {
                 currentLevel={currentLevel}
                 onSelectLevel={handleSelectLevel}
                 progress={progress}
+                studyTheme={currentTheme}
                 onCloseMobile={() => setIsSidebarOpen(false)}
               />
             </div>
           </div>
         )}
 
-        {/* Lesson View Area */}
-        <main className="flex-1 min-w-0 overflow-y-auto pb-16">
+        {/* Lesson View Area: Smooth, natural window scrolling */}
+        <main className="flex-1 min-w-0 w-full max-w-full pb-20">
           <TopicView
             topic={activeTopic}
             progress={progress}
@@ -206,18 +289,20 @@ export default function App() {
             onNavigateTopic={handleSelectTopic}
             onToggleBookmark={handleToggleBookmark}
             speechRate={progress.speechRate}
+            studyTheme={currentTheme}
           />
         </main>
       </div>
 
       {/* 3. Floating "Go to Top" Icon at bottom */}
-      <ScrollToTop />
+      <ScrollToTop studyTheme={currentTheme} />
 
       {/* 4. Digital Badges Modal */}
       <BadgesModal
         isOpen={isBadgesModalOpen}
         onClose={() => setIsBadgesModalOpen(false)}
         progress={progress}
+        studyTheme={currentTheme}
       />
 
       {/* 5. Progress & Analytics Modal */}
@@ -226,6 +311,7 @@ export default function App() {
         onClose={() => setIsProgressModalOpen(false)}
         progress={progress}
         onResetProgress={handleResetProgress}
+        studyTheme={currentTheme}
       />
 
       {/* 6. Real-time Badge Unlock Notification Toast */}
@@ -236,6 +322,7 @@ export default function App() {
           setNewlyAwardedBadgeId(null);
           setIsBadgesModalOpen(true);
         }}
+        studyTheme={currentTheme}
       />
 
     </div>

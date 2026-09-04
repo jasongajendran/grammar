@@ -80,9 +80,9 @@ export const LEVEL_METADATA: Record<DifficultyLevel, LevelMetadata> = {
     description: 'Active vs passive voice, semicolons and colons, subjunctive mood, and complex agreement.',
     badgeTitle: 'KS3 Syntax Commander',
     accentColor: 'amber',
-    bgColor: 'bg-amber-50',
-    borderColor: 'border-amber-200',
-    textColor: 'text-amber-800',
+    bgColor: 'bg-amber-100',
+    borderColor: 'border-amber-300',
+    textColor: 'text-slate-950 font-bold',
     topicsCount: LEVEL_4_TOPICS.length,
   },
   'level-5': {

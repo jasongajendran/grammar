@@ -1,9 +1,36 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
   html {
     scroll-behavior: smooth;
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    overflow-x: hidden;
+    overscroll-behavior-x: none;
+    -webkit-tap-highlight-color: transparent;
+    font-size: 16px;
+  }
+
+  html[data-font-size="normal"] {
+    font-size: 15px;
+  }
+
+  html[data-font-size="large"] {
+    font-size: 17px;
+  }
+
+  html[data-font-size="xlarge"] {
+    font-size: 19px;
+  }
+
+  body {
+    overflow-x: hidden;
+    touch-action: pan-y;
+    overscroll-behavior-x: none;
+    font-size: 1rem;
+    line-height: 1.65;
+    transition: background-color 0.25s ease, color 0.25s ease;
   }
   
   h1, h2, h3, .font-heading {
@@ -15,27 +42,103 @@
   }
 }
 
-/* Custom crisp scrollbar */
+/* Pastel Eye-Comfort Study Palettes (Zero White Glare) */
+
+/* 1. Pastel Warm Linen / Oatmeal (Default) */
+[data-study-theme="pastel-warm"],
+[data-study-theme="warm-paper"] {
+  --bg-canvas: #F4EFE6;
+  --bg-card: #ECE5DA;
+  --bg-subtle: #E3DBCF;
+  --bg-accent-soft: #F8F3EC;
+  --border-subtle: #DDD5C7;
+  --border-focus: #C89B3C;
+  --text-main: #252830;
+  --text-muted: #535965;
+  --accent-primary: #C97204;
+}
+
+/* 2. Pastel Calm Sage / Mint Tea */
+[data-study-theme="pastel-sage"],
+[data-study-theme="calm-sage"] {
+  --bg-canvas: #EBF2EC;
+  --bg-card: #DEECE2;
+  --bg-subtle: #D3E4D8;
+  --bg-accent-soft: #F3F8F4;
+  --border-subtle: #C7DBD0;
+  --border-focus: #0D9488;
+  --text-main: #1C2922;
+  --text-muted: #475850;
+  --accent-primary: #0F766E;
+}
+
+/* 3. Pastel Soft Lavender / Heather */
+[data-study-theme="pastel-lavender"] {
+  --bg-canvas: #EFEAF4;
+  --bg-card: #E4DCED;
+  --bg-subtle: #D9CEE4;
+  --bg-accent-soft: #F6F3F9;
+  --border-subtle: #CEC2DC;
+  --border-focus: #7C3AED;
+  --text-main: #241E2F;
+  --text-muted: #574F67;
+  --accent-primary: #7C3AED;
+}
+
+/* 4. Pastel Warm Peach / Apricot */
+[data-study-theme="pastel-peach"] {
+  --bg-canvas: #F7EEE4;
+  --bg-card: #EFE1D4;
+  --bg-subtle: #E5D4C4;
+  --bg-accent-soft: #FAF4ED;
+  --border-subtle: #DDC8B6;
+  --border-focus: #EA580C;
+  --text-main: #2C211B;
+  --text-muted: #5F5046;
+  --accent-primary: #C2410C;
+}
+
+/* 5. Pastel Night (Soft Deep Indigo - Non-glare low light) */
+[data-study-theme="pastel-night"],
+[data-study-theme="dark-study"] {
+  --bg-canvas: #171B22;
+  --bg-card: #202630;
+  --bg-subtle: #29303D;
+  --bg-accent-soft: #252D3B;
+  --border-subtle: #343E4E;
+  --border-focus: #F59E0B;
+  --text-main: #E5EAF2;
+  --text-muted: #9BA5B6;
+  --accent-primary: #F59E0B;
+}
+
+/* Smooth pastel non-glare scrollbars */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #CFC5B4;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: #B5A893;
 }
 
-@keyframes pulse-subtle {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
+[data-study-theme="pastel-sage"] ::-webkit-scrollbar-thumb,
+[data-study-theme="calm-sage"] ::-webkit-scrollbar-thumb {
+  background: #BDD2C5;
 }
-
-.animate-pulse-subtle {
-  animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+[data-study-theme="pastel-lavender"] ::-webkit-scrollbar-thumb {
+  background: #C4B5D4;
+}
+[data-study-theme="pastel-peach"] ::-webkit-scrollbar-thumb {
+  background: #D4BEAA;
+}
+[data-study-theme="pastel-night"] ::-webkit-scrollbar-thumb,
+[data-study-theme="dark-study"] ::-webkit-scrollbar-thumb {
+  background: #3B4455;
 }

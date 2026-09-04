@@ -13,6 +13,8 @@ const DEFAULT_PROGRESS: UserProgress = {
   bookmarkedTopics: [],
   totalCorrectAnswers: 0,
   speechRate: 1.0,
+  studyTheme: 'pastel-warm',
+  fontSize: 'large',
   soundEffectsEnabled: true,
   streakCount: 1,
   lastActiveDate: new Date().toISOString().split('T')[0],

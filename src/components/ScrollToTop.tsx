@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowUp } from 'lucide-react';
+import { StudyTheme } from '../types';
 
-export const ScrollToTop: React.FC = () => {
+interface ScrollToTopProps {
+  studyTheme?: StudyTheme;
+}
+
+export const ScrollToTop: React.FC<ScrollToTopProps> = ({
+  studyTheme = 'warm-paper',
+}) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -26,6 +33,8 @@ export const ScrollToTop: React.FC = () => {
 
   if (!isVisible) return null;
 
+  const isDark = studyTheme === 'dark-study';
+
   return (
     <button
       type="button"
@@ -33,7 +42,11 @@ export const ScrollToTop: React.FC = () => {
       onClick={scrollToTop}
       title="Go to top of page"
       aria-label="Scroll back to top"
-      className="fixed bottom-6 right-6 z-40 p-3 rounded-2xl bg-slate-900/90 hover:bg-slate-900 text-white shadow-lg border border-slate-700 hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-xs focus:outline-none focus:ring-2 focus:ring-amber-500"
+      className={`fixed bottom-6 right-6 z-40 p-3 rounded-2xl shadow-xl border hover:scale-105 active:scale-95 transition-all cursor-pointer backdrop-blur-xs focus:outline-none focus:ring-2 focus:ring-amber-500 ${
+        isDark
+          ? 'bg-[#2E3544] text-[#E6EAF0] border-[#3E485A] hover:bg-[#384152]'
+          : 'bg-[#242831] text-white border-[#3F4756] hover:bg-black'
+      }`}
     >
       <ArrowUp size={20} className="stroke-[2.5]" />
     </button>

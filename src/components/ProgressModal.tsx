@@ -9,7 +9,7 @@ import {
   Sparkles,
   RefreshCw
 } from 'lucide-react';
-import { UserProgress, DifficultyLevel } from '../types';
+import { UserProgress, DifficultyLevel, StudyTheme } from '../types';
 import { ALL_TOPICS, LEVEL_METADATA } from '../data/curriculum';
 import { BADGES } from '../data/badges';
 
@@ -18,6 +18,7 @@ interface ProgressModalProps {
   onClose: () => void;
   progress: UserProgress;
   onResetProgress: () => void;
+  studyTheme?: StudyTheme;
 }
 
 export const ProgressModal: React.FC<ProgressModalProps> = ({
@@ -25,6 +26,7 @@ export const ProgressModal: React.FC<ProgressModalProps> = ({
   onClose,
   progress,
   onResetProgress,
+  studyTheme = 'pastel-warm',
 }) => {
   if (!isOpen) return null;
 
@@ -34,32 +36,52 @@ export const ProgressModal: React.FC<ProgressModalProps> = ({
 
   const levels: DifficultyLevel[] = ['level-1', 'level-2', 'level-3', 'level-4', 'level-5'];
 
-  // Average score
   const scoreValues: number[] = Object.values(progress.quizScores);
   const avgScore = scoreValues.length > 0 
     ? Math.round(scoreValues.reduce((a: number, b: number) => a + b, 0) / scoreValues.length) 
     : 0;
 
+  const isDark = studyTheme === 'pastel-night' || studyTheme === 'dark-study';
+  const isSage = studyTheme === 'pastel-sage' || studyTheme === 'calm-sage';
+  const isLavender = studyTheme === 'pastel-lavender';
+  const isPeach = studyTheme === 'pastel-peach';
+
+  const getModalCardStyle = () => {
+    if (isDark) return 'bg-[#1D2129] border-[#2E3544] text-[#E6EAF0]';
+    if (isSage) return 'bg-[#DEECE2] border-[#C7DBD0] text-[#1C2922]';
+    if (isLavender) return 'bg-[#E4DCED] border-[#CEC2DC] text-[#241E2F]';
+    if (isPeach) return 'bg-[#EFE1D4] border-[#DDC8B6] text-[#2C211B]';
+    return 'bg-[#ECE5DA] border-[#DDD5C7] text-[#252830]';
+  };
+
+  const getSubBoxStyle = () => {
+    if (isDark) return 'bg-[#252C39] border-[#364253] text-[#E6EAF0]';
+    if (isSage) return 'bg-[#D0E2D6] border-[#BCD4C4] text-[#1C2922]';
+    if (isLavender) return 'bg-[#D9CEE4] border-[#C5B5D6] text-[#241E2F]';
+    if (isPeach) return 'bg-[#E5D4C4] border-[#D4BFAB] text-[#2C211B]';
+    return 'bg-[#DFD6C8] border-[#CCC0B0] text-[#252830]';
+  };
+
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200"
       onClick={onClose}
     >
       <div 
-        className="bg-white w-full max-w-xl rounded-3xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[90vh]"
+        className={`w-full max-w-xl rounded-3xl shadow-2xl border overflow-hidden flex flex-col max-h-[90vh] ${getModalCardStyle()}`}
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="px-6 py-4 bg-slate-900 text-white flex items-center justify-between">
+        <div className="px-6 py-4 bg-amber-600 text-white flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-xl bg-amber-500 text-white flex items-center justify-center">
-              <BookOpen size={18} />
+            <div className="w-9 h-9 rounded-xl bg-white/20 flex items-center justify-center">
+              <BookOpen size={20} />
             </div>
             <div>
-              <h3 className="text-base sm:text-lg font-heading font-bold">
+              <h3 className="text-lg sm:text-xl font-heading font-bold">
                 Curriculum Progress & Analytics
               </h3>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs sm:text-sm text-amber-100 font-medium">
                 British National Curriculum Mastery (KS1 – GCSE)
               </p>
             </div>
@@ -68,9 +90,9 @@ export const ProgressModal: React.FC<ProgressModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
+            className="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
           >
-            <X size={18} />
+            <X size={20} />
           </button>
         </div>
 
@@ -78,40 +100,48 @@ export const ProgressModal: React.FC<ProgressModalProps> = ({
         <div className="p-6 overflow-y-auto space-y-6">
           {/* Key Metrics Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <div className="p-3.5 bg-amber-50 rounded-2xl border border-amber-200 text-center">
-              <div className="text-2xl font-heading font-extrabold text-amber-600">
+            <div className={`p-3.5 rounded-2xl border text-center ${
+              isDark ? 'bg-amber-950/60 border-amber-700/60 text-amber-100' : 'bg-amber-100/90 border-amber-300 text-amber-950'
+            }`}>
+              <div className="text-3xl font-heading font-extrabold text-amber-800 dark:text-amber-200">
                 {overallPercent}%
               </div>
-              <div className="text-[10px] font-bold uppercase tracking-wider text-amber-900 mt-0.5">
+              <div className="text-xs font-bold uppercase tracking-wider mt-1 opacity-80">
                 Completed
               </div>
             </div>
 
-            <div className="p-3.5 bg-emerald-50 rounded-2xl border border-emerald-200 text-center">
-              <div className="text-2xl font-heading font-extrabold text-emerald-600">
+            <div className={`p-3.5 rounded-2xl border text-center ${
+              isDark ? 'bg-emerald-950/30 border-emerald-800/50 text-emerald-300' : 'bg-emerald-100/70 border-emerald-300 text-emerald-950'
+            }`}>
+              <div className="text-3xl font-heading font-extrabold text-emerald-700 dark:text-emerald-400">
                 {avgScore}%
               </div>
-              <div className="text-[10px] font-bold uppercase tracking-wider text-emerald-900 mt-0.5">
+              <div className="text-xs font-bold uppercase tracking-wider mt-1 opacity-80">
                 Avg Accuracy
               </div>
             </div>
 
-            <div className="p-3.5 bg-orange-50 rounded-2xl border border-orange-200 text-center">
-              <div className="text-2xl font-heading font-extrabold text-orange-600 flex items-center justify-center gap-1">
-                <Flame size={18} className="fill-orange-500" />
+            <div className={`p-3.5 rounded-2xl border text-center ${
+              isDark ? 'bg-orange-950/30 border-orange-800/50 text-orange-300' : 'bg-orange-100/70 border-orange-300 text-orange-950'
+            }`}>
+              <div className="text-3xl font-heading font-extrabold text-orange-700 dark:text-orange-400 flex items-center justify-center gap-1">
+                <Flame size={22} className="fill-orange-500" />
                 {progress.streakCount}d
               </div>
-              <div className="text-[10px] font-bold uppercase tracking-wider text-orange-900 mt-0.5">
+              <div className="text-xs font-bold uppercase tracking-wider mt-1 opacity-80">
                 Daily Streak
               </div>
             </div>
 
-            <div className="p-3.5 bg-indigo-50 rounded-2xl border border-indigo-200 text-center">
-              <div className="text-2xl font-heading font-extrabold text-indigo-600 flex items-center justify-center gap-1">
-                <Award size={18} />
+            <div className={`p-3.5 rounded-2xl border text-center ${
+              isDark ? 'bg-purple-950/30 border-purple-800/50 text-purple-300' : 'bg-purple-100/70 border-purple-300 text-purple-950'
+            }`}>
+              <div className="text-3xl font-heading font-extrabold text-purple-700 dark:text-purple-400 flex items-center justify-center gap-1">
+                <Award size={22} />
                 {progress.earnedBadges.length}
               </div>
-              <div className="text-[10px] font-bold uppercase tracking-wider text-indigo-900 mt-0.5">
+              <div className="text-xs font-bold uppercase tracking-wider mt-1 opacity-80">
                 Badges Earned
               </div>
             </div>
@@ -119,7 +149,7 @@ export const ProgressModal: React.FC<ProgressModalProps> = ({
 
           {/* Level by Level Mastery Breakdown */}
           <div className="space-y-3">
-            <h4 className="font-bold text-xs uppercase tracking-wider text-slate-400">
+            <h4 className="font-bold text-xs uppercase tracking-wider opacity-70">
               Stage Mastery Progress
             </h4>
 
@@ -130,19 +160,21 @@ export const ProgressModal: React.FC<ProgressModalProps> = ({
               const percent = Math.round((doneCount / meta.topicsCount) * 100);
 
               return (
-                <div key={lvl} className="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1.5">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-bold text-slate-800">
+                <div key={lvl} className={`p-3.5 rounded-2xl border space-y-2 ${getSubBoxStyle()}`}>
+                  <div className="flex items-center justify-between text-xs sm:text-sm">
+                    <span className="font-bold">
                       {meta.label}: {meta.stageName}
                     </span>
-                    <span className="font-semibold text-slate-500">
+                    <span className="font-bold opacity-80">
                       {doneCount} / {meta.topicsCount} ({percent}%)
                     </span>
                   </div>
 
-                  <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+                  <div className={`w-full h-2.5 rounded-full overflow-hidden border ${
+                    isDark ? 'bg-[#181D24] border-[#364253]' : 'bg-[#C9BDAA] border-[#B5A792]'
+                  }`}>
                     <div
-                      className="h-full bg-amber-500 rounded-full transition-all duration-300"
+                      className="h-full bg-amber-600 rounded-full transition-all duration-300"
                       style={{ width: `${percent}%` }}
                     />
                   </div>
@@ -152,7 +184,9 @@ export const ProgressModal: React.FC<ProgressModalProps> = ({
           </div>
 
           {/* Reset progress button */}
-          <div className="pt-2 border-t border-slate-100 flex justify-end">
+          <div className={`pt-3 border-t flex justify-end ${
+            isDark ? 'border-[#2E3544]' : 'border-black/10'
+          }`}>
             <button
               type="button"
               onClick={() => {
@@ -160,9 +194,9 @@ export const ProgressModal: React.FC<ProgressModalProps> = ({
                   onResetProgress();
                 }
               }}
-              className="text-xs text-rose-600 hover:text-rose-800 font-semibold flex items-center gap-1 p-1 cursor-pointer"
+              className="text-xs sm:text-sm text-rose-600 hover:text-rose-700 font-bold flex items-center gap-1.5 p-1.5 cursor-pointer"
             >
-              <RefreshCw size={12} />
+              <RefreshCw size={14} />
               Reset Learning Progress
             </button>
           </div>

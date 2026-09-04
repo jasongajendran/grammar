@@ -126,6 +126,18 @@ export interface Badge {
   unlockedCriteria: string;
 }
 
+export type StudyTheme = 
+  | 'pastel-warm' 
+  | 'pastel-sage' 
+  | 'pastel-lavender' 
+  | 'pastel-peach' 
+  | 'pastel-night'
+  | 'warm-paper' 
+  | 'calm-sage' 
+  | 'dark-study';
+
+export type FontSizePreference = 'normal' | 'large' | 'xlarge';
+
 export interface UserProgress {
   completedTopics: string[]; // topic IDs
   quizScores: Record<string, number>; // topicId -> highest score percentage
@@ -135,6 +147,8 @@ export interface UserProgress {
   bookmarkedTopics: string[];
   totalCorrectAnswers: number;
   speechRate: number; // 0.8, 1.0, 1.2
+  studyTheme?: StudyTheme; // Eye comfort pastel theme
+  fontSize?: FontSizePreference; // Font size scale
   soundEffectsEnabled: boolean;
   lastStudiedTopicId?: string;
   streakCount: number;
