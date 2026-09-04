@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- GitHub Actions workflow metadata and deployment configuration for GitHub Pages -->
+<workflow name="Deploy to GitHub Pages">
+  <on>
+    <push branch="main" />
+    <workflow_dispatch />
+  </on>
+  <permissions>
+    <contents>read</contents>
+    <pages>write</pages>
+    <id-token>write</id-token>
+  </permissions>
+  <steps>
+    <step name="Checkout repository" action="actions/checkout@v4" />
+    <step name="Setup Node.js" action="actions/setup-node@v4">
+      <with node-version="20" cache="npm" />
+    </step>
+    <step name="Install dependencies" run="npm ci" />
+    <step name="Build static site" run="npm run build" />
+    <step name="Upload Pages artifact" action="actions/upload-pages-artifact@v3">
+      <with path="dist" />
+    </step>
+    <step name="Deploy to GitHub Pages" action="actions/deploy-pages@v4" />
+  </steps>
+</workflow>

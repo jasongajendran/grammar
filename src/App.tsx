@@ -1,0 +1,243 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+import React, { useState, useEffect } from 'react';
+import { DifficultyLevel, GrammarTopic, UserProgress } from './types';
+import { ALL_TOPICS, LEVEL_METADATA, getTopicById } from './data/curriculum';
+import { loadUserProgress, saveUserProgress, checkAndAwardBadges } from './utils/storage';
+import { Header } from './components/Header';
+import { ChapterNav } from './components/ChapterNav';
+import { TopicView } from './components/TopicView';
+import { BadgesModal } from './components/BadgesModal';
+import { ProgressModal } from './components/ProgressModal';
+import { ScrollToTop } from './components/ScrollToTop';
+import { BadgeUnlockToast } from './components/BadgeUnlockToast';
+
+export default function App() {
+  const [progress, setProgress] = useState<UserProgress>(() => loadUserProgress());
+  const [currentLevel, setCurrentLevel] = useState<DifficultyLevel>('level-1');
+  const [currentTopicId, setCurrentTopicId] = useState<string>('l1-nouns');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isBadgesModalOpen, setIsBadgesModalOpen] = useState(false);
+  const [isProgressModalOpen, setIsProgressModalOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [newlyAwardedBadgeId, setNewlyAwardedBadgeId] = useState<string | null>(null);
+
+  // Sync current level when topic changes
+  const activeTopic = getTopicById(currentTopicId) || ALL_TOPICS[0];
+
+  useEffect(() => {
+    if (activeTopic && activeTopic.level !== currentLevel) {
+      setCurrentLevel(activeTopic.level);
+    }
+  }, [activeTopic, currentLevel]);
+
+  // Handle Level Selection
+  const handleSelectLevel = (lvl: DifficultyLevel) => {
+    setCurrentLevel(lvl);
+    const firstTopicInLevel = ALL_TOPICS.find(t => t.level === lvl);
+    if (firstTopicInLevel) {
+      setCurrentTopicId(firstTopicInLevel.id);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  // Handle Topic Selection
+  const handleSelectTopic = (topicId: string) => {
+    setCurrentTopicId(topicId);
+    const targetTopic = getTopicById(topicId);
+    if (targetTopic) {
+      setCurrentLevel(targetTopic.level);
+    }
+    setIsSidebarOpen(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Update last studied topic
+    const updated = { ...progress, lastStudiedTopicId: topicId };
+    setProgress(updated);
+    saveUserProgress(updated);
+  };
+
+  // Handle Quiz Completion
+  const handleCompleteTopicQuiz = (topicId: string, scorePercent: number) => {
+    const existingScore = progress.quizScores[topicId] || 0;
+    const highestScore = Math.max(existingScore, scorePercent);
+    const isNowCompleted = scorePercent >= 60; // 60% passing mark
+
+    const completed = new Set(progress.completedTopics);
+    if (isNowCompleted) {
+      completed.add(topicId);
+    }
+
+    const updatedScores = {
+      ...progress.quizScores,
+      [topicId]: highestScore,
+    };
+
+    const updatedAttempts = {
+      ...progress.quizAttempts,
+      [topicId]: (progress.quizAttempts[topicId] || 0) + 1,
+    };
+
+    const newProgressState: UserProgress = {
+      ...progress,
+      completedTopics: Array.from(completed),
+      quizScores: updatedScores,
+      quizAttempts: updatedAttempts,
+      totalCorrectAnswers: progress.totalCorrectAnswers + Math.round((scorePercent / 100) * 4),
+    };
+
+    // Check for badges
+    const { updatedProgress, newlyEarnedBadges } = checkAndAwardBadges(
+      newProgressState,
+      badgeId => {
+        setNewlyAwardedBadgeId(badgeId);
+      }
+    );
+
+    setProgress(updatedProgress);
+    saveUserProgress(updatedProgress);
+  };
+
+  // Toggle Bookmark
+  const handleToggleBookmark = (topicId: string) => {
+    const isBookmarked = progress.bookmarkedTopics.includes(topicId);
+    let updatedList: string[];
+    if (isBookmarked) {
+      updatedList = progress.bookmarkedTopics.filter(id => id !== topicId);
+    } else {
+      updatedList = [...progress.bookmarkedTopics, topicId];
+    }
+    const updated = { ...progress, bookmarkedTopics: updatedList };
+    setProgress(updated);
+    saveUserProgress(updated);
+  };
+
+  // Change Speech Rate
+  const handleChangeSpeechRate = (rate: number) => {
+    const updated = { ...progress, speechRate: rate };
+    setProgress(updated);
+    saveUserProgress(updated);
+  };
+
+  // Reset Progress
+  const handleResetProgress = () => {
+    const resetState: UserProgress = {
+      completedTopics: [],
+      quizScores: {},
+      quizAttempts: {},
+      earnedBadges: [],
+      badgeUnlockDates: {},
+      bookmarkedTopics: [],
+      totalCorrectAnswers: 0,
+      speechRate: 1.0,
+      soundEffectsEnabled: true,
+      streakCount: 1,
+      lastActiveDate: new Date().toISOString().split('T')[0],
+    };
+    setProgress(resetState);
+    saveUserProgress(resetState);
+    setIsProgressModalOpen(false);
+  };
+
+  return (
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col antialiased selection:bg-amber-200">
+      
+      {/* 1. Header with minimal banner space */}
+      <Header
+        currentLevel={currentLevel}
+        onSelectLevel={handleSelectLevel}
+        progress={progress}
+        onOpenBadges={() => setIsBadgesModalOpen(true)}
+        onOpenProgressModal={() => setIsProgressModalOpen(true)}
+        onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+        isSidebarOpen={isSidebarOpen}
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        onSelectTopic={handleSelectTopic}
+        speechRate={progress.speechRate}
+        onChangeSpeechRate={handleChangeSpeechRate}
+      />
+
+      {/* 2. Main Content Layout (Desktop sidebar + Main content area) */}
+      <div className="flex-1 max-w-7xl w-full mx-auto flex overflow-hidden">
+        
+        {/* Desktop Sidebar Navigation */}
+        <div className="hidden md:block w-72 lg:w-80 shrink-0 h-[calc(100vh-3.5rem)] sticky top-14">
+          <ChapterNav
+            currentTopicId={currentTopicId}
+            onSelectTopic={handleSelectTopic}
+            currentLevel={currentLevel}
+            onSelectLevel={handleSelectLevel}
+            progress={progress}
+          />
+        </div>
+
+        {/* Mobile Navigation Drawer */}
+        {isSidebarOpen && (
+          <div 
+            className="fixed inset-0 z-50 md:hidden bg-slate-900/60 backdrop-blur-xs flex"
+            onClick={() => setIsSidebarOpen(false)}
+          >
+            <div 
+              className="w-4/5 max-w-xs h-full bg-white shadow-2xl flex flex-col"
+              onClick={e => e.stopPropagation()}
+            >
+              <ChapterNav
+                currentTopicId={currentTopicId}
+                onSelectTopic={handleSelectTopic}
+                currentLevel={currentLevel}
+                onSelectLevel={handleSelectLevel}
+                progress={progress}
+                onCloseMobile={() => setIsSidebarOpen(false)}
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Lesson View Area */}
+        <main className="flex-1 min-w-0 overflow-y-auto pb-16">
+          <TopicView
+            topic={activeTopic}
+            progress={progress}
+            onCompleteTopicQuiz={handleCompleteTopicQuiz}
+            onNavigateTopic={handleSelectTopic}
+            onToggleBookmark={handleToggleBookmark}
+            speechRate={progress.speechRate}
+          />
+        </main>
+      </div>
+
+      {/* 3. Floating "Go to Top" Icon at bottom */}
+      <ScrollToTop />
+
+      {/* 4. Digital Badges Modal */}
+      <BadgesModal
+        isOpen={isBadgesModalOpen}
+        onClose={() => setIsBadgesModalOpen(false)}
+        progress={progress}
+      />
+
+      {/* 5. Progress & Analytics Modal */}
+      <ProgressModal
+        isOpen={isProgressModalOpen}
+        onClose={() => setIsProgressModalOpen(false)}
+        progress={progress}
+        onResetProgress={handleResetProgress}
+      />
+
+      {/* 6. Real-time Badge Unlock Notification Toast */}
+      <BadgeUnlockToast
+        badgeId={newlyAwardedBadgeId}
+        onDismiss={() => setNewlyAwardedBadgeId(null)}
+        onViewBadges={() => {
+          setNewlyAwardedBadgeId(null);
+          setIsBadgesModalOpen(true);
+        }}
+      />
+
+    </div>
+  );
+}
