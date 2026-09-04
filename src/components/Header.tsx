@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   BookOpen, 
   Award, 
@@ -9,14 +9,17 @@ import {
   X, 
   CheckCircle2, 
   Sparkles,
-  Type
+  Type,
+  Target
 } from 'lucide-react';
-import { DifficultyLevel, UserProgress, StudyTheme, FontSizePreference } from '../types';
+import { DifficultyLevel, UserProgress, StudyTheme, FontSizePreference, GrammarTopic } from '../types';
 import { ALL_TOPICS, LEVEL_METADATA } from '../data/curriculum';
+import { AudioButton } from './AudioButton';
 
 interface HeaderProps {
   currentLevel: DifficultyLevel;
   onSelectLevel: (lvl: DifficultyLevel) => void;
+  activeTopic?: GrammarTopic;
   progress: UserProgress;
   onOpenBadges: () => void;
   onOpenProgressModal: () => void;
@@ -36,6 +39,7 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({
   currentLevel,
   onSelectLevel,
+  activeTopic,
   progress,
   onOpenBadges,
   onOpenProgressModal,
@@ -55,6 +59,16 @@ export const Header: React.FC<HeaderProps> = ({
   const [showSpeedMenu, setShowSpeedMenu] = useState(false);
   const [showThemeMenu, setShowThemeMenu] = useState(false);
   const [showFontMenu, setShowFontMenu] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 80);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const completedCount = progress.completedTopics.length;
   const totalCount = ALL_TOPICS.length;
@@ -453,6 +467,59 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Persistent Sticky Lesson Banner Strip on Scroll */}
+      {isScrolled && activeTopic && (
+        <div className={`border-t py-1.5 px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-3 text-xs transition-all animate-in slide-in-from-top-1 duration-200 ${
+          isDark 
+            ? 'bg-[#181D24]/95 border-[#2C323E] text-[#E5EAF2]' 
+            : isSage
+            ? 'bg-[#D6E3DA]/95 border-[#BAD0C1] text-[#1C2922]'
+            : isLavender
+            ? 'bg-[#DCD2E6]/95 border-[#C5B7D6] text-[#241E2F]'
+            : isPeach
+            ? 'bg-[#E7D7C8]/95 border-[#D5BFA9] text-[#2C211B]'
+            : 'bg-[#E3DACD]/95 border-[#D0C4B3] text-[#252830]'
+        } backdrop-blur-md shadow-xs`}>
+          <div className="flex items-center gap-2 min-w-0 max-w-xl">
+            <span className="shrink-0 font-extrabold px-2 py-0.5 rounded-full text-[10px] bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-950 shadow-2xs">
+              {activeTopic.levelLabel.split(':')[0]}
+            </span>
+            <span className="font-bold text-xs sm:text-sm truncate text-slate-950 dark:text-white">
+              {activeTopic.title}
+            </span>
+            <span className="hidden sm:inline text-[11px] opacity-70 truncate font-medium">
+              • {activeTopic.subtitle}
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2 shrink-0">
+            <AudioButton
+              text={`${activeTopic.title}. ${activeTopic.subtitle}. ${activeTopic.overview}`}
+              textId={`header-sticky-${activeTopic.id}`}
+              speechRate={speechRate}
+              size="sm"
+              showLabel
+              label="Listen"
+            />
+            <button
+              type="button"
+              id="btn-sticky-jump-quiz"
+              onClick={() => {
+                const quizEl = document.getElementById('quiz-section');
+                if (quizEl) {
+                  quizEl.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg font-bold text-[11px] bg-amber-600 hover:bg-amber-700 text-white transition-colors cursor-pointer shadow-2xs"
+              title="Jump to Interactive Practice Exercises"
+            >
+              <Target size={12} />
+              <span className="hidden xs:inline">Practice Quiz</span>
+            </button>
+          </div>
+        </div>
+      )}
     </header>
   );
 };

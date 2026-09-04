@@ -36,18 +36,18 @@ export default function App() {
     const isDark = currentTheme === 'pastel-night' || currentTheme === 'dark-study';
     if (isDark) {
       document.documentElement.classList.add('dark');
-      document.body.className = 'bg-[#171B22] text-[#E5EAF2] antialiased overflow-x-hidden min-h-screen selection:bg-amber-600 selection:text-white';
+      document.body.className = 'bg-[#171B22] text-[#E5EAF2] antialiased overflow-x-clip min-h-screen selection:bg-amber-600 selection:text-white';
     } else {
       document.documentElement.classList.remove('dark');
       if (currentTheme === 'pastel-sage' || currentTheme === 'calm-sage') {
-        document.body.className = 'bg-[#EBF2EC] text-[#1C2922] antialiased overflow-x-hidden min-h-screen selection:bg-emerald-200 selection:text-emerald-950';
+        document.body.className = 'bg-[#EBF2EC] text-[#1C2922] antialiased overflow-x-clip min-h-screen selection:bg-emerald-200 selection:text-emerald-950';
       } else if (currentTheme === 'pastel-lavender') {
-        document.body.className = 'bg-[#EFEAF4] text-[#241E2F] antialiased overflow-x-hidden min-h-screen selection:bg-purple-200 selection:text-purple-950';
+        document.body.className = 'bg-[#EFEAF4] text-[#241E2F] antialiased overflow-x-clip min-h-screen selection:bg-purple-200 selection:text-purple-950';
       } else if (currentTheme === 'pastel-peach') {
-        document.body.className = 'bg-[#F7EEE4] text-[#2C211B] antialiased overflow-x-hidden min-h-screen selection:bg-orange-200 selection:text-orange-950';
+        document.body.className = 'bg-[#F7EEE4] text-[#2C211B] antialiased overflow-x-clip min-h-screen selection:bg-orange-200 selection:text-orange-950';
       } else {
         // Default pastel warm linen / oatmeal - gentle and glare-free
-        document.body.className = 'bg-[#F4EFE6] text-[#252830] antialiased overflow-x-hidden min-h-screen selection:bg-amber-200 selection:text-amber-950';
+        document.body.className = 'bg-[#F4EFE6] text-[#252830] antialiased overflow-x-clip min-h-screen selection:bg-amber-200 selection:text-amber-950';
       }
     }
   }, [currentTheme, currentFontSize]);
@@ -209,13 +209,14 @@ export default function App() {
     <div 
       data-study-theme={currentTheme}
       data-font-size={currentFontSize}
-      className={`min-h-screen ${getThemeBgClass()} flex flex-col antialiased overflow-x-hidden transition-colors duration-200`}
+      className={`min-h-screen ${getThemeBgClass()} flex flex-col antialiased overflow-x-clip transition-colors duration-200`}
     >
       
       {/* 1. Header with study mode toggle & navigation */}
       <Header
         currentLevel={currentLevel}
         onSelectLevel={handleSelectLevel}
+        activeTopic={activeTopic}
         progress={progress}
         onOpenBadges={() => setIsBadgesModalOpen(true)}
         onOpenProgressModal={() => setIsProgressModalOpen(true)}

@@ -80,7 +80,7 @@ export const TopicView: React.FC<TopicViewProps> = ({
   };
 
   return (
-    <article className="max-w-4xl mx-auto py-4 sm:py-6 px-3 sm:px-6 lg:px-8 space-y-6 overflow-x-hidden">
+    <article className="max-w-4xl mx-auto py-4 sm:py-6 px-3 sm:px-6 lg:px-8 space-y-6 overflow-x-clip">
       
       {/* 1. Header Banner & Meta Tags */}
       <div className={`rounded-3xl border p-5 sm:p-8 shadow-xs transition-colors ${getCardStyle()}`}>
@@ -393,7 +393,7 @@ export const TopicView: React.FC<TopicViewProps> = ({
       )}
 
       {/* 4. Progressive Interactive Exercises */}
-      <div className="space-y-3 pt-2">
+      <div id="quiz-section" className="space-y-3 pt-2">
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-xl bg-amber-600 text-white flex items-center justify-center font-bold">
             <Target size={18} />
