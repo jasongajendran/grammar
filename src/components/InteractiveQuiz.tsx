@@ -296,9 +296,6 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
       {/* Quiz Header Bar */}
       <div className={`px-5 py-3.5 border-b flex items-center justify-between gap-2 ${getQuizHeaderStyle()}`}>
         <div className="flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-full bg-amber-600 text-white flex items-center justify-center text-xs sm:text-sm font-bold">
-            {currentIndex + 1}
-          </div>
           <span className="text-xs sm:text-sm font-bold">
             Exercise {currentIndex + 1} of {exercises.length}
           </span>
