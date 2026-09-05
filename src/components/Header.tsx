@@ -10,7 +10,9 @@ import {
   CheckCircle2, 
   Sparkles,
   Type,
-  Target
+  Target,
+  Maximize,
+  Minimize
 } from 'lucide-react';
 import { DifficultyLevel, UserProgress, StudyTheme, FontSizePreference, GrammarTopic } from '../types';
 import { ALL_TOPICS, LEVEL_METADATA } from '../data/curriculum';
@@ -25,6 +27,7 @@ interface HeaderProps {
   onOpenProgressModal: () => void;
   onToggleSidebar: () => void;
   isSidebarOpen: boolean;
+  isSidebarCollapsed?: boolean;
   searchQuery: string;
   onSearchChange: (q: string) => void;
   onSelectTopic: (topicId: string) => void;
@@ -34,6 +37,8 @@ interface HeaderProps {
   onChangeStudyTheme: (theme: StudyTheme) => void;
   fontSize?: FontSizePreference;
   onChangeFontSize?: (size: FontSizePreference) => void;
+  isFullscreen?: boolean;
+  onToggleFullscreen?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -45,6 +50,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenProgressModal,
   onToggleSidebar,
   isSidebarOpen,
+  isSidebarCollapsed = false,
   searchQuery,
   onSearchChange,
   onSelectTopic,
@@ -54,6 +60,8 @@ export const Header: React.FC<HeaderProps> = ({
   onChangeStudyTheme,
   fontSize = 'large',
   onChangeFontSize,
+  isFullscreen = false,
+  onToggleFullscreen,
 }) => {
   const [showSearchDropdown, setShowSearchDropdown] = useState(false);
   const [showSpeedMenu, setShowSpeedMenu] = useState(false);
@@ -85,6 +93,14 @@ export const Header: React.FC<HeaderProps> = ({
     : [];
 
   const levels: DifficultyLevel[] = ['level-1', 'level-2', 'level-3', 'level-4', 'level-5'];
+
+  const LEVEL_TAB_LABELS: Record<DifficultyLevel, string> = {
+    'level-1': '1. KS1',
+    'level-2': '2. L-KS2',
+    'level-3': '3. U-KS2',
+    'level-4': '4. KS3',
+    'level-5': '5. GCSE',
+  };
 
   const themeMeta: Record<StudyTheme, { label: string; icon: string; desc: string }> = {
     'pastel-warm': { label: 'Pastel Oatmeal', icon: '🌾', desc: 'Soft matte linen, zero glare' },
@@ -131,18 +147,19 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 gap-2 sm:gap-4">
           
-          {/* Left: Mobile Nav Toggle & Brand Logo */}
+          {/* Left: Mobile/Tablet/Desktop Nav Toggle & Brand Logo */}
           <div className="flex items-center gap-2 sm:gap-3">
             <button
               type="button"
               id="btn-toggle-sidebar"
               onClick={onToggleSidebar}
-              className={`p-2 rounded-xl transition-colors md:hidden focus:outline-none focus:ring-2 focus:ring-amber-500 cursor-pointer ${
+              className={`p-2 rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500 cursor-pointer flex items-center justify-center shrink-0 ${
                 isDark 
                   ? 'text-slate-300 hover:bg-[#282E39]' 
                   : 'text-slate-800 hover:bg-black/10'
               }`}
               aria-label="Toggle navigation chapters"
+              title={isSidebarOpen || !isSidebarCollapsed ? "Collapse side menu" : "Expand side menu"}
             >
               {isSidebarOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
@@ -166,7 +183,7 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
 
           {/* Level Selector Tabs (Soft pastel pill tabs) */}
-          <nav className={`hidden lg:flex items-center gap-1 p-1 rounded-2xl border text-xs ${getPillBg()}`}>
+          <nav className={`hidden lg:flex items-center gap-0.5 xl:gap-1 p-1 rounded-2xl border text-xs shrink-0 ${getPillBg()}`}>
             {levels.map(lvl => {
               const meta = LEVEL_METADATA[lvl];
               const isActive = currentLevel === lvl;
@@ -180,7 +197,8 @@ export const Header: React.FC<HeaderProps> = ({
                   type="button"
                   id={`nav-level-${lvl}`}
                   onClick={() => onSelectLevel(lvl)}
-                  className={`px-3 py-1.5 rounded-xl font-bold transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
+                  title={`${meta.label}: ${meta.stageName}`}
+                  className={`px-2.5 py-1.5 rounded-xl font-bold transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer shrink-0 text-xs ${
                     isActive
                       ? 'bg-amber-600 text-white shadow-xs'
                       : isDark
@@ -188,18 +206,18 @@ export const Header: React.FC<HeaderProps> = ({
                       : 'text-slate-800 hover:text-slate-950 hover:bg-black/5'
                   }`}
                 >
-                  <span className={`w-2 h-2 rounded-full ${
+                  <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${
                     isAllDone ? 'bg-emerald-400' : isActive ? 'bg-white' : 'bg-slate-400 opacity-60'
                   }`} />
-                  <span>{meta.number}. {meta.stageName.split(' ')[0]} {meta.stageName.includes('KS') ? meta.stageName.split('(')[0] : ''}</span>
-                  {isAllDone && <CheckCircle2 size={13} className={isActive ? 'text-white' : 'text-emerald-500'} />}
+                  <span className="leading-none">{LEVEL_TAB_LABELS[lvl]}</span>
+                  {isAllDone && <CheckCircle2 size={13} className={`shrink-0 ${isActive ? 'text-white' : 'text-emerald-500'}`} />}
                 </button>
               );
             })}
           </nav>
 
           {/* Search Box */}
-          <div className="relative flex-1 max-w-xs hidden sm:block">
+          <div className="relative flex-1 max-w-[180px] lg:max-w-[210px] xl:max-w-xs hidden md:block min-w-0">
             <div className="relative">
               <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 opacity-60" />
               <input
@@ -211,8 +229,8 @@ export const Header: React.FC<HeaderProps> = ({
                   setShowSearchDropdown(true);
                 }}
                 onFocus={() => setShowSearchDropdown(true)}
-                placeholder="Search topics (e.g. adverbs, commas)..."
-                className={`w-full pl-8.5 pr-3 py-1.5 rounded-xl text-xs placeholder:opacity-50 focus:outline-none focus:ring-2 focus:ring-amber-500/40 transition-colors border ${
+                placeholder="Search topics..."
+                className={`w-full pl-8.5 pr-3 py-1.5 rounded-xl text-xs placeholder:opacity-50 focus:outline-none focus:ring-2 focus:ring-amber-500/40 transition-colors border truncate ${
                   isDark
                     ? 'bg-[#252B35] border-[#384254] text-white focus:bg-[#2C3340]'
                     : 'bg-[#F4EEE4] border-[#D5CABB] text-[#252830] focus:bg-[#FAF6F0]'
@@ -244,19 +262,19 @@ export const Header: React.FC<HeaderProps> = ({
                       setShowSearchDropdown(false);
                       onSearchChange('');
                     }}
-                    className={`w-full text-left px-3 py-2 rounded-xl text-xs flex items-center justify-between group transition-colors cursor-pointer ${
+                    className={`w-full text-left px-3 py-2.5 rounded-xl text-xs flex items-start justify-between gap-2 group transition-colors cursor-pointer ${
                       isDark ? 'hover:bg-white/10' : 'hover:bg-amber-600/15'
                     }`}
                   >
-                    <div>
-                      <div className="font-semibold group-hover:text-amber-600">
+                    <div className="flex-1 min-w-0">
+                      <div className="font-semibold text-xs leading-snug break-words group-hover:text-amber-600 text-slate-900 dark:text-slate-100">
                         {topic.title}
                       </div>
-                      <div className="text-[10px] opacity-60">
+                      <div className="text-[10px] opacity-70 leading-normal break-words mt-0.5 font-medium">
                         {topic.levelStage} • {topic.categoryLabel}
                       </div>
                     </div>
-                    <span className="text-[10px] bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-950 px-2 py-0.5 rounded-full font-extrabold">
+                    <span className="text-[10px] bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-950 px-2 py-0.5 rounded-full font-extrabold shrink-0 mt-0.5">
                       {topic.levelLabel.split(':')[0]}
                     </span>
                   </button>
@@ -421,6 +439,31 @@ export const Header: React.FC<HeaderProps> = ({
                 </div>
               )}
             </div>
+
+            {/* Full Screen Mode Toggle */}
+            {onToggleFullscreen && (
+              <button
+                type="button"
+                id="btn-fullscreen-toggle"
+                onClick={onToggleFullscreen}
+                title={isFullscreen ? 'Exit Full Screen Mode (Esc)' : 'Enter Full Screen Mode'}
+                aria-label={isFullscreen ? 'Exit Full Screen Mode' : 'Enter Full Screen Mode'}
+                className={`flex items-center gap-1 p-1.5 sm:px-2.5 sm:py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer border ${
+                  isFullscreen
+                    ? 'bg-amber-600 text-white border-amber-700 shadow-xs ring-2 ring-amber-500/30'
+                    : getPillBg()
+                }`}
+              >
+                {isFullscreen ? (
+                  <Minimize size={15} className="text-white shrink-0" />
+                ) : (
+                  <Maximize size={15} className="text-amber-600 shrink-0" />
+                )}
+                <span className="hidden md:inline">
+                  {isFullscreen ? 'Exit' : 'Full Screen'}
+                </span>
+              </button>
+            )}
 
             {/* Streak Counter */}
             <div 

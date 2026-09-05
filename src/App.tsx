@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import { PanelLeftOpen, BookOpen } from 'lucide-react';
 import { DifficultyLevel, GrammarTopic, UserProgress, StudyTheme, FontSizePreference } from './types';
 import { ALL_TOPICS, LEVEL_METADATA, getTopicById } from './data/curriculum';
 import { loadUserProgress, saveUserProgress, checkAndAwardBadges } from './utils/storage';
@@ -20,10 +21,100 @@ export default function App() {
   const [currentLevel, setCurrentLevel] = useState<DifficultyLevel>('level-1');
   const [currentTopicId, setCurrentTopicId] = useState<string>('l1-nouns');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isBadgesModalOpen, setIsBadgesModalOpen] = useState(false);
   const [isProgressModalOpen, setIsProgressModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [newlyAwardedBadgeId, setNewlyAwardedBadgeId] = useState<string | null>(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  // Synchronize fullscreen state with HTML5 fullscreen change events
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      const isDocFs = !!(
+        document.fullscreenElement ||
+        (document as any).webkitFullscreenElement ||
+        (document as any).mozFullScreenElement ||
+        (document as any).msFullscreenElement
+      );
+      setIsFullscreen(isDocFs);
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+    document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+    document.addEventListener('MSFullscreenChange', handleFullscreenChange);
+
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
+      document.removeEventListener('mozfullscreenchange', handleFullscreenChange);
+      document.removeEventListener('MSFullscreenChange', handleFullscreenChange);
+    };
+  }, []);
+
+  const handleToggleFullscreen = async () => {
+    try {
+      const isDocFs = !!(
+        document.fullscreenElement ||
+        (document as any).webkitFullscreenElement ||
+        (document as any).mozFullScreenElement ||
+        (document as any).msFullscreenElement
+      );
+
+      if (!isDocFs && !isFullscreen) {
+        if (document.documentElement.requestFullscreen) {
+          await document.documentElement.requestFullscreen();
+        } else if ((document.documentElement as any).webkitRequestFullscreen) {
+          await (document.documentElement as any).webkitRequestFullscreen();
+        } else if ((document.documentElement as any).msRequestFullscreen) {
+          await (document.documentElement as any).msRequestFullscreen();
+        } else {
+          setIsFullscreen(true);
+        }
+      } else {
+        if (document.exitFullscreen && document.fullscreenElement) {
+          await document.exitFullscreen();
+        } else if ((document as any).webkitExitFullscreen && (document as any).webkitFullscreenElement) {
+          await (document as any).webkitExitFullscreen();
+        } else if ((document as any).msExitFullscreen && (document as any).msFullscreenElement) {
+          await (document as any).msExitFullscreen();
+        }
+        setIsFullscreen(false);
+      }
+    } catch {
+      // In iframes or browser contexts where requestFullscreen is restricted,
+      // fallback smoothly to immersive app fullscreen view
+      setIsFullscreen(prev => !prev);
+    }
+  };
+
+  // Keyboard shortcut listener: 'f' or 'F' to toggle fullscreen
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const activeEl = document.activeElement as HTMLElement | null;
+      const isTyping = activeEl && (
+        activeEl.tagName === 'INPUT' ||
+        activeEl.tagName === 'TEXTAREA' ||
+        activeEl.isContentEditable
+      );
+      if (!isTyping && (e.key === 'f' || e.key === 'F')) {
+        e.preventDefault();
+        handleToggleFullscreen();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isFullscreen]);
+
+  const handleToggleSidebar = () => {
+    if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+      setIsSidebarOpen(prev => !prev);
+    } else {
+      setIsSidebarCollapsed(prev => !prev);
+    }
+  };
 
   const currentTheme: StudyTheme = progress.studyTheme || 'pastel-warm';
   const currentFontSize: FontSizePreference = progress.fontSize || 'large';
@@ -220,8 +311,9 @@ export default function App() {
         progress={progress}
         onOpenBadges={() => setIsBadgesModalOpen(true)}
         onOpenProgressModal={() => setIsProgressModalOpen(true)}
-        onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+        onToggleSidebar={handleToggleSidebar}
         isSidebarOpen={isSidebarOpen}
+        isSidebarCollapsed={isSidebarCollapsed}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
         onSelectTopic={handleSelectTopic}
@@ -231,31 +323,51 @@ export default function App() {
         onChangeStudyTheme={handleChangeTheme}
         fontSize={currentFontSize}
         onChangeFontSize={handleChangeFontSize}
+        isFullscreen={isFullscreen}
+        onToggleFullscreen={handleToggleFullscreen}
       />
 
       {/* 2. Main Content Layout: Native Window Scroll for zero mobile wobble */}
       <div className="flex-1 max-w-7xl w-full mx-auto flex items-start overflow-visible px-0 sm:px-4">
         
-        {/* Desktop Sidebar Navigation: Sticky in view */}
-        <div className="hidden md:block w-72 lg:w-80 shrink-0 h-[calc(100vh-3.5rem)] sticky top-14 z-20">
-          <ChapterNav
-            currentTopicId={currentTopicId}
-            onSelectTopic={handleSelectTopic}
-            currentLevel={currentLevel}
-            onSelectLevel={handleSelectLevel}
-            progress={progress}
-            studyTheme={currentTheme}
-          />
-        </div>
+        {/* Desktop Sidebar Navigation: Sticky in view (>= 1024px) */}
+        {!isSidebarCollapsed && (
+          <div className="hidden lg:block w-72 lg:w-80 shrink-0 h-[calc(100vh-3.5rem)] sticky top-14 z-20 transition-all duration-200">
+            <ChapterNav
+              currentTopicId={currentTopicId}
+              onSelectTopic={handleSelectTopic}
+              currentLevel={currentLevel}
+              onSelectLevel={handleSelectLevel}
+              progress={progress}
+              studyTheme={currentTheme}
+              onToggleCollapse={() => setIsSidebarCollapsed(true)}
+            />
+          </div>
+        )}
 
-        {/* Mobile Navigation Drawer */}
+        {/* Desktop Expand Button (when sidebar is collapsed) */}
+        {isSidebarCollapsed && (
+          <button
+            type="button"
+            id="btn-desktop-expand-sidebar"
+            onClick={() => setIsSidebarCollapsed(false)}
+            className="hidden lg:flex fixed left-3 top-18 z-30 items-center gap-1.5 px-3 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shadow-md transition-all cursor-pointer"
+            title="Expand curriculum lessons menu"
+            aria-label="Expand curriculum lessons menu"
+          >
+            <PanelLeftOpen size={16} />
+            <span>Lessons</span>
+          </button>
+        )}
+
+        {/* Mobile & Tablet Navigation Drawer (< 1024px) */}
         {isSidebarOpen && (
           <div 
-            className="fixed inset-0 z-50 md:hidden bg-black/50 backdrop-blur-xs flex"
+            className="fixed inset-0 z-50 lg:hidden bg-black/50 backdrop-blur-xs flex animate-in fade-in duration-200"
             onClick={() => setIsSidebarOpen(false)}
           >
             <div 
-              className={`w-4/5 max-w-xs h-full ${
+              className={`w-[85vw] max-w-xs sm:max-w-sm h-full ${
                 currentTheme === 'pastel-night' || currentTheme === 'dark-study'
                   ? 'bg-[#202630]'
                   : currentTheme === 'pastel-sage' || currentTheme === 'calm-sage'
@@ -279,6 +391,21 @@ export default function App() {
               />
             </div>
           </div>
+        )}
+
+        {/* Mobile & Tablet Quick Access Lessons Floating Button */}
+        {!isSidebarOpen && (
+          <button
+            type="button"
+            id="btn-mobile-quick-lessons"
+            onClick={() => setIsSidebarOpen(true)}
+            className="lg:hidden fixed bottom-5 left-4 z-30 flex items-center gap-1.5 px-3.5 py-2.5 rounded-full bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shadow-lg transition-all cursor-pointer active:scale-95"
+            title="Open curriculum lessons menu"
+            aria-label="Open lessons menu"
+          >
+            <BookOpen size={16} />
+            <span>Lessons</span>
+          </button>
         )}
 
         {/* Lesson View Area: Smooth, natural window scrolling */}
