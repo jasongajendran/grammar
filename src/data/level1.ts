@@ -157,6 +157,7 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
         words: ['The', 'famous', 'University', 'professor', 'gave', 'a', 'lecture', 'on', 'modern', 'Philosophy.'],
         errorWordIndex: 2,
         correctedWord: 'university',
+        ruleViolated: 'Grammar Rule',
         explanation: 'When used generally, "university" is a common noun. It is only capitalised when referring to a specific institution (e.g., Oxford University).'
       },
       {
@@ -174,6 +175,17 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
         correctIndex: 1,
         explanation: '"Courage" is an uncountable abstract noun correctly used in the singular. "Knowledge", "information", and "sadness" are uncountable and do not normally take an "s".'
       }
+    ,
+      {
+        id: 'gen2-noun-1',
+        type: 'multiple-choice',
+        difficultyStep: 3,
+        prompt: 'Which word in the following sentence is a PROPER noun?',
+        instruction: 'Select the proper noun.',
+        options: ['museum', 'London', 'dinosaur', 'exhibition'],
+        correctIndex: 1,
+        explanation: '"London" is a specific place and must be capitalised, making it a proper noun.'
+    }
     ]
   },
   {
@@ -334,6 +346,19 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
         correctIndex: 2,
         explanation: '"understands" is a stative verb representing a mental state. "tasting", "thinking" (as an active process), and "having" (experiencing) are used as action verbs here.'
       }
+    ,
+      {
+        id: 'gen2-verb-1',
+        type: 'word-clicker',
+        difficultyStep: 3,
+        prompt: 'Tap on the action verb in this sentence.',
+        instruction: 'Find the doing word.',
+        sentence: 'The fierce wind rattled the old wooden windows.',
+        words: ['The', 'fierce', 'wind', 'rattled', 'the', 'old', 'wooden', 'windows.'],
+        targetIndices: [3],
+        targetCategoryLabel: 'Action Verb',
+        explanation: '"rattled" describes the action that the wind performed.'
+    }
     ]
   },
   {
@@ -439,6 +464,20 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
         correctIndex: 1,
         explanation: 'The standard order of adjectives in English is: Opinion (beautiful), Colour (red), Origin (Italian), Purpose (sports).'
       }
+    ,
+      {
+        id: 'gen2-adj-1',
+        type: 'error-detective',
+        difficultyStep: 3,
+        prompt: 'Find the adjective that is in the wrong position.',
+        instruction: 'Click the incorrectly placed describing word.',
+        sentenceWithMistake: 'She drove a car blue down the winding country lane.',
+        words: ['She', 'drove', 'a', 'car', 'blue', 'down', 'the', 'winding', 'country', 'lane.'],
+        errorWordIndex: 4,
+        correctedWord: 'blue car',
+        ruleViolated: 'Grammar Rule',
+        explanation: 'In English, adjectives typically come BEFORE the noun they describe (a blue car).'
+    }
     ]
   },
   {
@@ -544,8 +583,20 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
         words: ['My', 'friend', 'sarah', 'is', 'moving', 'to', 'London', 'next', 'month.'],
         errorWordIndex: 2,
         correctedWord: 'Sarah',
+        ruleViolated: 'Grammar Rule',
         explanation: 'Proper nouns, such as names of people (Sarah), must always start with a capital letter.'
       }
+    ,
+      {
+        id: 'gen2-cap-1',
+        type: 'sentence-builder',
+        difficultyStep: 2,
+        prompt: 'Build a properly punctuated sentence.',
+        instruction: 'Arrange the words. Pay attention to capitals and full stops.',
+        scrambledWords: ['We', 'went', 'to', 'the', 'park', 'on', 'Sunday.'],
+        correctSentence: 'We went to the park on Sunday.',
+        explanation: 'The sentence must start with a capital (We), use a capital for the day of the week (Sunday), and end with a full stop.'
+    }
     ]
   },
   {
@@ -648,6 +699,17 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
         correctSentence: 'The quick brown fox jumps over the lazy dog.',
         explanation: 'This famous pangram forms a simple sentence: "The quick brown fox" is the subject, and "jumps over the lazy dog" is the predicate.'
       }
+    ,
+      {
+        id: 'gen2-sim-1',
+        type: 'multiple-choice',
+        difficultyStep: 2,
+        prompt: 'Identify the SUBJECT of this sentence: "Under the bed slept a tiny kitten."',
+        instruction: 'Who or what is performing the action?',
+        options: ['Under the bed', 'slept', 'a tiny', 'a tiny kitten'],
+        correctIndex: 3,
+        explanation: 'Even though it comes at the end, "a tiny kitten" is the subject because the kitten is the one doing the sleeping.'
+    }
     ]
   }
 ];

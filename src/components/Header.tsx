@@ -118,7 +118,7 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <header className={`sticky top-0 z-40 transition-colors duration-200 border-b ${getHeaderBg()} shadow-xs`}>
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-14 gap-2 sm:gap-4">
+        <div className="flex flex-wrap items-center justify-between min-h-[3.5rem] py-2 gap-y-2 gap-x-2 sm:gap-4">
           
           {/* Left: Mobile/Tablet/Desktop Nav Toggle & Brand Logo */}
           <div className="flex items-center gap-2 sm:gap-3">
@@ -195,10 +195,10 @@ export const Header: React.FC<HeaderProps> = ({
           </nav>
 
           {/* Right Action Icons: Font Size Scaler, Pastel Atmosphere Switcher, Speech Rate, Streak, Points */}
-          <div className="flex items-center gap-1.5 sm:gap-2">
+          <div className="flex flex-wrap items-center justify-end gap-1.5 sm:gap-2 relative sm:static">
             
             {/* Font Size Scaler (Aa) */}
-            <div className="relative">
+            <div className="static sm:relative">
               <button
                 type="button"
                 id="btn-font-size-toggle"
@@ -248,7 +248,7 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
 
             {/* Pastel Eye-Comfort Theme Switcher */}
-            <div className="relative">
+            <div className="static sm:relative">
               <button
                 type="button"
                 id="btn-study-theme-toggle"
@@ -305,7 +305,7 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
 
             {/* Audio Voice Speed Toggle */}
-            <div className="relative">
+            <div className="static sm:relative">
               <button
                 type="button"
                 id="btn-speed-toggle"

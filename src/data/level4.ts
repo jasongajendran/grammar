@@ -108,6 +108,17 @@ export const LEVEL_4_TOPICS: GrammarTopic[] = [
         correctIndex: 2,
         explanation: 'In the passive voice, the subject of the sentence (the new bridge) receives the action, and the agent (by a famous architect) is introduced with "by".'
       }
+    ,
+      {
+        id: 'gen2-act-1',
+        type: 'sentence-builder',
+        difficultyStep: 4,
+        prompt: 'Build this sentence in the PASSIVE voice.',
+        instruction: 'Arrange the words so the action happens TO the subject.',
+        scrambledWords: ['The', 'window', 'was', 'broken', 'by', 'the', 'storm.'],
+        correctSentence: 'The window was broken by the storm.',
+        explanation: 'In the passive voice, the receiver (window) is the subject, the verb uses "to be" + past participle (was broken), and the agent is introduced by "by".'
+    }
     ]
   },
   {
@@ -239,6 +250,20 @@ export const LEVEL_4_TOPICS: GrammarTopic[] = [
         correctIndex: 0,
         explanation: 'A semicolon is used to link two independent but closely related clauses without a coordinating conjunction (like and, but, so).'
       }
+    ,
+      {
+        id: 'gen2-semi-1',
+        type: 'error-detective',
+        difficultyStep: 4,
+        prompt: 'Find the "comma splice" error that should be a semicolon.',
+        instruction: 'Click the comma that incorrectly joins two independent clauses.',
+        sentenceWithMistake: 'The wind howled outside, the fireplace kept the room warm.',
+        words: ['The', 'wind', 'howled', 'outside,', 'the', 'fireplace', 'kept', 'the', 'room', 'warm.'],
+        errorWordIndex: 3,
+        correctedWord: 'outside;',
+        ruleViolated: 'Grammar Rule',
+        explanation: 'A comma splice occurs when two independent sentences are joined by just a comma. You need a semicolon (or a conjunction like "but") here.'
+    }
     ]
   },
   {
@@ -347,6 +372,19 @@ export const LEVEL_4_TOPICS: GrammarTopic[] = [
         correctIndex: 1,
         explanation: 'The subjunctive mood requires the base form of the verb ("rest") after verbs like "recommend", "suggest", or "insist" in a "that" clause.'
       }
+    ,
+      {
+        id: 'gen2-subj-1',
+        type: 'word-clicker',
+        difficultyStep: 4,
+        prompt: 'Tap the verb in the subjunctive mood.',
+        instruction: 'Identify the base form of the verb used after a formal demand or suggestion.',
+        sentence: 'It is essential that she arrive on time for the meeting.',
+        words: ['It', 'is', 'essential', 'that', 'she', 'arrive', 'on', 'time', 'for', 'the', 'meeting.'],
+        targetIndices: [5],
+        targetCategoryLabel: 'Subjunctive Verb',
+        explanation: '"arrive" (instead of "arrives") is in the subjunctive mood following "It is essential that...".'
+    }
     ]
   },
   {
@@ -434,8 +472,25 @@ export const LEVEL_4_TOPICS: GrammarTopic[] = [
         words: ['A', 'bouquet', 'of', 'yellow', 'roses', 'lend', 'colour', 'and', 'fragrance', 'to', 'the', 'room.'],
         errorWordIndex: 5,
         correctedWord: 'lends',
+        ruleViolated: 'Grammar Rule',
         explanation: 'The subject is "bouquet" (singular), not "roses" (which is part of the prepositional phrase). Therefore, the verb should be "lends".'
       }
+    ,
+      {
+        id: 'gen2-sva-1',
+        type: 'multiple-choice',
+        difficultyStep: 4,
+        prompt: 'Choose the correct verb for this collective noun (acting as a single unit):',
+        instruction: 'Select the verb that agrees with the subject.',
+        options: [
+          'The jury have finally reached a verdict.',
+          'The jury has finally reached a verdict.',
+          'The jury are finally reached a verdict.',
+          'The jury is finally reach a verdict.'
+        ],
+        correctIndex: 1,
+        explanation: 'When a collective noun (jury) acts as a single unified body, it takes a singular verb (has).'
+    }
     ]
   }
 ];

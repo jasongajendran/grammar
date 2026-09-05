@@ -100,6 +100,19 @@ export const LEVEL_3_TOPICS: GrammarTopic[] = [
         correctIndex: 1,
         explanation: 'We use "an" before a word that starts with a vowel SOUND. "Honest" starts with a silent "h", so it begins with an "o" sound.'
       }
+    ,
+      {
+        id: 'gen2-det-1',
+        type: 'word-clicker',
+        difficultyStep: 3,
+        prompt: 'Tap on the demonstrative determiner.',
+        instruction: 'Click the word that specifies WHICH noun is being referred to.',
+        sentence: 'I prefer those apples over the ones in this basket.',
+        words: ['I', 'prefer', 'those', 'apples', 'over', 'the', 'ones', 'in', 'this', 'basket.'],
+        targetIndices: [2, 8],
+        targetCategoryLabel: 'Demonstrative Determiner',
+        explanation: '"those" and "this" are demonstratives pointing to specific apples and a specific basket.'
+    }
     ]
   },
   {
@@ -203,6 +216,20 @@ export const LEVEL_3_TOPICS: GrammarTopic[] = [
         correctSentence: 'Without warning, the thunder clapped loudly.',
         explanation: '"Without warning," is a fronted adverbial describing how/when the action happened, and must be followed by a comma.'
       }
+    ,
+      {
+        id: 'gen2-front-1',
+        type: 'error-detective',
+        difficultyStep: 3,
+        prompt: 'Identify the punctuation missing after the fronted adverbial.',
+        instruction: 'Click the word that should have a comma after it.',
+        sentenceWithMistake: 'Suddenly the lights went out in the entire building.',
+        words: ['Suddenly', 'the', 'lights', 'went', 'out', 'in', 'the', 'entire', 'building.'],
+        errorWordIndex: 0,
+        correctedWord: 'Suddenly,',
+        ruleViolated: 'Grammar Rule',
+        explanation: 'A comma is needed after a fronted adverbial to separate it from the main clause.'
+    }
     ]
   },
   {
@@ -311,6 +338,19 @@ export const LEVEL_3_TOPICS: GrammarTopic[] = [
         targetCategoryLabel: 'Subordinating Conjunction',
         explanation: '"Although" introduces the dependent clause, establishing a relationship of contrast with the main clause.'
       }
+    ,
+      {
+        id: 'gen2-sub-1',
+        type: 'clause-matcher',
+        difficultyStep: 4,
+        prompt: 'Identify the main clause and the subordinate clause in this sentence.',
+        instruction: 'Read the sentence and understand which part relies on the other.',
+        sentence: 'Unless you finish your vegetables, you cannot have any pudding.',
+        mainClause: 'you cannot have any pudding',
+        subordinateClause: 'Unless you finish your vegetables',
+        conjunctionOrConnective: 'Conjunction',
+        explanation: 'The main clause makes sense on its own. The subordinate clause starts with "Unless" and is dependent.'
+    }
     ]
   },
   {
@@ -412,6 +452,17 @@ export const LEVEL_3_TOPICS: GrammarTopic[] = [
         correctIndex: 2,
         explanation: '"whose" is the possessive relative pronoun, indicating that the research belongs to the scientist.'
       }
+    ,
+      {
+        id: 'gen2-rel-1',
+        type: 'multiple-choice',
+        difficultyStep: 3,
+        prompt: 'Which relative pronoun correctly completes: "The book ___ you lent me was fascinating."?',
+        instruction: 'Select the correct pronoun for a thing.',
+        options: ['who', 'whom', 'which', 'where'],
+        correctIndex: 2,
+        explanation: '"which" (or "that") is used for objects/things like "the book".'
+    }
     ]
   },
   {
@@ -518,6 +569,20 @@ export const LEVEL_3_TOPICS: GrammarTopic[] = [
         correctIndex: 2,
         explanation: '"must" expresses a strong obligation or necessity. The others express possibility or hypothetical situations.'
       }
+    ,
+      {
+        id: 'gen2-mod-1',
+        type: 'error-detective',
+        difficultyStep: 3,
+        prompt: 'Find the incorrectly used modal verb of obligation.',
+        instruction: 'Click the modal verb that should be changed to make logical sense.',
+        sentenceWithMistake: 'You mustn\\\'t look both ways before crossing the street.',
+        words: ['You', 'mustn\\\'t', 'look', 'both', 'ways', 'before', 'crossing', 'the', 'street.'],
+        errorWordIndex: 1,
+        correctedWord: 'must',
+        ruleViolated: 'Grammar Rule',
+        explanation: '"mustn\\\'t" means you are forbidden to do it. You "must" (obligation) look both ways.'
+    }
     ]
   },
   {
@@ -624,8 +689,25 @@ export const LEVEL_3_TOPICS: GrammarTopic[] = [
         words: ['"I', 'cannot', 'believe', 'it"', 'she', 'exclaimed', 'loudly.'],
         errorWordIndex: 3,
         correctedWord: 'it,"',
+        ruleViolated: 'Grammar Rule',
         explanation: 'There should be a comma inside the closing inverted comma to separate the spoken words from the reporting clause (unless it is a question mark or exclamation mark).'
       }
+    ,
+      {
+        id: 'gen2-ds-1',
+        type: 'multiple-choice',
+        difficultyStep: 4,
+        prompt: 'Which sentence uses inverted commas (speech marks) correctly?',
+        instruction: 'Select the correctly punctuated dialogue.',
+        options: [
+          '"I am going to the shops" said Mary.',
+          'I am going to the shops, "said Mary."',
+          '"I am going to the shops," said Mary.',
+          '"I am going to the shops, said Mary."'
+        ],
+        correctIndex: 2,
+        explanation: 'The spoken words are inside the inverted commas, and there is a comma before the closing speech marks separating it from the reporting clause.'
+    }
     ]
   }
 ];

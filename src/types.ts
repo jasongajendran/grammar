@@ -43,7 +43,7 @@ export type ExerciseType =
 export interface BaseExercise {
   id: string;
   type: ExerciseType;
-  difficultyStep: 1 | 2 | 3 | 4;
+  difficultyStep: 1 | 2 | 3 | 4 | 5;
   prompt: string;
   instruction: string;
   hint?: string;

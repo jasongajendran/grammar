@@ -103,6 +103,17 @@ export const LEVEL_5_TOPICS: GrammarTopic[] = [
         correctIndex: 0,
         explanation: '"The quick discovery of the cure" turns the verb "discovered" into the noun "discovery", which is a hallmark of academic writing.'
       }
+    ,
+      {
+        id: 'gen2-nom-1',
+        type: 'sentence-builder',
+        difficultyStep: 4,
+        prompt: 'Build the sentence using nominalisation for an academic tone.',
+        instruction: 'Arrange the words to form a noun-heavy, formal sentence.',
+        scrambledWords: ['The', 'implementation', 'of', 'the', 'policy', 'caused', 'widespread', 'debate.'],
+        correctSentence: 'The implementation of the policy caused widespread debate.',
+        explanation: '"The implementation of the policy" changes the verb "implement" into a noun phrase, elevating the register.'
+    }
     ]
   },
   {
@@ -201,6 +212,20 @@ export const LEVEL_5_TOPICS: GrammarTopic[] = [
         correctIndex: 2,
         explanation: 'In option 3, the modifying phrase "Exhausted from the marathon" correctly modifies "she". The other options have modifiers that do not logically apply to the subjects that follow them.'
       }
+    ,
+      {
+        id: 'gen2-part-1',
+        type: 'error-detective',
+        difficultyStep: 5,
+        prompt: 'Identify the dangling modifier issue.',
+        instruction: 'Click the word that incorrectly receives the action of the modifier.',
+        sentenceWithMistake: 'Looking out the window, the mountains were covered in snow.',
+        words: ['Looking', 'out', 'the', 'window,', 'the', 'mountains', 'were', 'covered', 'in', 'snow.'],
+        errorWordIndex: 5,
+        correctedWord: 'we saw the mountains',
+        ruleViolated: 'Grammar Rule',
+        explanation: 'The mountains were not "looking out the window". The sentence needs a human subject immediately after the comma (e.g., "...window, we saw the mountains...").'
+    }
     ]
   },
   {
@@ -300,6 +325,19 @@ export const LEVEL_5_TOPICS: GrammarTopic[] = [
         correctIndex: 2,
         explanation: 'The third conditional requires "if + past perfect (had studied)" and "would have + past participle (would have passed)" to describe a hypothetical situation in the past.'
       }
+    ,
+      {
+        id: 'gen2-cond-1',
+        type: 'clause-matcher',
+        difficultyStep: 5,
+        prompt: 'Identify the condition (if-clause) and the result (main clause) in this mixed conditional.',
+        instruction: 'Match the clauses.',
+        sentence: 'If I had invested in that company, I would be rich now.',
+        mainClause: 'I would be rich now',
+        subordinateClause: 'If I had invested in that company',
+        conjunctionOrConnective: 'Conjunction',
+        explanation: 'This mixed conditional uses an unreal past condition (had invested) and an unreal present result (would be rich).'
+    }
     ]
   },
   {
@@ -393,8 +431,25 @@ export const LEVEL_5_TOPICS: GrammarTopic[] = [
         words: ['She', 'likes', 'hiking,', 'swimming,', 'and', 'to', 'ride', 'her', 'bicycle.'],
         errorWordIndex: 5,
         correctedWord: 'riding',
+        ruleViolated: 'Grammar Rule',
         explanation: 'To maintain parallel structure, the items in the list should all be in the same form (gerunds: hiking, swimming, riding).'
       }
+    ,
+      {
+        id: 'gen2-para-1',
+        type: 'multiple-choice',
+        difficultyStep: 5,
+        prompt: 'Which sentence demonstrates flawless parallel structure?',
+        instruction: 'Choose the sentence where all list items share the same grammatical form.',
+        options: [
+          'The manager asked the team to prepare the report, to review the data, and presenting the findings.',
+          'The manager asked the team to prepare the report, review the data, and present the findings.',
+          'The manager asked the team preparing the report, to review the data, and present the findings.',
+          'The manager asked the team to prepare the report, reviewed the data, and present the findings.'
+        ],
+        correctIndex: 1,
+        explanation: 'All three verbs are in the base form (infinitive without "to" repeated): prepare, review, present. This creates a perfect parallel structure.'
+    }
     ]
   }
 ];

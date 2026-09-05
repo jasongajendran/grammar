@@ -132,6 +132,20 @@ export const LEVEL_2_TOPICS: GrammarTopic[] = [
         correctIndex: 1,
         explanation: '"me" is the correct object pronoun here because it receives the action of the verb "asked" (along with John).'
       }
+    ,
+      {
+        id: 'gen2-pro-1',
+        type: 'error-detective',
+        difficultyStep: 3,
+        prompt: 'Find the incorrect pronoun in this sentence.',
+        instruction: 'Click the pronoun that is grammatically wrong.',
+        sentenceWithMistake: 'Her and David went to the cinema yesterday.',
+        words: ['Her', 'and', 'David', 'went', 'to', 'the', 'cinema', 'yesterday.'],
+        errorWordIndex: 0,
+        correctedWord: 'She',
+        ruleViolated: 'Grammar Rule',
+        explanation: '"She" is the correct subject pronoun to use here, as she is the one performing the action (went).'
+    }
     ]
   },
   {
@@ -234,6 +248,22 @@ export const LEVEL_2_TOPICS: GrammarTopic[] = [
         targetCategoryLabel: 'Adverb of Manner',
         explanation: '"beautifully" tells us how the choir sang, making it an adverb of manner.'
       }
+    ,
+      {
+        id: 'gen2-adv-1',
+        type: 'multiple-choice',
+        difficultyStep: 3,
+        prompt: 'Which sentence contains an adverb of TIME?',
+        instruction: 'Select the sentence with a time adverb.',
+        options: [
+          'He spoke softly to the baby.',
+          'They will arrive tomorrow.',
+          'She looked everywhere for her keys.',
+          'The car stopped abruptly.'
+        ],
+        correctIndex: 1,
+        explanation: '"tomorrow" is an adverb of time, telling us WHEN they will arrive.'
+    }
     ]
   },
   {
@@ -333,6 +363,19 @@ export const LEVEL_2_TOPICS: GrammarTopic[] = [
         correctIndex: 0,
         explanation: 'We use "at" for specific times (at 8:00 PM) and "on" for days of the week (on Saturday).'
       }
+    ,
+      {
+        id: 'gen2-prep-1',
+        type: 'word-clicker',
+        difficultyStep: 3,
+        prompt: 'Tap on the preposition of direction.',
+        instruction: 'Identify the word showing movement or direction.',
+        sentence: 'The frightened cat dashed towards the open door.',
+        words: ['The', 'frightened', 'cat', 'dashed', 'towards', 'the', 'open', 'door.'],
+        targetIndices: [4],
+        targetCategoryLabel: 'Preposition',
+        explanation: '"towards" is a preposition showing the direction the cat moved.'
+    }
     ]
   },
   {
@@ -434,8 +477,20 @@ export const LEVEL_2_TOPICS: GrammarTopic[] = [
         words: ['I', 'wanted', 'to', 'go', 'to', 'the', 'park,', 'so', 'it', 'was', 'raining', 'heavily.'],
         errorWordIndex: 7,
         correctedWord: 'but',
+        ruleViolated: 'Grammar Rule',
         explanation: '"but" should be used here to show contrast. "so" implies a result, which doesn\'t make sense in this context.'
       }
+    ,
+      {
+        id: 'gen2-fan-1',
+        type: 'sentence-builder',
+        difficultyStep: 3,
+        prompt: 'Build a compound sentence using a FANBOYS conjunction.',
+        instruction: 'Arrange the scrambled words.',
+        scrambledWords: ['I', 'was', 'tired,', 'yet', 'I', 'finished', 'my', 'homework.'],
+        correctSentence: 'I was tired, yet I finished my homework.',
+        explanation: '"yet" is a coordinating conjunction showing contrast between being tired and finishing the work.'
+    }
     ]
   },
   {
@@ -544,6 +599,22 @@ export const LEVEL_2_TOPICS: GrammarTopic[] = [
         correctIndex: 1,
         explanation: 'A compound sentence needs a comma before the coordinating conjunction (and) that joins the two independent clauses.'
       }
+    ,
+      {
+        id: 'gen2-comp-1',
+        type: 'multiple-choice',
+        difficultyStep: 3,
+        prompt: 'Which of the following is NOT a compound sentence?',
+        instruction: 'Identify the sentence that is simple or complex, but not compound.',
+        options: [
+          'I like tea, but my sister prefers coffee.',
+          'We can go to the beach, or we can stay home.',
+          'Because it was raining, we stayed indoors.',
+          'He studied hard, so he passed the test.'
+        ],
+        correctIndex: 2,
+        explanation: '"Because it was raining, we stayed indoors" is a complex sentence, using a subordinating conjunction (Because).'
+    }
     ]
   },
   {
@@ -681,8 +752,20 @@ export const LEVEL_2_TOPICS: GrammarTopic[] = [
         words: ['The', 'cat', 'chased', 'it\'s', 'tail', 'around', 'the', 'garden.'],
         errorWordIndex: 3,
         correctedWord: 'its',
+        ruleViolated: 'Grammar Rule',
         explanation: '"its" (without an apostrophe) is the possessive form. "it\'s" is a contraction for "it is" or "it has".'
       }
+    ,
+      {
+        id: 'gen2-apo-1',
+        type: 'multiple-choice',
+        difficultyStep: 4,
+        prompt: 'Choose the correct plural possessive form: "The ___ coats were left in the hallway."',
+        instruction: 'Select the form that means "the coats belonging to the children".',
+        options: ['childrens', 'childrens\\\'', 'children\\\'s', 'childrens\\\'s'],
+        correctIndex: 2,
+        explanation: '"Children" is already an irregular plural, so we just add \\\'s to show possession.'
+    }
     ]
   }
 ];
