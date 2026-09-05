@@ -15,6 +15,7 @@ import { BadgesModal } from './components/BadgesModal';
 import { ProgressModal } from './components/ProgressModal';
 import { ScrollToTop } from './components/ScrollToTop';
 import { BadgeUnlockToast } from './components/BadgeUnlockToast';
+import { ExplorerSelectorModal } from './components/ExplorerSelectorModal';
 
 export default function App() {
   const [progress, setProgress] = useState<UserProgress>(() => loadUserProgress());
@@ -24,7 +25,7 @@ export default function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isBadgesModalOpen, setIsBadgesModalOpen] = useState(false);
   const [isProgressModalOpen, setIsProgressModalOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [isExplorerModalOpen, setIsExplorerModalOpen] = useState(false);
   const [newlyAwardedBadgeId, setNewlyAwardedBadgeId] = useState<string | null>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
@@ -254,6 +255,13 @@ export default function App() {
     saveUserProgress(updated);
   };
 
+  // Select Explorer Companion Guide
+  const handleSelectExplorer = (explorerId: string) => {
+    const updated = { ...progress, selectedExplorerId: explorerId };
+    setProgress(updated);
+    saveUserProgress(updated);
+  };
+
   // Reset Progress
   const handleResetProgress = () => {
     const resetState: UserProgress = {
@@ -270,6 +278,7 @@ export default function App() {
       soundEffectsEnabled: true,
       streakCount: 1,
       lastActiveDate: new Date().toISOString().split('T')[0],
+      selectedExplorerId: 'barnaby-cartographer',
     };
     setProgress(resetState);
     saveUserProgress(resetState);
@@ -314,9 +323,6 @@ export default function App() {
         onToggleSidebar={handleToggleSidebar}
         isSidebarOpen={isSidebarOpen}
         isSidebarCollapsed={isSidebarCollapsed}
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-        onSelectTopic={handleSelectTopic}
         speechRate={progress.speechRate}
         onChangeSpeechRate={handleChangeSpeechRate}
         studyTheme={currentTheme}
@@ -325,6 +331,8 @@ export default function App() {
         onChangeFontSize={handleChangeFontSize}
         isFullscreen={isFullscreen}
         onToggleFullscreen={handleToggleFullscreen}
+        selectedExplorerId={progress.selectedExplorerId}
+        onOpenExplorerModal={() => setIsExplorerModalOpen(true)}
       />
 
       {/* 2. Main Content Layout: Native Window Scroll for zero mobile wobble */}
@@ -347,17 +355,19 @@ export default function App() {
 
         {/* Desktop Expand Button (when sidebar is collapsed) */}
         {isSidebarCollapsed && (
-          <button
-            type="button"
-            id="btn-desktop-expand-sidebar"
-            onClick={() => setIsSidebarCollapsed(false)}
-            className="hidden lg:flex fixed left-3 top-18 z-30 items-center gap-1.5 px-3 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shadow-md transition-all cursor-pointer"
-            title="Expand curriculum lessons menu"
-            aria-label="Expand curriculum lessons menu"
-          >
-            <PanelLeftOpen size={16} />
-            <span>Lessons</span>
-          </button>
+          <div className="hidden lg:block sticky top-16 z-30 ml-2 mt-2 -mr-10">
+            <button
+              type="button"
+              id="btn-desktop-expand-sidebar"
+              onClick={() => setIsSidebarCollapsed(false)}
+              className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shadow-md transition-all cursor-pointer"
+              title="Expand curriculum lessons menu"
+              aria-label="Expand curriculum lessons menu"
+            >
+              <PanelLeftOpen size={16} />
+              <span>Lessons</span>
+            </button>
+          </div>
         )}
 
         {/* Mobile & Tablet Navigation Drawer (< 1024px) */}
@@ -409,7 +419,7 @@ export default function App() {
         )}
 
         {/* Lesson View Area: Smooth, natural window scrolling */}
-        <main className="flex-1 min-w-0 w-full max-w-full pb-20">
+        <main className="flex-1 min-w-0 w-full max-w-full pb-32 sm:pb-24">
           <TopicView
             topic={activeTopic}
             progress={progress}
@@ -418,6 +428,8 @@ export default function App() {
             onToggleBookmark={handleToggleBookmark}
             speechRate={progress.speechRate}
             studyTheme={currentTheme}
+            selectedExplorerId={progress.selectedExplorerId}
+            onOpenExplorerModal={() => setIsExplorerModalOpen(true)}
           />
         </main>
       </div>
@@ -450,6 +462,16 @@ export default function App() {
           setNewlyAwardedBadgeId(null);
           setIsBadgesModalOpen(true);
         }}
+        studyTheme={currentTheme}
+      />
+
+      {/* 7. Explorer Guide Selector Modal */}
+      <ExplorerSelectorModal
+        isOpen={isExplorerModalOpen}
+        onClose={() => setIsExplorerModalOpen(false)}
+        selectedExplorerId={progress.selectedExplorerId}
+        onSelectExplorer={handleSelectExplorer}
+        speechRate={progress.speechRate}
         studyTheme={currentTheme}
       />
 

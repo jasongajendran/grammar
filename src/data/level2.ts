@@ -14,7 +14,7 @@ export const LEVEL_2_TOPICS: GrammarTopic[] = [
     categoryLabel: 'Parts of Speech',
     iconName: 'UserCheck',
     estimatedMinutes: 6,
-    overview: 'A **pronoun** is a word used in place of a noun or noun phrase to avoid repeating the same names over and over again. Instead of saying *"Hamish picked up Hamish\'s bagpipes because Hamish was late for the ceilidh"*, we write *"Hamish picked up **his** bagpipes because **he** was late for the ceilidh"*!',
+    overview: 'A **pronoun** is a word used in place of a noun or noun phrase to avoid repeating the same names over and over again. Instead of saying *"Oliver picked up Oliver\'s violin because Oliver was late for the orchestra rehearsal"*, we write *"Oliver picked up **his** violin because **he** was late for the orchestra rehearsal"*!',
     whyItMatters: 'Pronouns make sentences sound natural, cohesive, and easy to read.',
     sections: [
       {
@@ -277,7 +277,7 @@ export const LEVEL_2_TOPICS: GrammarTopic[] = [
         id: 'ex-q1-l2-prep',
         type: 'multiple-choice',
         difficultyStep: 1,
-        prompt: 'Which word is a preposition of TIME in: "We will visit the Robert Burns museum after lunch"?',
+        prompt: 'Which word is a preposition of TIME in: "We will visit the natural history museum after lunch"?',
         instruction: 'Pick the time preposition.',
         options: ['visit', 'after', 'museum', 'lunch'],
         correctIndex: 1,
@@ -444,8 +444,8 @@ export const LEVEL_2_TOPICS: GrammarTopic[] = [
         title: 'The Two-Sentence Test',
         trick: 'Cover up the conjunction. If both sides of your sentence can stand by themselves as complete, grammatically sound sentences, you have successfully built a compound sentence!',
         mnemonic: 'Can both halves stand alone? If yes, it is COMPOUND!',
-        commonMistake: 'Creating a **comma splice** by joining two sentences with ONLY a comma and no conjunction (for example: *The bagpipes sounded, the regiment marched*).',
-        correctWay: 'Add a coordinating conjunction: *The bagpipes sounded, **and** the regiment marched.*',
+        commonMistake: 'Creating a **comma splice** by joining two sentences with ONLY a comma and no conjunction (for example: *The trumpets sounded, the orchestra played*).',
+        correctWay: 'Add a coordinating conjunction: *The trumpets sounded, **and** the orchestra played.*',
         explanation: 'A comma alone is not strong enough to join two independent clauses in standard British English.'
       }
     ],
@@ -457,7 +457,7 @@ export const LEVEL_2_TOPICS: GrammarTopic[] = [
         prompt: 'Which of the following is a TRUE compound sentence?',
         instruction: 'Pick the sentence with two independent clauses joined by a coordinating conjunction.',
         options: [
-          'Sailing swiftly across the dark waters of Loch Ness.',
+          'Sailing swiftly across the tranquil waters of the lake.',
           'The Atlantic wind howled through the glen, but the sturdy stone cottage stood firm.',
           'Because the winter weather was freezing in Aberdeen.',
           'Isla and Callum ate warm shortbread by the fireside.'
@@ -556,10 +556,10 @@ export const LEVEL_2_TOPICS: GrammarTopic[] = [
           },
           {
             id: 'ex-l2-ap6',
-            sentence: 'The **Highland cow\'s** thick, shaggy coat protected it from freezing winter rain.',
-            highlightWords: ["Highland cow's"],
-            explanation: 'The shaggy coat belongs to ONE Highland cow (singular possession).',
-            contextNote: 'Farm animal adaptation'
+            sentence: 'The **Exmoor pony\'s** thick, shaggy coat protected it from freezing winter rain.',
+            highlightWords: ["Exmoor pony's"],
+            explanation: 'The shaggy coat belongs to ONE Exmoor pony (singular possession).',
+            contextNote: 'Animal adaptation'
           }
         ],
         ruleSummary: 'Singular noun + \'s = ownership belonging to one individual thing.'

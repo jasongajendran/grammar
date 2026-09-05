@@ -22,6 +22,8 @@ import { LEVEL_METADATA, getNextTopic, getPrevTopic } from '../data/curriculum';
 import { getThematicImageForLevel } from '../utils/assets';
 import { ConceptVisualizer } from './ConceptVisualizer';
 import { MascotCard } from './MascotCard';
+import { VisualExplorerDecoder } from './VisualExplorerDecoder';
+import { getExplorer } from '../utils/assets';
 
 interface TopicViewProps {
   topic: GrammarTopic;
@@ -31,6 +33,8 @@ interface TopicViewProps {
   onToggleBookmark: (topicId: string) => void;
   speechRate: number;
   studyTheme?: StudyTheme;
+  selectedExplorerId?: string;
+  onOpenExplorerModal?: () => void;
 }
 
 export const TopicView: React.FC<TopicViewProps> = ({
@@ -41,10 +45,13 @@ export const TopicView: React.FC<TopicViewProps> = ({
   onToggleBookmark,
   speechRate,
   studyTheme = 'pastel-warm',
+  selectedExplorerId = progress.selectedExplorerId || 'barnaby-cartographer',
+  onOpenExplorerModal,
 }) => {
   const isCompleted = progress.completedTopics.includes(topic.id);
   const isBookmarked = progress.bookmarkedTopics.includes(topic.id);
   const userScore = progress.quizScores[topic.id];
+  const explorer = getExplorer(selectedExplorerId);
 
   const prevTopic = getPrevTopic(topic.id);
   const nextTopic = getNextTopic(topic.id);
@@ -196,9 +203,52 @@ export const TopicView: React.FC<TopicViewProps> = ({
             }} 
           />
         </div>
+
+        {/* Active Explorer Banner in Header */}
+        <div className={`mt-5 p-3.5 sm:p-4 rounded-2xl border flex flex-col sm:flex-row items-center justify-between gap-3 ${
+          isDark ? 'bg-[#181E27] border-[#2C3646]' : 'bg-white/80 border-amber-200 shadow-2xs'
+        }`}>
+          <div className="flex items-center gap-3 w-full sm:w-auto">
+            <div className="w-11 h-11 rounded-2xl overflow-hidden border-2 border-amber-500 shadow-sm shrink-0">
+              <img src={explorer.avatar} alt={explorer.name} referrerPolicy="no-referrer" className="w-full h-full object-cover" />
+            </div>
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-slate-100">{explorer.name}</span>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-800 dark:text-amber-300">
+                  {explorer.badge}
+                </span>
+              </div>
+              <p className="text-[11px] opacity-75 truncate">
+                {explorer.title} • {explorer.favoriteLandmark.split('&')[0]}
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 self-end sm:self-auto shrink-0">
+            {onOpenExplorerModal && (
+              <button
+                type="button"
+                onClick={onOpenExplorerModal}
+                className="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-extrabold text-xs shadow-xs transition-transform active:scale-95 flex items-center gap-1.5 cursor-pointer"
+              >
+                <Compass size={14} />
+                <span>Switch Explorer</span>
+              </button>
+            )}
+          </div>
+        </div>
       </div>
 
-      {/* 2. Interactive Concept Visualizer (Innovative animated lab) */}
+      {/* 2. Visual Explorer Decoder (Intuitive visual representation, syntax anatomy & expedition trail) */}
+      <VisualExplorerDecoder
+        topic={topic}
+        studyTheme={studyTheme}
+        speechRate={speechRate}
+        selectedExplorerId={selectedExplorerId}
+      />
+
+      {/* 3. Interactive Concept Visualizer (Innovative animated lab) */}
       <ConceptVisualizer
         topic={topic}
         studyTheme={studyTheme}
@@ -216,9 +266,14 @@ export const TopicView: React.FC<TopicViewProps> = ({
             <div className={`flex items-center justify-between gap-3 border-b pb-3 ${
               isDark ? 'border-[#343E4E]' : 'border-[#DDD4C5]'
             }`}>
-              <h2 className="text-xl sm:text-2xl font-heading font-bold">
-                {section.title}
-              </h2>
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-500 via-orange-500 to-rose-500 text-white flex items-center justify-center font-black text-sm shadow-xs shrink-0">
+                  {sIndex + 1}
+                </div>
+                <h2 className="text-xl sm:text-2xl font-heading font-bold">
+                  {section.title}
+                </h2>
+              </div>
 
               <AudioButton
                 text={`${section.title}. ${section.content}. ${section.bulletPoints?.join('. ') || ''}`}
@@ -427,25 +482,30 @@ export const TopicView: React.FC<TopicViewProps> = ({
         </div>
       )}
 
-      {/* Mascot Companion Tip */}
+      {/* Explorer Companion Card */}
       <MascotCard 
         topic={topic}
         studyTheme={studyTheme}
         speechRate={speechRate}
+        selectedExplorerId={selectedExplorerId}
+        onOpenExplorerModal={onOpenExplorerModal}
       />
 
       {/* 4. Progressive Interactive Exercises */}
       <div id="quiz-section" className="space-y-3 pt-2">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-amber-600 text-white flex items-center justify-center font-bold">
-            <Target size={18} />
+          <div className="w-9 h-9 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-600 text-white flex items-center justify-center font-bold shadow-sm">
+            <Target size={19} />
           </div>
           <div>
-            <h3 className="text-xl sm:text-2xl font-heading font-bold">
-              Interactive Practice
+            <h3 className="text-xl sm:text-2xl font-heading font-bold flex items-center gap-2">
+              <span>Interactive Practice</span>
+              <span className="text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 font-extrabold uppercase tracking-wider">
+                Progressive Quest
+              </span>
             </h3>
-            <p className="text-xs sm:text-sm opacity-70">
-              Build mastery progressively through {topic.exercises.length} stepped exercises
+            <p className="text-xs sm:text-sm opacity-75">
+              Build mastery progressively through {topic.exercises.length} stepped exercises with instant explorer feedback
             </p>
           </div>
         </div>
@@ -467,8 +527,10 @@ export const TopicView: React.FC<TopicViewProps> = ({
             type="button"
             id="btn-prev-topic"
             onClick={() => onNavigateTopic(prevTopic.id)}
-            className={`flex items-center gap-2 text-sm sm:text-base font-bold transition-colors cursor-pointer py-2 px-3.5 rounded-xl ${
-              isDark ? 'text-slate-300 hover:bg-[#282E39]' : 'text-slate-800 hover:bg-black/10'
+            className={`flex items-center gap-2 text-sm sm:text-base font-bold transition-all cursor-pointer py-2.5 px-4 rounded-2xl border ${
+              isDark 
+                ? 'border-slate-800 text-slate-300 hover:bg-[#282E39]' 
+                : 'border-slate-200 text-slate-800 hover:bg-black/5'
             }`}
           >
             <span>←</span>
@@ -483,10 +545,10 @@ export const TopicView: React.FC<TopicViewProps> = ({
             type="button"
             id="btn-next-topic"
             onClick={() => onNavigateTopic(nextTopic.id)}
-            className="px-8 py-3 bg-amber-600 hover:bg-amber-700 text-white rounded-full font-bold text-sm sm:text-base shadow-md transition-all flex items-center gap-2 cursor-pointer"
+            className="px-6 sm:px-8 py-3.5 bg-gradient-to-r from-amber-600 via-orange-600 to-amber-700 hover:from-amber-700 hover:to-orange-700 text-white rounded-2xl font-extrabold text-sm sm:text-base shadow-md hover:shadow-lg transition-all flex items-center gap-2 cursor-pointer active:scale-95"
           >
             <span>Next: {nextTopic.title}</span>
-            <span>→</span>
+            <ChevronRight size={18} />
           </button>
         )}
       </div>

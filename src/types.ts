@@ -126,6 +126,23 @@ export interface Badge {
   unlockedCriteria: string;
 }
 
+export interface ExplorerCompanion {
+  id: string;
+  name: string;
+  title: string;
+  badge: string;
+  avatar: string;
+  color: string;
+  gradient: string;
+  bgLight: string;
+  bgDark: string;
+  borderLight: string;
+  borderDark: string;
+  favoriteLandmark: string;
+  specialty: string;
+  quotes: string[];
+}
+
 export type StudyTheme = 
   | 'pastel-warm' 
   | 'pastel-sage' 
@@ -150,6 +167,7 @@ export interface UserProgress {
   studyTheme?: StudyTheme; // Eye comfort pastel theme
   fontSize?: FontSizePreference; // Font size scale
   soundEffectsEnabled: boolean;
+  selectedExplorerId?: string; // Active explorer guide
   lastStudiedTopicId?: string;
   streakCount: number;
   lastActiveDate: string; // YYYY-MM-DD

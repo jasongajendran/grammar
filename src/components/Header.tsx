@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
   BookOpen, 
   Award, 
   Flame, 
-  Search, 
   Volume2, 
   Menu, 
   X, 
@@ -12,12 +11,13 @@ import {
   Type,
   Target,
   Maximize,
-  Minimize
+  Minimize,
+  Compass
 } from 'lucide-react';
 import { DifficultyLevel, UserProgress, StudyTheme, FontSizePreference, GrammarTopic } from '../types';
 import { ALL_TOPICS, LEVEL_METADATA } from '../data/curriculum';
 import { AudioButton } from './AudioButton';
-import { APP_IMAGES } from '../utils/assets';
+import { APP_IMAGES, getExplorer } from '../utils/assets';
 
 interface HeaderProps {
   currentLevel: DifficultyLevel;
@@ -29,9 +29,6 @@ interface HeaderProps {
   onToggleSidebar: () => void;
   isSidebarOpen: boolean;
   isSidebarCollapsed?: boolean;
-  searchQuery: string;
-  onSearchChange: (q: string) => void;
-  onSelectTopic: (topicId: string) => void;
   speechRate: number;
   onChangeSpeechRate: (rate: number) => void;
   studyTheme: StudyTheme;
@@ -40,6 +37,8 @@ interface HeaderProps {
   onChangeFontSize?: (size: FontSizePreference) => void;
   isFullscreen?: boolean;
   onToggleFullscreen?: () => void;
+  selectedExplorerId?: string;
+  onOpenExplorerModal?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -52,9 +51,6 @@ export const Header: React.FC<HeaderProps> = ({
   onToggleSidebar,
   isSidebarOpen,
   isSidebarCollapsed = false,
-  searchQuery,
-  onSearchChange,
-  onSelectTopic,
   speechRate,
   onChangeSpeechRate,
   studyTheme,
@@ -63,35 +59,17 @@ export const Header: React.FC<HeaderProps> = ({
   onChangeFontSize,
   isFullscreen = false,
   onToggleFullscreen,
+  selectedExplorerId = progress.selectedExplorerId || 'barnaby-cartographer',
+  onOpenExplorerModal,
 }) => {
-  const [showSearchDropdown, setShowSearchDropdown] = useState(false);
+  const currentExplorer = getExplorer(selectedExplorerId);
   const [showSpeedMenu, setShowSpeedMenu] = useState(false);
   const [showThemeMenu, setShowThemeMenu] = useState(false);
   const [showFontMenu, setShowFontMenu] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 80);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const completedCount = progress.completedTopics.length;
   const totalCount = ALL_TOPICS.length;
   const progressPercent = Math.round((completedCount / totalCount) * 100);
-
-  const searchResults = searchQuery.trim()
-    ? ALL_TOPICS.filter(
-        t =>
-          t.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          t.subtitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          t.categoryLabel.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          t.levelStage.toLowerCase().includes(searchQuery.toLowerCase())
-      ).slice(0, 5)
-    : [];
 
   const levels: DifficultyLevel[] = ['level-1', 'level-2', 'level-3', 'level-4', 'level-5'];
 
@@ -172,7 +150,7 @@ export const Header: React.FC<HeaderProps> = ({
               <div className="w-8 h-8 rounded-xl overflow-hidden border border-amber-600 shadow-xs shrink-0 group-hover:scale-105 transition-transform">
                 <img 
                   src={APP_IMAGES.mascot} 
-                  alt="Hamish Grammar Mascot" 
+                  alt="British Grammar Mascot" 
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover"
                 />
@@ -221,73 +199,6 @@ export const Header: React.FC<HeaderProps> = ({
               );
             })}
           </nav>
-
-          {/* Search Box */}
-          <div className="relative flex-1 max-w-[180px] lg:max-w-[210px] xl:max-w-xs hidden md:block min-w-0">
-            <div className="relative">
-              <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 opacity-60" />
-              <input
-                type="text"
-                id="search-input"
-                value={searchQuery}
-                onChange={e => {
-                  onSearchChange(e.target.value);
-                  setShowSearchDropdown(true);
-                }}
-                onFocus={() => setShowSearchDropdown(true)}
-                placeholder="Search topics..."
-                className={`w-full pl-8.5 pr-3 py-1.5 rounded-xl text-xs placeholder:opacity-50 focus:outline-none focus:ring-2 focus:ring-amber-500/40 transition-colors border truncate ${
-                  isDark
-                    ? 'bg-[#252B35] border-[#384254] text-white focus:bg-[#2C3340]'
-                    : 'bg-[#F4EEE4] border-[#D5CABB] text-[#252830] focus:bg-[#FAF6F0]'
-                }`}
-              />
-              {searchQuery && (
-                <button
-                  type="button"
-                  onClick={() => onSearchChange('')}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 opacity-60 hover:opacity-100 text-xs p-1"
-                >
-                  ✕
-                </button>
-              )}
-            </div>
-
-            {/* Quick Search Dropdown */}
-            {showSearchDropdown && searchResults.length > 0 && (
-              <div 
-                className={`absolute left-0 right-0 top-full mt-1.5 rounded-2xl shadow-xl border p-1.5 z-50 overflow-hidden ${getDropdownBg()}`}
-                onMouseLeave={() => setShowSearchDropdown(false)}
-              >
-                {searchResults.map(topic => (
-                  <button
-                    key={topic.id}
-                    type="button"
-                    onClick={() => {
-                      onSelectTopic(topic.id);
-                      setShowSearchDropdown(false);
-                      onSearchChange('');
-                    }}
-                    className={`w-full text-left px-3 py-2.5 rounded-xl text-xs flex items-start justify-between gap-2 group transition-colors cursor-pointer ${
-                      isDark ? 'hover:bg-white/10' : 'hover:bg-amber-600/15'
-                    }`}
-                  >
-                    <div className="flex-1 min-w-0">
-                      <div className="font-semibold text-xs leading-snug break-words group-hover:text-amber-600 text-slate-900 dark:text-slate-100">
-                        {topic.title}
-                      </div>
-                      <div className="text-[10px] opacity-70 leading-normal break-words mt-0.5 font-medium">
-                        {topic.levelStage} • {topic.categoryLabel}
-                      </div>
-                    </div>
-                    <span className="text-[10px] bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-950 px-2 py-0.5 rounded-full font-extrabold shrink-0 mt-0.5">
-                      {topic.levelLabel.split(':')[0]}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
 
           {/* Right Action Icons: Font Size Scaler, Pastel Atmosphere Switcher, Speech Rate, Streak, Points */}
           <div className="flex items-center gap-1.5 sm:gap-2">
@@ -502,6 +413,28 @@ export const Header: React.FC<HeaderProps> = ({
               </span>
             </button>
 
+            {/* Active Explorer Guide Button */}
+            {onOpenExplorerModal && (
+              <button
+                type="button"
+                id="btn-open-explorer-header"
+                onClick={onOpenExplorerModal}
+                title={`Active Explorer Guide: ${currentExplorer.name} (${currentExplorer.title}) - Tap to switch!`}
+                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full border border-amber-500/40 bg-gradient-to-r from-amber-500/20 via-orange-500/20 to-amber-500/20 hover:from-amber-500/35 hover:to-orange-500/35 text-amber-900 dark:text-amber-200 transition-all cursor-pointer shadow-2xs group active:scale-95"
+              >
+                <div className="w-5 h-5 rounded-full overflow-hidden border border-amber-500 shrink-0">
+                  <img
+                    src={currentExplorer.avatar}
+                    alt={currentExplorer.name}
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <span className="text-xs font-black hidden xl:inline">{currentExplorer.name.split(' ')[0]}</span>
+                <Compass size={13} className="text-amber-600 group-hover:rotate-45 transition-transform" />
+              </button>
+            )}
+
             {/* Overall Progress Pill */}
             <button
               type="button"
@@ -516,59 +449,6 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
       </div>
-
-      {/* Persistent Sticky Lesson Banner Strip on Scroll */}
-      {isScrolled && activeTopic && (
-        <div className={`border-t py-1.5 px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-3 text-xs transition-all animate-in slide-in-from-top-1 duration-200 ${
-          isDark 
-            ? 'bg-[#181D24]/95 border-[#2C323E] text-[#E5EAF2]' 
-            : isSage
-            ? 'bg-[#D6E3DA]/95 border-[#BAD0C1] text-[#1C2922]'
-            : isLavender
-            ? 'bg-[#DCD2E6]/95 border-[#C5B7D6] text-[#241E2F]'
-            : isPeach
-            ? 'bg-[#E7D7C8]/95 border-[#D5BFA9] text-[#2C211B]'
-            : 'bg-[#E3DACD]/95 border-[#D0C4B3] text-[#252830]'
-        } backdrop-blur-md shadow-xs`}>
-          <div className="flex items-center gap-2 min-w-0 max-w-xl">
-            <span className="shrink-0 font-extrabold px-2 py-0.5 rounded-full text-[10px] bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-950 shadow-2xs">
-              {activeTopic.levelLabel.split(':')[0]}
-            </span>
-            <span className="font-bold text-xs sm:text-sm truncate text-slate-950 dark:text-white">
-              {activeTopic.title}
-            </span>
-            <span className="hidden sm:inline text-[11px] opacity-70 truncate font-medium">
-              • {activeTopic.subtitle}
-            </span>
-          </div>
-
-          <div className="flex items-center gap-2 shrink-0">
-            <AudioButton
-              text={`${activeTopic.title}. ${activeTopic.subtitle}. ${activeTopic.overview}`}
-              textId={`header-sticky-${activeTopic.id}`}
-              speechRate={speechRate}
-              size="sm"
-              showLabel
-              label="Listen"
-            />
-            <button
-              type="button"
-              id="btn-sticky-jump-quiz"
-              onClick={() => {
-                const quizEl = document.getElementById('quiz-section');
-                if (quizEl) {
-                  quizEl.scrollIntoView({ behavior: 'smooth' });
-                }
-              }}
-              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg font-bold text-[11px] bg-amber-600 hover:bg-amber-700 text-white transition-colors cursor-pointer shadow-2xs"
-              title="Jump to Interactive Practice Exercises"
-            >
-              <Target size={12} />
-              <span className="hidden xs:inline">Practice Quiz</span>
-            </button>
-          </div>
-        </div>
-      )}
     </header>
   );
 };

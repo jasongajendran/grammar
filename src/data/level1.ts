@@ -92,10 +92,10 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
       {
         id: 'tip-l1-n1',
         title: 'The "The" Test for Nouns',
-        trick: 'If you can place the word **the** or **a** in front of a word and it makes complete sense, it is usually a noun (for example: *the biscuit*, *a hedgehog*, *the tartan*).',
+        trick: 'If you can place the word **the** or **a** in front of a word and it makes complete sense, it is usually a noun (for example: *the biscuit*, *a hedgehog*, *the teapot*).',
         mnemonic: 'Can I put "A" or "The" in front? If YES, it is a Noun!',
-        commonMistake: 'Writing "scotland", "edinburgh" or "monday" with lowercase letters.',
-        correctWay: 'Always write **Scotland**, **Edinburgh**, and **Monday** with initial capital letters.',
+        commonMistake: 'Writing "london", "cardiff" or "monday" with lowercase letters.',
+        correctWay: 'Always write **London**, **Cardiff**, and **Monday** with initial capital letters.',
         explanation: 'Names of days, months, and towns are proper nouns and require a capital letter in British English.'
       }
     ],
@@ -116,11 +116,11 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
         difficultyStep: 2,
         prompt: 'Tap on all the PROPER NOUNS in the sentence below.',
         instruction: 'Click each word that should be classified as a proper noun.',
-        sentence: 'Isla and Hamish explored Stirling Castle last July.',
-        words: ['Isla', 'and', 'Hamish', 'explored', 'Stirling', 'Castle', 'last', 'July.'],
+        sentence: 'Emma and Oliver explored Warwick Castle last July.',
+        words: ['Emma', 'and', 'Oliver', 'explored', 'Warwick', 'Castle', 'last', 'July.'],
         targetIndices: [0, 2, 4, 5, 7],
         targetCategoryLabel: 'Proper Noun',
-        explanation: '**Isla**, **Hamish**, **Stirling**, **Castle**, and **July** are all proper nouns because they name specific people, a fortress, and a calendar month.'
+        explanation: '**Emma**, **Oliver**, **Warwick**, **Castle**, and **July** are all proper nouns because they name specific people, a fortress, and a calendar month.'
       },
       {
         id: 'ex-q3-l1-nouns',
@@ -128,12 +128,12 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
         difficultyStep: 3,
         prompt: 'Find the word that was written incorrectly without a capital letter.',
         instruction: 'Tap on the mistake in the sentence.',
-        sentenceWithMistake: 'We are travelling to scotland on Friday morning.',
-        words: ['We', 'are', 'travelling', 'to', 'scotland', 'on', 'Friday', 'morning.'],
+        sentenceWithMistake: 'We are travelling to london on Friday morning.',
+        words: ['We', 'are', 'travelling', 'to', 'london', 'on', 'Friday', 'morning.'],
         errorWordIndex: 4,
-        correctedWord: 'Scotland',
-        ruleViolated: 'Proper nouns representing countries must start with a capital letter.',
-        explanation: '**Scotland** is a country name (proper noun) and must be capitalised as **Scotland**.'
+        correctedWord: 'London',
+        ruleViolated: 'Proper nouns representing cities must start with a capital letter.',
+        explanation: '**London** is a city name (proper noun) and must be capitalised as **London**.'
       },
       {
         id: 'ex-q4-l1-nouns',
