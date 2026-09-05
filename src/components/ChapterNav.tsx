@@ -80,6 +80,29 @@ export const ChapterNav: React.FC<ChapterNavProps> = ({
     return 'bg-[#ECE5DA] hover:bg-[#E0D7C9] border-[#DDD5C7] text-[#252830]';
   };
 
+  const getCategoryBadge = (category: string) => {
+    const cat = category.toLowerCase();
+    if (cat.includes('noun') || cat.includes('pronoun')) {
+      return { icon: '🏰', color: 'bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 border-emerald-400/30' };
+    }
+    if (cat.includes('verb') || cat.includes('tense')) {
+      return { icon: '⚡', color: 'bg-amber-500/20 text-amber-800 dark:text-amber-300 border-amber-400/30' };
+    }
+    if (cat.includes('adverb') || cat.includes('adjective')) {
+      return { icon: '🎨', color: 'bg-purple-500/20 text-purple-800 dark:text-purple-300 border-purple-400/30' };
+    }
+    if (cat.includes('punctuation') || cat.includes('comma') || cat.includes('colon')) {
+      return { icon: '✍️', color: 'bg-sky-500/20 text-sky-800 dark:text-sky-300 border-sky-400/30' };
+    }
+    if (cat.includes('sentence') || cat.includes('clause') || cat.includes('conjunction')) {
+      return { icon: '🌉', color: 'bg-teal-500/20 text-teal-800 dark:text-teal-300 border-teal-400/30' };
+    }
+    if (cat.includes('conditional') || cat.includes('voice') || cat.includes('rhetoric')) {
+      return { icon: '👑', color: 'bg-rose-500/20 text-rose-800 dark:text-rose-300 border-rose-400/30' };
+    }
+    return { icon: '📖', color: 'bg-blue-500/20 text-blue-800 dark:text-blue-300 border-blue-400/30' };
+  };
+
   const levelIcons: Record<DifficultyLevel, React.ReactNode> = {
     'level-1': <BookOpen size={16} className={isDark ? 'text-emerald-400' : 'text-emerald-700'} />,
     'level-2': <Compass size={16} className={isDark ? 'text-sky-400' : 'text-blue-700'} />,
@@ -203,6 +226,7 @@ export const ChapterNav: React.FC<ChapterNavProps> = ({
           const isSelected = currentTopicId === topic.id;
           const isCompleted = progress.completedTopics.includes(topic.id);
           const score = progress.quizScores[topic.id];
+          const badge = getCategoryBadge(topic.categoryLabel);
 
           if (isSelected) {
             return (
@@ -217,8 +241,11 @@ export const ChapterNav: React.FC<ChapterNavProps> = ({
                 className="w-full text-left p-2.5 sm:p-3 bg-amber-600 text-white border border-amber-700 rounded-2xl shadow-xs flex items-start justify-between gap-2 group cursor-pointer transition-all overflow-hidden box-border"
               >
                 <div className="flex flex-col items-start min-w-0 flex-1 overflow-hidden">
-                  <div className="text-[10px] sm:text-[11px] font-bold text-white/90 uppercase tracking-wider w-full truncate">
-                    Level {LEVEL_METADATA[currentLevel].number} • Step {index + 1}
+                  <div className="flex items-center gap-1.5 w-full">
+                    <span className="text-sm shrink-0">{badge.icon}</span>
+                    <span className="text-[10px] sm:text-[11px] font-bold text-white/90 uppercase tracking-wider truncate">
+                      Level {LEVEL_METADATA[currentLevel].number} • Step {index + 1}
+                    </span>
                   </div>
                   <div className="text-xs sm:text-sm font-bold text-white leading-snug break-words [overflow-wrap:anywhere] w-full block mt-0.5">
                     {topic.title}
@@ -245,6 +272,7 @@ export const ChapterNav: React.FC<ChapterNavProps> = ({
             >
               <div className="flex flex-col items-start min-w-0 flex-1 overflow-hidden">
                 <div className="flex items-center gap-1.5 flex-wrap w-full">
+                  <span className="text-sm shrink-0">{badge.icon}</span>
                   <span className={`text-[10px] sm:text-[11px] font-bold ${isCompleted ? 'text-emerald-700 dark:text-emerald-400' : 'opacity-70'}`}>
                     Level {LEVEL_METADATA[currentLevel].number}
                   </span>

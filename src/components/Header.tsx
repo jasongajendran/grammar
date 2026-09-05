@@ -17,6 +17,7 @@ import {
 import { DifficultyLevel, UserProgress, StudyTheme, FontSizePreference, GrammarTopic } from '../types';
 import { ALL_TOPICS, LEVEL_METADATA } from '../data/curriculum';
 import { AudioButton } from './AudioButton';
+import { APP_IMAGES } from '../utils/assets';
 
 interface HeaderProps {
   currentLevel: DifficultyLevel;
@@ -165,11 +166,16 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
 
             <div 
-              className="flex items-center gap-2.5 cursor-pointer select-none"
+              className="flex items-center gap-2.5 cursor-pointer select-none group"
               onClick={() => onSelectLevel('level-1')}
             >
-              <div className="w-8 h-8 bg-amber-600 rounded-xl flex items-center justify-center text-white font-bold text-base shadow-xs">
-                G
+              <div className="w-8 h-8 rounded-xl overflow-hidden border border-amber-600 shadow-xs shrink-0 group-hover:scale-105 transition-transform">
+                <img 
+                  src={APP_IMAGES.mascot} 
+                  alt="Hamish Grammar Mascot" 
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover"
+                />
               </div>
               <div>
                 <span className="font-heading font-bold text-base sm:text-lg tracking-tight block leading-tight">

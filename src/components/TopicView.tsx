@@ -19,6 +19,9 @@ import { GrammarTopic, UserProgress, DifficultyLevel, StudyTheme } from '../type
 import { AudioButton } from './AudioButton';
 import { InteractiveQuiz } from './InteractiveQuiz';
 import { LEVEL_METADATA, getNextTopic, getPrevTopic } from '../data/curriculum';
+import { getThematicImageForLevel } from '../utils/assets';
+import { ConceptVisualizer } from './ConceptVisualizer';
+import { MascotCard } from './MascotCard';
 
 interface TopicViewProps {
   topic: GrammarTopic;
@@ -79,12 +82,37 @@ export const TopicView: React.FC<TopicViewProps> = ({
     return 'bg-[#F2ECE1] border-[#D8CEBF] text-[#252830]';
   };
 
+  const thematicArt = getThematicImageForLevel(topic.level);
+
   return (
     <article className="max-w-4xl mx-auto py-4 sm:py-6 px-3 sm:px-6 lg:px-8 space-y-6 overflow-x-clip">
       
-      {/* 1. Header Banner & Meta Tags */}
-      <div className={`rounded-3xl border p-5 sm:p-8 shadow-xs transition-colors ${getCardStyle()}`}>
+      {/* 1. Header Banner with Artwork & Meta Tags */}
+      <div className={`rounded-3xl border p-5 sm:p-8 shadow-xs transition-colors overflow-hidden ${getCardStyle()}`}>
         
+        {/* Thematic Scottish Visual Hero Strip */}
+        <div className="relative rounded-2xl overflow-hidden mb-6 border border-black/10 dark:border-white/10 shadow-sm max-h-48 sm:max-h-56">
+          <img 
+            src={thematicArt.src} 
+            alt={thematicArt.alt}
+            referrerPolicy="no-referrer"
+            className="w-full h-48 sm:h-56 object-cover object-center filter brightness-95 contrast-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent flex flex-col justify-end p-4 sm:p-5 text-white">
+            <div className="flex items-center gap-2 mb-1">
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-black uppercase tracking-wider bg-amber-500 text-slate-950 shadow-sm">
+                Scottish Heritage Edition
+              </span>
+              <span className="text-xs text-white/90 font-medium hidden sm:inline">
+                {topic.levelLabel}
+              </span>
+            </div>
+            <p className="text-xs sm:text-sm font-semibold text-white/95 line-clamp-1 drop-shadow-sm">
+              {thematicArt.tagline}
+            </p>
+          </div>
+        </div>
+
         {/* Level Badges & Quick Controls */}
         <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
           <div className="flex flex-wrap items-center gap-2">
@@ -170,7 +198,14 @@ export const TopicView: React.FC<TopicViewProps> = ({
         </div>
       </div>
 
-      {/* 2. Structured Sections with Highlighted Examples */}
+      {/* 2. Interactive Concept Visualizer (Innovative animated lab) */}
+      <ConceptVisualizer
+        topic={topic}
+        studyTheme={studyTheme}
+        speechRate={speechRate}
+      />
+
+      {/* 3. Structured Sections with Highlighted Examples */}
       <div className="space-y-6">
         {topic.sections.map((section, sIndex) => (
           <div
@@ -391,6 +426,13 @@ export const TopicView: React.FC<TopicViewProps> = ({
           </div>
         </div>
       )}
+
+      {/* Mascot Companion Tip */}
+      <MascotCard 
+        topic={topic}
+        studyTheme={studyTheme}
+        speechRate={speechRate}
+      />
 
       {/* 4. Progressive Interactive Exercises */}
       <div id="quiz-section" className="space-y-3 pt-2">

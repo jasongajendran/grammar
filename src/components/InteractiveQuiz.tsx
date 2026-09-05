@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import confetti from 'canvas-confetti';
+import { motion, AnimatePresence } from 'motion/react';
 import { 
   CheckCircle2, 
   XCircle, 
@@ -11,11 +12,13 @@ import {
   Zap, 
   Volume2,
   ShieldAlert,
-  ThumbsUp
+  ThumbsUp,
+  Star
 } from 'lucide-react';
 import { GrammarTopic, InteractiveExercise, WordClickerExercise, SentenceBuilderExercise, ErrorDetectiveExercise, MultipleChoiceExercise, ClauseMatcherExercise, StudyTheme } from '../types';
 import { AudioButton } from './AudioButton';
 import { playSound } from '../utils/storage';
+import { APP_IMAGES } from '../utils/assets';
 
 interface InteractiveQuizProps {
   topic: GrammarTopic;
@@ -190,35 +193,91 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
     const finalScore = Math.round((correctAnswersCount / exercises.length) * 100);
     const isMastered = finalScore >= 80;
 
+    const celebrationPraise = isMastered 
+      ? `Splendid mastery! You scored ${finalScore} percent and conquered ${topic.title} with true Scottish brilliance!`
+      : `Good effort! You scored ${finalScore} percent on ${topic.title}. Practise once more to claim full mastery!`;
+
     return (
-      <div className={`p-6 sm:p-8 rounded-3xl border shadow-xs text-center ${getQuizCardStyle()}`}>
-        <div className="inline-flex p-3 rounded-2xl bg-amber-500/10 text-amber-600 mb-4 animate-bounce">
-          <Award size={38} />
+      <motion.div 
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ type: 'spring', damping: 20 }}
+        className={`p-6 sm:p-10 rounded-3xl border shadow-md text-center relative overflow-hidden ${getQuizCardStyle()}`}
+      >
+        {/* Animated Trophy Artwork */}
+        <div className="flex justify-center mb-5 relative">
+          <motion.div 
+            animate={{ 
+              scale: [1, 1.05, 1],
+              rotate: [0, -2, 2, 0]
+            }}
+            transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut' }}
+            className="w-28 h-28 sm:w-36 sm:h-36 rounded-3xl overflow-hidden border-4 border-amber-500 shadow-xl relative"
+          >
+            <img 
+              src={APP_IMAGES.trophy}
+              alt="Golden Scottish Grammar Trophy"
+              referrerPolicy="no-referrer"
+              className="w-full h-full object-cover"
+            />
+          </motion.div>
+
+          {/* Floating Stars */}
+          <motion.div 
+            animate={{ y: [0, -8, 0], rotate: [0, 15, 0] }}
+            transition={{ repeat: Infinity, duration: 2.5 }}
+            className="absolute -top-2 right-1/4 text-amber-500"
+          >
+            <Star size={28} className="fill-amber-400" />
+          </motion.div>
+          <motion.div 
+            animate={{ y: [0, 8, 0], rotate: [0, -15, 0] }}
+            transition={{ repeat: Infinity, duration: 3, delay: 0.5 }}
+            className="absolute -bottom-2 left-1/4 text-amber-500"
+          >
+            <Sparkles size={24} className="fill-amber-400" />
+          </motion.div>
         </div>
 
-        <h3 className="text-2xl sm:text-3xl font-heading font-bold mb-1">
-          {isMastered ? 'Lesson Mastered!' : 'Great Effort!'}
+        <h3 className="text-2xl sm:text-3xl font-heading font-extrabold mb-1.5 flex items-center justify-center gap-2">
+          <span>{isMastered ? '🏆 Highland Lesson Mastered!' : '⭐ Valiant Scottish Effort!'}</span>
         </h3>
-        <p className="text-base sm:text-lg opacity-80 mb-6">
-          You answered <strong className="font-bold">{correctAnswersCount}</strong> out of{' '}
-          <strong className="font-bold">{exercises.length}</strong> questions correctly.
+        <p className="text-sm sm:text-base opacity-85 mb-6 max-w-md mx-auto">
+          You answered <strong className="font-extrabold">{correctAnswersCount}</strong> out of{' '}
+          <strong className="font-extrabold">{exercises.length}</strong> challenges correctly in {topic.title}.
         </p>
 
-        {/* Score Ring */}
-        <div className={`inline-block p-6 rounded-2xl border mb-6 ${getQuizHeaderStyle()}`}>
-          <div className="text-5xl font-heading font-extrabold text-slate-900 dark:text-white">
-            {finalScore}%
+        {/* Score Ring & Audio Praise */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
+          <div className={`p-4 sm:p-5 rounded-2xl border ${getQuizHeaderStyle()} flex items-center gap-4 shadow-sm`}>
+            <div className="text-4xl sm:text-5xl font-heading font-black text-amber-600 dark:text-amber-400">
+              {finalScore}%
+            </div>
+            <div className="text-left border-l border-black/10 dark:border-white/10 pl-3">
+              <div className="text-xs font-black uppercase tracking-wider opacity-90">
+                {isMastered ? 'Mastery Tier' : 'Practice Tier'}
+              </div>
+              <div className="text-xs opacity-75">
+                Target: 80% to claim badge
+              </div>
+            </div>
           </div>
-          <div className="text-xs sm:text-sm font-bold opacity-80 uppercase tracking-wider mt-1.5">
-            Accuracy Score
-          </div>
+
+          <AudioButton
+            text={celebrationPraise}
+            textId={`quiz-praise-${topic.id}-${finalScore}`}
+            speechRate={speechRate}
+            size="md"
+            showLabel
+            label="Listen to Praise"
+          />
         </div>
 
         <div className="flex flex-wrap items-center justify-center gap-3">
           <button
             type="button"
             onClick={handleRetryEntireQuiz}
-            className={`px-6 py-3 rounded-xl font-bold text-sm transition-colors flex items-center gap-2 cursor-pointer border ${
+            className={`px-6 py-3 rounded-full font-bold text-sm sm:text-base transition-all flex items-center gap-2 cursor-pointer border shadow-sm ${
               isDark
                 ? 'bg-[#29303D] hover:bg-[#343D4E] text-slate-200 border-[#3D475B]'
                 : 'bg-[#DCD2C3] hover:bg-[#D0C5B4] text-slate-900 border-[#BEB2A0]'
@@ -228,7 +287,7 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
             Practise Again
           </button>
         </div>
-      </div>
+      </motion.div>
     );
   }
 
@@ -320,11 +379,13 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
               }
 
               return (
-                <button
+                <motion.button
                   key={idx}
                   type="button"
                   id={`mc-option-${idx}`}
                   disabled={isSubmitted}
+                  whileHover={!isSubmitted ? { scale: 1.01 } : {}}
+                  whileTap={!isSubmitted ? { scale: 0.99 } : {}}
                   onClick={() => handleSelectOption(idx)}
                   className={`w-full p-4 rounded-2xl border text-left text-base sm:text-lg font-medium transition-all flex items-center justify-between cursor-pointer ${optionStyle}`}
                 >
@@ -346,7 +407,7 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
                   {isSubmitted && isSelected && !isCorrect && (
                     <XCircle size={20} className="text-rose-600 shrink-0" />
                   )}
-                </button>
+                </motion.button>
               );
             })}
           </div>
@@ -377,15 +438,17 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
                   }
 
                   return (
-                    <button
+                    <motion.button
                       key={idx}
                       type="button"
                       disabled={isSubmitted}
+                      whileHover={!isSubmitted ? { scale: 1.05 } : {}}
+                      whileTap={!isSubmitted ? { scale: 0.95 } : {}}
                       onClick={() => handleToggleWordIndex(idx)}
                       className={`px-3.5 py-2 rounded-xl border text-base sm:text-lg font-semibold transition-all cursor-pointer ${wordStyle}`}
                     >
                       {word}
-                    </button>
+                    </motion.button>
                   );
                 })}
               </div>
@@ -409,8 +472,11 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
                 </span>
               ) : (
                 builtSentenceWords.map((word, idx) => (
-                  <button
-                    key={idx}
+                  <motion.button
+                    layout
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    key={`${word}-${idx}`}
                     type="button"
                     disabled={isSubmitted}
                     onClick={() => handleRemoveWordFromBuilder(idx)}
@@ -418,7 +484,7 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
                   >
                     <span>{word}</span>
                     {!isSubmitted && <span className="text-xs text-white/90">✕</span>}
-                  </button>
+                  </motion.button>
                 ))
               )}
             </div>
@@ -431,19 +497,22 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
                 const isExhausted = timesUsed >= timesAvailable;
 
                 return (
-                  <button
+                  <motion.button
+                    layout
+                    whileHover={!isSubmitted && !isExhausted ? { scale: 1.05 } : {}}
+                    whileTap={!isSubmitted && !isExhausted ? { scale: 0.95 } : {}}
                     key={idx}
                     type="button"
                     disabled={isSubmitted || isExhausted}
                     onClick={() => handleAddWordToBuilder(word, idx)}
                     className={`px-4 py-2.5 rounded-xl border text-sm sm:text-base font-semibold transition-all cursor-pointer ${
                       isExhausted
-                        ? isDark ? 'bg-[#252B35] text-slate-600 border-[#2D3440] cursor-not-allowed' : 'bg-[#DDD4C5] text-slate-400 border-[#CCC1AF] cursor-not-allowed'
+                        ? isDark ? 'bg-[#252B35] text-slate-600 border-[#2D3440] cursor-not-allowed opacity-40' : 'bg-[#DDD4C5] text-slate-400 border-[#CCC1AF] cursor-not-allowed opacity-40'
                         : isDark ? 'bg-[#232933] hover:bg-[#303744] text-slate-200 border-[#384254]' : 'bg-[#EAE0D1] hover:bg-[#DFD3C2] text-slate-900 border-[#C9BCAB] shadow-2xs'
                     }`}
                   >
                     {word}
-                  </button>
+                  </motion.button>
                 );
               })}
             </div>
@@ -475,15 +544,17 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
                   }
 
                   return (
-                    <button
+                    <motion.button
                       key={idx}
                       type="button"
                       disabled={isSubmitted}
+                      whileHover={!isSubmitted ? { scale: 1.05 } : {}}
+                      whileTap={!isSubmitted ? { scale: 0.95 } : {}}
                       onClick={() => setSelectedWordIndices([idx])}
                       className={`px-3.5 py-2 rounded-xl border text-base sm:text-lg font-semibold transition-all cursor-pointer ${wordStyle}`}
                     >
                       {word}
-                    </button>
+                    </motion.button>
                   );
                 })}
               </div>

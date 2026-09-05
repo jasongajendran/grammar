@@ -61,14 +61,27 @@ class SpeechService {
       this.initVoices();
     }
 
-    // Clean text of markdown formatting symbols for smooth natural reading
-    const cleanText = text
+    // Clean text of markdown formatting symbols and expand abbreviations for smooth natural reading
+    let cleanText = text
       .replace(/\*\*(.*?)\*\*/g, '$1')
       .replace(/\*(.*?)\*/g, '$1')
       .replace(/`([^`]+)`/g, '$1')
       .replace(/\[(.*?)\]\(.*?\)/g, '$1')
       .replace(/#{1,6}\s?/g, '')
       .replace(/•/g, '')
+      // Expand common Latin and British abbreviations into natural spoken English
+      .replace(/\be\.g\.,?\s*/gi, 'for example, ')
+      .replace(/\be\.g\b/gi, 'for example')
+      .replace(/\beg\.,?\s*/gi, 'for example, ')
+      .replace(/\bi\.e\.,?\s*/gi, 'that is, ')
+      .replace(/\bi\.e\b/gi, 'that is')
+      .replace(/\betc\./gi, 'et cetera')
+      .replace(/\betc\b/gi, 'et cetera')
+      .replace(/\bvs\./gi, 'versus')
+      .replace(/\bSt\.\s+/g, 'Saint ')
+      .replace(/\bKS([1-5])\b/gi, 'Key Stage $1')
+      // Clean up slashes in choices like was/were
+      .replace(/([a-zA-Z]+)\/([a-zA-Z]+)/g, '$1 or $2')
       .trim();
 
     const utterance = new SpeechSynthesisUtterance(cleanText);
