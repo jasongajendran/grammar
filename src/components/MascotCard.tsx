@@ -13,13 +13,13 @@ interface MascotCardProps {
 }
 
 const HAMISH_QUOTES = [
-  "Moo-ve over confusion! Take it one sentence at a time, just like climbing Ben Nevis!",
-  "A proper noun always wears its best capital letter, just like a highlander wears his clan tartan!",
-  "In Scotland, we keep our lochs deep and our grammar crystal clear!",
-  "Remember the golden rule: punctuation marks guide your reader like a lighthouse along the rugged coast of Scotland!",
-  "Give yourself a high-five for practicing! Even the greatest poets like Robert Burns started with basic nouns and verbs!",
-  "Don't fear the semicolon! It's simply a bridge connecting two strong, independent thoughts without any fuss.",
-  "When in doubt, say your sentence out loud. If your tongue trips, a comma might be missing!",
+  "Take it one sentence at a time, whether you're climbing Scafell Pike, Snowdon, or Ben Nevis!",
+  "A proper noun always wears its best capital letter, just like Big Ben, Cardiff Castle, or Giant's Causeway!",
+  "Punctuation marks guide your reader just like lighthouses along the rugged British coastline!",
+  "Give yourself credit for practising! Great British writers, from Shakespeare and Jane Austen to Dylan Thomas, built their masterpieces word by word.",
+  "Don't fear the semicolon! It's simply a sturdy suspension bridge connecting two strong, independent thoughts.",
+  "When in doubt, read your sentence out loud. If your tongue stumbles, a comma might be missing!",
+  "Every draft improves with care. Polish your sentences like stones smoothed along the Cornish shore!",
 ];
 
 export const MascotCard: React.FC<MascotCardProps> = ({
@@ -52,11 +52,11 @@ export const MascotCard: React.FC<MascotCardProps> = ({
           transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut' }}
           className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border-3 border-amber-500 shadow-md relative group cursor-pointer"
           onClick={handleNextQuote}
-          title="Click Hamish for more Scottish grammar wisdom!"
+          title="Click Hamish for helpful grammar wisdom!"
         >
           <img
             src={APP_IMAGES.mascot}
-            alt="Hamish the Highland Grammar Coo"
+            alt="Hamish the Grammar Coo"
             referrerPolicy="no-referrer"
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
           />

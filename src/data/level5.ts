@@ -14,7 +14,7 @@ export const LEVEL_5_TOPICS: GrammarTopic[] = [
     categoryLabel: 'Advanced Syntax',
     iconName: 'Sparkles',
     estimatedMinutes: 9,
-    overview: '**Nominalisation** is the grammatical process of converting verbs (actions) or adjectives (qualities) into abstract nouns (for example: *discover -> discovery*, *reconstruct -> reconstruction*, *resilient -> resilience*). It is the cornerstone of academic, scientific, historical, and formal essay writing in British GCSEs and Scottish Highers.',
+    overview: '**Nominalisation** is the grammatical process of converting verbs (actions) or adjectives (qualities) into abstract nouns (for example: *discover -> discovery*, *reconstruct -> reconstruction*, *resilient -> resilience*). It is the cornerstone of academic, scientific, historical, and formal essay writing in British GCSEs and A-Levels.',
     whyItMatters: 'Nominalisation condenses clauses, removes informal personal pronouns, and creates an objective, academic tone.',
     sections: [
       {
@@ -22,31 +22,31 @@ export const LEVEL_5_TOPICS: GrammarTopic[] = [
         title: '1. Converting Actions to Concepts',
         content: 'Observe how nominalisation elevates everyday narrative into formal academic discourse:',
         bulletPoints: [
-          '**Informal Narrative (Verbal):** *Because the Scottish clans gathered at Bannockburn, they defended their nation bravely.*',
-          '**Academic Prose (Nominalised):** *The **mobilisation** of the Scottish clans at Bannockburn ensured the **preservation** of national sovereignty.*',
-          '**Common Suffixes for Nominalisation:** *-tion, -sion, -ment, -ance, -ity, -ness, -ence* (for example: *restore -> restoration of Stirling Castle; establish -> establishment of the Scottish Parliament; expand -> expansion of Edinburgh*).'
+          '**Informal Narrative (Verbal):** *Because ancient Britons built defensive earthworks at Maiden Castle, they protected their communities effectively.*',
+          '**Academic Prose (Nominalised):** *The **construction** of defensive earthworks at Maiden Castle ensured the effective **protection** of local communities.*',
+          '**Common Suffixes for Nominalisation:** *-tion, -sion, -ment, -ance, -ity, -ness, -ence* (for example: *restore -> restoration of Conwy Castle; establish -> establishment of the NHS; expand -> expansion of Roman London*).'
         ],
         examples: [
           {
             id: 'ex-l5-nom1',
-            sentence: 'The **restoration** of Eilean Donan Castle in the twentieth century transformed the fortress into a global symbol of Scottish heritage.',
+            sentence: 'The **restoration** of Conwy Castle in the twentieth century transformed the fortress into a global symbol of medieval heritage.',
             highlightWords: ['restoration'],
             explanation: 'The abstract noun "restoration" (from the verb *restore*) creates authoritative historical conciseness.',
-            contextNote: 'Scottish historical architecture'
+            contextNote: 'Historic British architecture'
           },
           {
             id: 'ex-l5-nom2',
-            sentence: 'The successful **reintroduction** of the beaver and red kite to the Scottish Highlands represents a triumph for ecological **conservation**.',
+            sentence: 'The successful **reintroduction** of the red kite across England and Wales represents a triumph for ecological **conservation**.',
             highlightWords: ['reintroduction', 'conservation'],
-            explanation: 'Abstract nouns replace wordy clauses like *"when rangers reintroduced beavers and conserved habitats"*.',
-            contextNote: 'Highland biodiversity report'
+            explanation: 'Abstract nouns replace wordy clauses like *"when conservationists reintroduced kites and conserved habitats"*.',
+            contextNote: 'UK biodiversity report'
           },
           {
             id: 'ex-l5-nom3',
-            sentence: 'The **completion** of the Caledonian Canal in 1822 enabled the **navigation** of inland waterways across the Great Glen.',
-            highlightWords: ['completion', 'navigation'],
+            sentence: 'The **completion** of the Grand Union Canal in 1805 enabled the **transportation** of heavy commercial freight across the Midlands.',
+            highlightWords: ['completion', 'transportation'],
             explanation: 'Nominalised nouns provide dense, objective historical framing.',
-            contextNote: 'Scottish civil engineering'
+            contextNote: 'British industrial engineering'
           }
         ],
         ruleSummary: 'Nominalisation turns verbs/adjectives into abstract nouns for concise, formal prose.'
@@ -80,8 +80,8 @@ export const LEVEL_5_TOPICS: GrammarTopic[] = [
         difficultyStep: 2,
         prompt: 'Tap on the two NOMINALISED NOUNS in this academic sentence.',
         instruction: 'Click the abstract nouns derived from verbs.',
-        sentence: 'The rapid industrialisation of Glasgow caused significant migration from the Highlands.',
-        words: ['The', 'rapid', 'industrialisation', 'of', 'Glasgow', 'caused', 'significant', 'migration', 'from', 'Highlands.'],
+        sentence: 'The rapid industrialisation of Manchester caused significant migration from rural counties.',
+        words: ['The', 'rapid', 'industrialisation', 'of', 'Manchester', 'caused', 'significant', 'migration', 'from', 'rural', 'counties.'],
         targetIndices: [2, 7],
         targetCategoryLabel: 'Nominalised Noun',
         explanation: '**Industrialisation** (from industrialise) and **migration** (from migrate) are nominalised nouns.'
@@ -101,7 +101,7 @@ export const LEVEL_5_TOPICS: GrammarTopic[] = [
     categoryLabel: 'Advanced Syntax',
     iconName: 'AlertTriangle',
     estimatedMinutes: 9,
-    overview: 'A **participle phrase** begins with a present participle (*-ing*) or past participle (*-ed / -en*) and acts as an adjective modifying a noun. A **dangling modifier** occurs when the noun being described is missing or placed too far away, creating unintentional comedy (for example: *"Walking through the Scottish glen, the mountains looked magnificent"* implies the mountains were walking through the glen!).',
+    overview: 'A **participle phrase** begins with a present participle (*-ing*) or past participle (*-ed / -en*) and acts as an adjective modifying a noun. A **dangling modifier** occurs when the noun being described is missing or placed too far away, creating unintentional comedy (for example: *"Walking through the national park, the mountains looked magnificent"* implies the mountains were walking through the park!).',
     whyItMatters: 'Dangling modifiers are one of the most penalised syntactic errors in GCSE and A-Level essays.',
     sections: [
       {
@@ -109,32 +109,32 @@ export const LEVEL_5_TOPICS: GrammarTopic[] = [
         title: '1. The Dangling Modifier Hazard',
         content: 'The subject performing the action of an introductory participle phrase MUST be the very first noun placed directly after the comma:',
         bulletPoints: [
-          '**Error (Dangling participle):** *Trekking across the Cairngorms, the snow-capped peaks looked magnificent.* (Did the peaks do the trekking? No!)',
-          '**Corrected (Proper agent):** *Trekking across the Cairngorms, the **mountaineers** gazed at the magnificent peaks.*',
-          '**Error (Misplaced modifier):** *Steeped in ancient legend, the tourist explored the ruined Scottish castle.* (Was the tourist steeped in legend, or was the castle?)',
-          '**Corrected:** *Steeped in ancient legend, the **ruined Scottish castle** fascinated the tourist.*'
+          '**Error (Dangling participle):** *Trekking across the Lake District, the snow-capped fells looked magnificent.* (Did the fells do the trekking? No!)',
+          '**Corrected (Proper agent):** *Trekking across the Lake District, the **ramblers** gazed at the magnificent fells.*',
+          '**Error (Misplaced modifier):** *Steeped in medieval legend, the tourist explored the ruined abbey.* (Was the tourist steeped in legend, or was the abbey?)',
+          '**Corrected:** *Steeped in medieval legend, the **ruined abbey** fascinated the tourist.*'
         ],
         examples: [
           {
             id: 'ex-l5-dm1',
-            sentence: '**Gazing across the silver expanse of Loch Ness,** the ornithologist spotted a golden eagle dive for prey.',
-            highlightWords: ['Gazing across the silver expanse of Loch Ness,', 'the ornithologist'],
+            sentence: '**Gazing across the silver expanse of Windermere,** the ornithologist spotted a peregrine falcon dive for prey.',
+            highlightWords: ['Gazing across the silver expanse of Windermere,', 'the ornithologist'],
             explanation: 'Correct syntax: "the ornithologist" immediately follows the comma as the person doing the gazing.',
-            contextNote: 'Highland birdwatching'
+            contextNote: 'Lake District wildlife observation'
           },
           {
             id: 'ex-l5-dm2',
-            sentence: '**Dressed in the traditional Royal Stewart tartan,** the piper led the parade down Edinburgh\'s Royal Mile.',
-            highlightWords: ['Dressed in the traditional Royal Stewart tartan,', 'the piper'],
-            explanation: '"The piper" is the person wearing the tartan, placed directly adjacent to the introductory participle phrase.',
-            contextNote: 'Edinburgh ceremonial procession'
+            sentence: '**Dressed in traditional ceremonial robes,** the Lord Mayor led the civic procession through the historic city centre.',
+            highlightWords: ['Dressed in traditional ceremonial robes,', 'the Lord Mayor'],
+            explanation: '"The Lord Mayor" is the person wearing the robes, placed directly adjacent to the introductory participle phrase.',
+            contextNote: 'Civic ceremonial procession'
           },
           {
             id: 'ex-l5-dm3',
-            sentence: '**Braving the bitter Atlantic squalls,** the ferry crew docked the vessel safely at Stornoway harbour.',
-            highlightWords: ['Braving the bitter Atlantic squalls,', 'the ferry crew'],
-            explanation: '"The ferry crew" performs the courageous action of braving the squalls, correctly positioned right after the comma.',
-            contextNote: 'Hebridean maritime transport'
+            sentence: '**Braving the bitter Atlantic squalls,** the lifeboat crew docked the vessel safely at the Cornish harbour.',
+            highlightWords: ['Braving the bitter Atlantic squalls,', 'the lifeboat crew'],
+            explanation: '"The lifeboat crew" performs the courageous action of braving the squalls, correctly positioned right after the comma.',
+            contextNote: 'RNLI maritime rescue'
           }
         ],
         ruleSummary: 'The noun immediately following an introductory modifier MUST be the one performing the action.'
@@ -159,13 +159,13 @@ export const LEVEL_5_TOPICS: GrammarTopic[] = [
         prompt: 'Which of the following sentences avoids a dangling modifier?',
         instruction: 'Pick the grammatically correct sentence.',
         options: [
-          'Climbing Ben Nevis, our water bottle was dropped into the ravine.',
-          'Climbing Ben Nevis, we dropped our water bottle into the ravine.',
-          'Climbing Ben Nevis, the ravine caught our water bottle.',
-          'Climbing Ben Nevis, our boots became muddy.'
+          'Climbing Scafell Pike, our water bottle was dropped into the ravine.',
+          'Climbing Scafell Pike, we dropped our water bottle into the ravine.',
+          'Climbing Scafell Pike, the ravine caught our water bottle.',
+          'Climbing Scafell Pike, our boots became muddy.'
         ],
         correctIndex: 1,
-        explanation: '**Climbing Ben Nevis, we dropped our water bottle into the ravine.** is correct because "we" were the ones doing the climbing.'
+        explanation: '**Climbing Scafell Pike, we dropped our water bottle into the ravine.** is correct because "we" were the ones doing the climbing.'
       }
     ]
   },
@@ -190,33 +190,33 @@ export const LEVEL_5_TOPICS: GrammarTopic[] = [
         title: '1. The Five British English Conditionals',
         content: 'Observe the grammatical formula and usage for each conditional tier:',
         bulletPoints: [
-          '**Zero Conditional (Universal Truths & Scientific Laws):** (for example: *If winter temperatures plunge across the Cairngorms, mountain lochs **freeze** solid.* [If + Present Simple, Present Simple])',
-          '**First Conditional (Real & Probable Future Scenarios):** (for example: *If the ferry leaves Oban on schedule, we **will arrive** on the Isle of Mull by noon.* [If + Present Simple, will + base])',
-          '**Second Conditional (Unreal Present & Hypothetical Dreams):** (for example: *If I owned an ancient Scottish estate, I **would establish** a sanctuary for red squirrels.* [If + Past Simple, would + base])',
-          '**Third Conditional (Unreal Past Counterfactual & Regrets):** (for example: *If Bonnie Prince Charlie **had chosen** higher ground, the Battle of Culloden might have unfolded differently.* [If + Past Perfect, would have + past participle])',
-          '**Mixed Conditional (Past cause with present consequence):** (for example: *If Victorian engineers **had not constructed** the Forth Rail Bridge in 1890, Edinburgh and Fife **would still be** severed by water today.*)'
+          '**Zero Conditional (Universal Truths & Scientific Laws):** (for example: *If winter temperatures plunge across the Yorkshire Dales, upland streams **freeze** solid.* [If + Present Simple, Present Simple])',
+          '**First Conditional (Real & Probable Future Scenarios):** (for example: *If the ferry leaves Portsmouth on schedule, we **will arrive** on the Isle of Wight by noon.* [If + Present Simple, will + base])',
+          '**Second Conditional (Unreal Present & Hypothetical Dreams):** (for example: *If I owned a country estate in the Cotswolds, I **would establish** a wildflower meadow for bees.* [If + Past Simple, would + base])',
+          '**Third Conditional (Unreal Past Counterfactual & Regrets):** (for example: *If King Harold **had maintained** higher ground, the Battle of Hastings might have unfolded differently.* [If + Past Perfect, would have + past participle])',
+          '**Mixed Conditional (Past cause with present consequence):** (for example: *If Victorian engineers **had not constructed** the Thames Embankment in 1870, central London **would still face** severe river flooding today.*)'
         ],
         examples: [
           {
             id: 'ex-l5-cd1',
-            sentence: 'If the Scottish mountain rescue team **had not acted** with such swiftness, the lost climbers **would have succumbed** to hypothermia.',
+            sentence: 'If the mountain rescue team **had not acted** with such swiftness, the lost hikers **would have succumbed** to hypothermia.',
             highlightWords: ['had not acted', 'would have succumbed'],
             explanation: 'Third conditional expressing a past counterfactual: Past Perfect ("had not acted") + Modal Perfect ("would have succumbed").',
-            contextNote: 'Highland rescue emergency'
+            contextNote: 'Peak District rescue emergency'
           },
           {
             id: 'ex-l5-cd2',
-            sentence: 'If ocean winds **exceed** fifty knots, the Pentland Firth ferry operators **suspend** all departures.',
+            sentence: 'If gale force winds **exceed** fifty knots, the English Channel ferry operators **suspend** all departures.',
             highlightWords: ['exceed', 'suspend'],
             explanation: 'Zero conditional representing standard maritime policy using Present Simple in both clauses.',
-            contextNote: 'Scottish maritime safety'
+            contextNote: 'Channel maritime safety'
           },
           {
             id: 'ex-l5-cd3',
-            sentence: 'If you **visit** Edinburgh during August, you **will witness** performances from artists around the globe.',
+            sentence: 'If you **visit** London during the Proms season, you **will witness** classical performances from world-renowned musicians.',
             highlightWords: ['visit', 'will witness'],
-            explanation: 'First conditional predicting a real, likely future event during the Edinburgh Festival Fringe.',
-            contextNote: 'Edinburgh international festival'
+            explanation: 'First conditional predicting a real, likely future event during the BBC Proms season.',
+            contextNote: 'Royal Albert Hall festival'
           }
         ],
         ruleSummary: '0 = Facts | 1 = Likely future | 2 = Hypothetical present | 3 = Past counterfactual | Mixed = Past cause + Present effect.'
@@ -228,8 +228,8 @@ export const LEVEL_5_TOPICS: GrammarTopic[] = [
         title: 'Never Put "Would" in the "If" Clause',
         trick: 'In standard British English, **never** put "would" inside the *if-clause*! Say: *"If I had known..."*, NEVER *"If I would have known..."*.',
         mnemonic: 'No "would" in the "if" clause!',
-        commonMistake: 'Saying *"If I would of visited Edinburgh, I would have seen the castle"*.',
-        correctWay: 'Write *"If I **had visited** Edinburgh, I would have seen the castle."*',
+        commonMistake: 'Saying *"If I would of visited London, I would have seen the British Museum"*.',
+        correctWay: 'Write *"If I **had visited** London, I would have seen the British Museum."*',
         explanation: 'The condition clause requires past perfect (had visited), while the result clause takes would have.'
       }
     ],
@@ -241,13 +241,13 @@ export const LEVEL_5_TOPICS: GrammarTopic[] = [
         prompt: 'Which sentence represents a THIRD CONDITIONAL (unreal past situation)?',
         instruction: 'Pick the third conditional sentence.',
         options: [
-          'If it rains in Glasgow, the river swells.',
-          'If you train hard, you will toss the caber.',
-          'If I were the clan chief, I would host a great ceilidh.',
-          'If the piper had tuned his chanter earlier, the harmony would have been flawless.'
+          'If it rains in Manchester, the river swells.',
+          'If you train hard, you will win the tournament.',
+          'If I were the museum curator, I would display the Roman mosaic.',
+          'If the organist had tuned the cathedral pipes earlier, the harmony would have been flawless.'
         ],
         correctIndex: 3,
-        explanation: '**If the piper had tuned his chanter earlier, the harmony would have been flawless.** uses "had tuned" (past perfect) and "would have been" (modal perfect).'
+        explanation: '**If the organist had tuned the cathedral pipes earlier, the harmony would have been flawless.** uses "had tuned" (past perfect) and "would have been" (modal perfect).'
       }
     ]
   },
@@ -265,39 +265,39 @@ export const LEVEL_5_TOPICS: GrammarTopic[] = [
     iconName: 'Equal',
     estimatedMinutes: 9,
     overview: '**Parallel structure** (also known as parallelism) means maintaining the same grammatical pattern across two or more coordinate words, phrases, or clauses in a series. This produces rhythmic beauty, clarity, and rhetorical weight in speech and composition.',
-    whyItMatters: 'Parallel syntax is the hallmark of great British prose, used by Robert Burns, Walter Scott, and Winston Churchill to craft memorable rhetoric.',
+    whyItMatters: 'Parallel syntax is the hallmark of great British prose, used by William Shakespeare, Jane Austen, and Winston Churchill to craft memorable rhetoric.',
     sections: [
       {
         id: 'sec-parallelism-rules',
         title: '1. Maintaining Grammatical Symmetry',
         content: 'All coordinated elements in a list, pair, or comparison must share the exact same grammatical shape:',
         bulletPoints: [
-          '**Faulty & Jarring (Unbalanced):** *The visitor enjoyed **hiking** in the Highlands, **to tour** Stirling Castle, and **a taste of** fresh shortbread.*',
-          '**Parallel & Elegant (Balanced Gerunds):** *The visitor enjoyed **hiking** in the Highlands, **touring** Stirling Castle, and **tasting** fresh shortbread.*',
-          '**Parallel Infinitives:** *The clan chief resolved **to defend** their glen, **to protect** their families, and **to preserve** their ancient traditions.*',
-          '**Rhetorical Parallelism in Scottish History (The Declaration of Arbroath, 1320):** *"It is in truth not for glory, nor riches, nor honours that we are fighting, but for freedom alone..."*'
+          '**Faulty & Jarring (Unbalanced):** *The visitor enjoyed **hiking** along the coast, **to tour** the historic castle, and **a taste of** local cider.*',
+          '**Parallel & Elegant (Balanced Gerunds):** *The visitor enjoyed **hiking** along the coast, **touring** the historic castle, and **tasting** local cider.*',
+          '**Parallel Infinitives:** *The council resolved **to defend** their borough, **to protect** green spaces, and **to preserve** their civic heritage.*',
+          '**Rhetorical Parallelism in British History (Winston Churchill, 1940):** *"We shall fight on the beaches, we shall fight on the landing grounds, we shall fight in the fields and in the streets..."*'
         ],
         examples: [
           {
             id: 'ex-l5-ps1',
-            sentence: 'The Highland conservation project aims **to restore** native Caledonian pinewoods, **to rewild** historical glens, and **to protect** indigenous Scottish wildlife.',
-            highlightWords: ['to restore', 'to rewild', 'to protect'],
-            explanation: 'Balanced infinitive verbs ("to restore", "to rewild", "to protect") create persuasive rhetorical symmetry.',
-            contextNote: 'Cairngorms National Park manifesto'
+            sentence: 'The national park trust aims **to restore** ancient oak woodlands, **to protect** peat bogs, and **to reintroduce** native British species.',
+            highlightWords: ['to restore', 'to protect', 'to reintroduce'],
+            explanation: 'Balanced infinitive verbs ("to restore", "to protect", "to reintroduce") create persuasive rhetorical symmetry.',
+            contextNote: 'National nature reserve manifesto'
           },
           {
             id: 'ex-l5-ps2',
-            sentence: 'The Braemar gathering was praised for its **formidable caber tosses**, its **electrifying bagpipe fanfares**, and its **graceful Highland dancing**.',
-            highlightWords: ['formidable caber tosses', 'electrifying bagpipe fanfares', 'graceful Highland dancing'],
+            sentence: 'The cultural festival was praised for its **vibrant brass fanfares**, its **dynamic theatrical staging**, and its **mesmerising choral performances**.',
+            highlightWords: ['vibrant brass fanfares', 'dynamic theatrical staging', 'mesmerising choral performances'],
             explanation: 'Each element in the tricolon follows the identical pattern: [adjective + noun phrase].',
-            contextNote: 'Highland Games review'
+            contextNote: 'Arts festival review'
           },
           {
             id: 'ex-l5-ps3',
-            sentence: 'Robert Burns composed poems that were **deeply romantic**, **fiercely patriotic**, and **richly observant** of everyday Scottish life.',
-            highlightWords: ['deeply romantic', 'fiercely patriotic', 'richly observant'],
+            sentence: 'Jane Austen composed novels that were **deeply observant**, **wittily satirical**, and **brilliantly insightful** regarding society.',
+            highlightWords: ['deeply observant', 'wittily satirical', 'brilliantly insightful'],
             explanation: 'Parallel construction: [adverb of degree + descriptive adjective].',
-            contextNote: 'Literary appraisal of Robert Burns'
+            contextNote: 'Literary appraisal of Jane Austen'
           }
         ],
         ruleSummary: 'Parallel elements must match in grammatical form (all gerunds, all infinitives, or all matching noun phrases).'
@@ -322,13 +322,13 @@ export const LEVEL_5_TOPICS: GrammarTopic[] = [
         prompt: 'Select the sentence with PERFECT parallel structure:',
         instruction: 'Pick the grammatically balanced sentence.',
         options: [
-          'The Scottish guide instructed us to stay together, walking quietly, and don\'t touch artifacts.',
-          'The Scottish guide instructed us to stay together, to walk quietly, and not to touch artifacts.',
-          'The Scottish guide instructed us to stay together, walk quiet, and no touching.',
-          'The Scottish guide instructed us staying together, to walk quietly, and do not touch.'
+          'The tour guide instructed us to stay together, walking quietly, and don\'t touch artifacts.',
+          'The tour guide instructed us to stay together, to walk quietly, and not to touch artifacts.',
+          'The tour guide instructed us to stay together, walk quiet, and no touching.',
+          'The tour guide instructed us staying together, to walk quietly, and do not touch.'
         ],
         correctIndex: 1,
-        explanation: '**The Scottish guide instructed us to stay together, to walk quietly, and not to touch artifacts.** maintains parallel infinitive verbs throughout.'
+        explanation: '**The tour guide instructed us to stay together, to walk quietly, and not to touch artifacts.** maintains parallel infinitive verbs throughout.'
       }
     ]
   }

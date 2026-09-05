@@ -194,7 +194,7 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
     const isMastered = finalScore >= 80;
 
     const celebrationPraise = isMastered 
-      ? `Splendid mastery! You scored ${finalScore} percent and conquered ${topic.title} with true Scottish brilliance!`
+      ? `Splendid mastery! You scored ${finalScore} percent and conquered ${topic.title} with outstanding grammar accuracy!`
       : `Good effort! You scored ${finalScore} percent on ${topic.title}. Practise once more to claim full mastery!`;
 
     return (
@@ -216,7 +216,7 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
           >
             <img 
               src={APP_IMAGES.trophy}
-              alt="Golden Scottish Grammar Trophy"
+              alt="Golden Grammar Trophy"
               referrerPolicy="no-referrer"
               className="w-full h-full object-cover"
             />
@@ -240,7 +240,7 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
         </div>
 
         <h3 className="text-2xl sm:text-3xl font-heading font-extrabold mb-1.5 flex items-center justify-center gap-2">
-          <span>{isMastered ? '🏆 Highland Lesson Mastered!' : '⭐ Valiant Scottish Effort!'}</span>
+          <span>{isMastered ? '🏆 Lesson Mastered!' : '⭐ Great Effort!'}</span>
         </h3>
         <p className="text-sm sm:text-base opacity-85 mb-6 max-w-md mx-auto">
           You answered <strong className="font-extrabold">{correctAnswersCount}</strong> out of{' '}

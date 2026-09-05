@@ -23,38 +23,38 @@ export function getThematicImageForLevel(level: DifficultyLevel): {
     case 'level-1':
       return {
         src: mascotImg,
-        alt: 'Hamish the Highland Coo reading an illuminated grammar book in the Scottish hills',
-        tagline: 'Join Hamish the Highland Coo on your first grammar adventure!',
+        alt: 'Friendly mascot reading an illuminated grammar book',
+        tagline: 'Embark on your journey into nouns, verbs, and punctuation across the UK!',
       };
     case 'level-2':
       return {
         src: castleImg,
-        alt: 'Ancient Scottish castle illuminated by aurora borealis with glowing scrolls',
-        tagline: 'Discover clauses and punctuation beneath the Highland northern lights.',
+        alt: 'Historic British castle illuminated by starry skies with glowing scrolls',
+        tagline: 'Discover pronouns, adverbs, and compound sentences across the British Isles.',
       };
     case 'level-3':
       return {
         src: castleImg,
-        alt: 'Highland fortress with magical glowing speech bubbles and connectors',
-        tagline: 'Navigate complex sentences, dialogues, and I SAW A WABUB connectors.',
+        alt: 'Medieval castle courtyard with speech bubbles and clause bridges',
+        tagline: 'Master complex sentences, dialogue punctuation, and fronted adverbials.',
       };
     case 'level-4':
       return {
         src: scholarImg,
-        alt: 'Cozy Scottish scholar library overlooking Edinburgh Castle with ancient manuscripts',
-        tagline: 'Master advanced syntax, active/passive voice, and semicolons in the scholar study.',
+        alt: 'Scholar library with bookshelves and manuscripts',
+        tagline: 'Master advanced syntax, active and passive voice, and semicolons.',
       };
     case 'level-5':
       return {
         src: scholarImg,
-        alt: 'Scholarly desk with quill, leather-bound volumes, and Edinburgh skyline at twilight',
-        tagline: 'Refine academic register, rhetorical parallelism, and GCSE Grade 9 mastery.',
+        alt: 'Scholarly desk with quill, leather-bound volumes, and historic skyline at twilight',
+        tagline: 'Refine academic register, rhetorical parallelism, and GCSE Grade 9 grammar mastery.',
       };
     default:
       return {
         src: mascotImg,
-        alt: 'Scottish grammar mascot',
-        tagline: 'Explore the grammar of British English with Scottish cultural flair.',
+        alt: 'Grammar study companion',
+        tagline: 'Explore the foundations of British English with rich UK-wide examples.',
       };
   }
 }

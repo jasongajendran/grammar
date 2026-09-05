@@ -22,32 +22,32 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
         title: '1. What is a Common Noun?',
         content: 'A **common noun** is the general name for an everyday person, place, animal, or thing. It does **not** take a capital letter unless it starts a sentence.',
         bulletPoints: [
-          '**People (general jobs & family):** boy, teacher, piper, farmer, sister (for example: *The **piper** tuned his wooden instruments*).',
-          '**Places (general locations):** park, school, beach, castle, island, glen (for example: *The ancient **castle** stood quietly on the rocky cliff*).',
-          '**Animals (creatures & wildlife):** badger, stag, hedgehog, otter, eagle, sheep (for example: *A majestic **stag** stepped through the purple heather*).',
-          '**Things (everyday objects):** pencil, biscuit, boat, kilt, teapot, lantern (for example: *She poured hot tea into a ceramic **cup** while eating a butter **biscuit***).'
+          '**People (general jobs & family):** boy, teacher, pilot, farmer, sister (for example: *The **farmer** tended his flock of sheep*).',
+          '**Places (general locations):** park, school, beach, castle, island, valley (for example: *The ancient **castle** stood quietly on the rocky cliff*).',
+          '**Animals (creatures & wildlife):** badger, stag, hedgehog, otter, eagle, sheep (for example: *A cautious **badger** snuffled through the damp woods*).',
+          '**Things (everyday objects):** pencil, biscuit, boat, bicycle, teapot, lantern (for example: *She poured hot tea into a ceramic **cup** while eating a butter **biscuit***).'
         ],
         examples: [
           {
             id: 'ex-l1-n1',
-            sentence: 'The shaggy Highland **cow** grazed beside the clear mountain **stream**.',
-            highlightWords: ['cow', 'stream'],
-            explanation: '**Cow** (an animal) and **stream** (a place/feature) are general everyday things, so they are common nouns.',
-            contextNote: 'Scottish Highlands nature'
+            sentence: 'The shaggy brown **pony** grazed beside the clear mountain **stream**.',
+            highlightWords: ['pony', 'stream'],
+            explanation: '**Pony** (an animal) and **stream** (a landscape feature) are general everyday things, so they are common nouns.',
+            contextNote: 'Dartmoor National Park nature'
           },
           {
             id: 'ex-l1-n2',
-            sentence: 'The friendly **ferryman** steered the small wooden **boat** across the misty **loch**.',
-            highlightWords: ['ferryman', 'boat', 'loch'],
-            explanation: '**Ferryman** (a person), **boat** (an object), and **loch** (a lake/place) are common nouns written in lowercase.',
-            contextNote: 'Scottish loch journey'
+            sentence: 'The friendly **ferryman** steered the small wooden **boat** across the misty **harbour**.',
+            highlightWords: ['ferryman', 'boat', 'harbour'],
+            explanation: '**Ferryman** (a person), **boat** (an object), and **harbour** (a place) are common nouns written in lowercase.',
+            contextNote: 'Cornish coastal harbour'
           },
           {
             id: 'ex-l1-n3',
-            sentence: 'A golden **eagle** circled high above the craggy **valley**.',
-            highlightWords: ['eagle', 'valley'],
-            explanation: '**Eagle** names the bird and **valley** names the landscape; both are common nouns.',
-            contextNote: 'Cairngorms wildlife'
+            sentence: 'A red **kite** circled high above the craggy **valley**.',
+            highlightWords: ['kite', 'valley'],
+            explanation: '**Kite** names the bird and **valley** names the landscape; both are common nouns.',
+            contextNote: 'Welsh valley wildlife'
           }
         ],
         ruleSummary: 'Common nouns name general things and use lowercase letters.'
@@ -57,32 +57,32 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
         title: '2. What is a Proper Noun?',
         content: 'A **proper noun** is a specific, official name for a particular person, place, day, month, festival, or landmark. A proper noun **always begins with a capital letter**.',
         bulletPoints: [
-          '**Names of specific people:** Oliver, Isla, Robert Burns, Mary Queen of Scots (for example: ***Robert Burns** wrote famous Scottish songs*).',
-          '**Specific places & landmarks:** Edinburgh, Inverness, Loch Ness, Arthur\'s Seat, River Tay, Stirling Castle (for example: *The view from **Arthur\'s Seat** over **Edinburgh** is spectacular*).',
-          '**Days, Months & Celebrations:** Monday, Friday, August, December, Hogmanay, Burns Night (for example: *We celebrate **Hogmanay** on **New Year\'s Eve***).',
-          '**Countries, Nations & Languages:** Scotland, England, Wales, Gaelic, British English (for example: *Many road signs in **Scotland** are written in both **Gaelic** and **English***).'
+          '**Names of specific people:** Oliver, Isla, William Shakespeare, Dylan Thomas (for example: ***William Shakespeare** wrote famous plays in London*).',
+          '**Specific places & landmarks:** London, Cardiff, Belfast, Edinburgh, Giant\'s Causeway, Snowdonia, Tower Bridge (for example: *The view of **Tower Bridge** over the **Thames** is iconic*).',
+          '**Days, Months & Celebrations:** Monday, Friday, August, December, St David\'s Day, St Patrick\'s Day (for example: *We celebrate **St Andrew\'s Day** in **November***).',
+          '**Countries, Nations & Languages:** England, Scotland, Wales, Northern Ireland, Welsh, British English (for example: *Road signs in **Wales** are written in both **Welsh** and **English***).'
         ],
         examples: [
           {
             id: 'ex-l1-n4',
-            sentence: '**Callum** and **Fiona** visited **Edinburgh Castle** on **Saturday**.',
-            highlightWords: ['Callum', 'Fiona', 'Edinburgh Castle', 'Saturday'],
-            explanation: '**Callum** and **Fiona** (people), **Edinburgh Castle** (famous Scottish monument), and **Saturday** (day of the week) are all proper nouns requiring initial capital letters.',
-            contextNote: 'Edinburgh landmark visit'
+            sentence: '**Oliver** and **Fiona** visited **Cardiff Castle** on **Saturday**.',
+            highlightWords: ['Oliver', 'Fiona', 'Cardiff Castle', 'Saturday'],
+            explanation: '**Oliver** and **Fiona** (people), **Cardiff Castle** (historic Welsh landmark), and **Saturday** (day of the week) are all proper nouns requiring initial capital letters.',
+            contextNote: 'Cardiff landmark visit'
           },
           {
             id: 'ex-l1-n5',
-            sentence: 'In the month of **August**, tourists from all over the world gather for the **Edinburgh International Festival**.',
+            sentence: 'In the month of **August**, visitors from across the globe gather for the **Edinburgh International Festival**.',
             highlightWords: ['August', 'Edinburgh International Festival'],
             explanation: '**August** (calendar month) and **Edinburgh International Festival** (official cultural event title) are proper nouns.',
-            contextNote: 'Scottish cultural festival'
+            contextNote: 'UK cultural festival'
           },
           {
             id: 'ex-l1-n6',
-            sentence: 'The famous monster hunter scanned **Loch Ness** near the ruins of **Urquhart Castle**.',
-            highlightWords: ['Loch Ness', 'Urquhart Castle'],
-            explanation: '**Loch Ness** is a specific Scottish body of water and **Urquhart Castle** is a historic monument.',
-            contextNote: 'Loch Ness exploration'
+            sentence: 'Geologists explored the hexagonal basalt columns of **Giant\'s Causeway** in **Northern Ireland**.',
+            highlightWords: ['Giant\'s Causeway', 'Northern Ireland'],
+            explanation: '**Giant\'s Causeway** is a specific geological landmark and **Northern Ireland** is a nation.',
+            contextNote: 'Northern Ireland landmark'
           }
         ],
         ruleSummary: 'Proper nouns are unique names and ALWAYS start with a capital letter.'
@@ -168,31 +168,31 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
         title: '1. Action Verbs (Doing Words)',
         content: 'Action verbs tell us what someone or something is **doing**, **making**, or **performing**.',
         bulletPoints: [
-          '**Physical actions (movement & work):** jump, sprint, pedal, paint, bake, climb (for example: *The Highland dancer **leapt** over the crossed swords*).',
-          '**Sound actions (noises & voices):** whisper, roar, chime, whistle, chant (for example: *The bagpipes **echoed** through the misty Scottish glen*).',
-          '**Mental actions (thoughts & feelings):** think, remember, imagine, admire, wonder (for example: *The hiker **imagined** a mythical kelpie swimming beneath the waves of Loch Ness*).'
+          '**Physical actions (movement & work):** jump, sprint, pedal, paint, bake, climb (for example: *The athletes **sprinted** along the Olympic running track*).',
+          '**Sound actions (noises & voices):** whisper, roar, chime, whistle, chant (for example: *Big Ben **chimed** across the foggy London streets*).',
+          '**Mental actions (thoughts & feelings):** think, remember, imagine, admire, wonder (for example: *The walker **admired** the dramatic peaks of Snowdonia*).'
         ],
         examples: [
           {
             id: 'ex-l1-v1',
-            sentence: 'The golden eagle **soared** majestically across the craggy peaks of the Isle of Skye.',
+            sentence: 'The red kite **soared** majestically across the valleys of Eryri in Wales.',
             highlightWords: ['soared'],
-            explanation: '**Soared** is the physical flying action performed by the eagle.',
-            contextNote: 'Isle of Skye wildlife'
+            explanation: '**Soared** is the physical flying action performed by the red kite.',
+            contextNote: 'Welsh valley wildlife'
           },
           {
             id: 'ex-l1-v2',
-            sentence: 'Grandmother **baked** sweet buttery shortbread for the afternoon ceilidh.',
+            sentence: 'Grandmother **baked** warm crusty scones with sweet strawberry jam.',
             highlightWords: ['baked'],
             explanation: '**Baked** is the physical kitchen action Grandmother completed.',
-            contextNote: 'Scottish baking'
+            contextNote: 'British baking'
           },
           {
             id: 'ex-l1-v3',
-            sentence: 'A playful river otter **splashed** through the cool waters of Loch Lomond.',
+            sentence: 'A playful river otter **splashed** through the cool waters of Lake Windermere.',
             highlightWords: ['splashed'],
             explanation: '**Splashed** is the vigorous movement action of the otter.',
-            contextNote: 'Loch Lomond wildlife'
+            contextNote: 'Lake District wildlife'
           }
         ],
         ruleSummary: 'Action verbs show what the subject does or feels.'
@@ -202,31 +202,31 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
         title: '2. Helping & State of Being Verbs ("To Be")',
         content: 'Not all verbs are energetic actions! Some verbs simply tell us that something **exists** or describe a state of being. The most common state of being verbs are forms of **to be**: *is, am, are, was, were*. Other linking verbs include *seem, look, feel, become, remain*.',
         bulletPoints: [
-          '**Present state (what someone or something is right now):** I *am* happy; The weather *is* rainy; We *are* ready (for example: *Ben Nevis **is** the highest mountain in Scotland and the British Isles*).',
-          '**Past state (what someone or something was in the past):** The castle *was* ancient; The soldiers *were* brave (for example: *Stirling Castle **was** an impenetrable fortress throughout the Scottish Wars of Independence*).',
-          '**Linking role (connecting a subject directly to its description):** These verbs link a subject to an adjective or descriptive noun (for example: *Edinburgh Castle **remains** magnificent*; *The Scottish highlands **look** breathtaking in summer*; *The waters of Loch Ness **seemed** peaceful under the silver fog*).'
+          '**Present state (what someone or something is right now):** I *am* happy; The weather *is* rainy; We *are* ready (for example: *London **is** the capital city of the United Kingdom*).',
+          '**Past state (what someone or something was in the past):** The castle *was* ancient; The soldiers *were* brave (for example: *Conwy Castle **was** a formidable medieval fortress*).',
+          '**Linking role (connecting a subject directly to its description):** These verbs link a subject to an adjective or descriptive noun (for example: *Tower Bridge **remains** magnificent*; *The Lake District fells **look** breathtaking in summer*; *The waters of Strangford Lough **seemed** peaceful*).'
         ],
         examples: [
           {
             id: 'ex-l1-v4',
-            sentence: 'Edinburgh **is** the historic capital city of Scotland.',
+            sentence: 'London **is** the historic capital city of the United Kingdom.',
             highlightWords: ['is'],
-            explanation: '**Is** is a state-of-being verb connecting Edinburgh to its official description.',
-            contextNote: 'Scottish geography'
+            explanation: '**Is** is a state-of-being verb connecting London to its official description.',
+            contextNote: 'UK geography'
           },
           {
             id: 'ex-l1-v5',
-            sentence: 'The mountaineers **were** triumphant when they reached the snowy summit of the Cairngorms.',
+            sentence: 'The mountaineers **were** triumphant when they reached the rocky summit of Snowdon.',
             highlightWords: ['were'],
             explanation: '**Were** shows the past state of being and feeling of the mountaineers.',
-            contextNote: 'Highland mountain trek'
+            contextNote: 'Welsh mountain trek'
           },
           {
             id: 'ex-l1-v6',
-            sentence: 'The ancient stone towers of Dunnottar Castle **looked** mysterious against the sea mist.',
+            sentence: 'The ancient stone towers of Bamburgh Castle **looked** dramatic against the North Sea waves.',
             highlightWords: ['looked'],
-            explanation: '**Looked** is a linking verb connecting the castle towers to their description (*mysterious*).',
-            contextNote: 'Coastal Scottish castle'
+            explanation: '**Looked** is a linking verb connecting the castle towers to their description (*dramatic*).',
+            contextNote: 'Northumberland coastal castle'
           }
         ],
         ruleSummary: 'State-of-being and linking verbs (is, are, was, were, seems, remains) link subjects to their descriptions.'
@@ -252,7 +252,7 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
         instruction: 'Pick the doing word.',
         options: ['Teapot', 'Gallop', 'Yellow', 'Careful'],
         correctIndex: 1,
-        explanation: '**Gallop** is an action that a Highland pony can perform, so it is an action verb.'
+        explanation: '**Gallop** is an action that a pony or horse can perform, so it is an action verb.'
       },
       {
         id: 'ex-q2-l1-verbs',
@@ -260,8 +260,8 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
         difficultyStep: 2,
         prompt: 'Tap on the two VERBS in the sentence below.',
         instruction: 'Identify both the action verb and the state verb.',
-        sentence: 'The red deer bounded across the glen and was very swift.',
-        words: ['The', 'red', 'deer', 'bounded', 'across', 'the', 'glen', 'and', 'was', 'very', 'swift.'],
+        sentence: 'The red deer bounded across the meadow and was very swift.',
+        words: ['The', 'red', 'deer', 'bounded', 'across', 'the', 'meadow', 'and', 'was', 'very', 'swift.'],
         targetIndices: [3, 8],
         targetCategoryLabel: 'Verb',
         explanation: '**Bounded** is an action verb showing how the deer moved, and **was** is a state-of-being verb.'
@@ -292,39 +292,39 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
     iconName: 'Palette',
     estimatedMinutes: 5,
     overview: 'An **adjective** is a word that describes, qualifies, or gives more information about a noun or pronoun. Adjectives tell us **what kind**, **which one**, or **how many**.',
-    whyItMatters: 'Adjectives paint vivid pictures in the reader\'s mind. Instead of just "a castle", we can write "a towering, storm-battered Scottish fortress".',
+    whyItMatters: 'Adjectives paint vivid pictures in the reader\'s mind. Instead of just "a castle", we can write "a towering, storm-battered coastal fortress".',
     sections: [
       {
         id: 'sec-types-adjectives',
         title: '1. What do Adjectives Describe?',
         content: 'Adjectives can describe many different qualities of a noun:',
         bulletPoints: [
-          '**Colours & Appearance:** crimson, emerald, golden, sparkling, gloomy, purple (for example: *The **purple** heather carpeted the **misty** Scottish hillsides*).',
-          '**Size & Shape:** colossal, miniature, circular, narrow, towering, rugged (for example: *A **towering** granite crag protects the castle from **howling** winds*).',
-          '**Feelings & Personality:** cheerful, courageous, gentle, proud, fierce (for example: *The **courageous** Scottish warriors defended the fortress*).',
-          '**Touch, Taste & Sound:** crunchy, scorching, deafening, silky, buttery (for example: *We enjoyed **warm**, **buttery** Scottish shortbread alongside hot tea*).'
+          '**Colours & Appearance:** crimson, emerald, golden, sparkling, gloomy, purple (for example: *The **purple** heather carpeted the **windy** Yorkshire moors*).',
+          '**Size & Shape:** colossal, miniature, circular, narrow, towering, rugged (for example: *A **towering** granite cliff protects the harbour from **howling** gales*).',
+          '**Feelings & Personality:** cheerful, courageous, gentle, proud, fierce (for example: *The **courageous** lifeboat crew launched into the stormy sea*).',
+          '**Touch, Taste & Sound:** crunchy, scorching, deafening, silky, buttery (for example: *We enjoyed **warm**, **buttery** scones alongside hot tea*).'
         ],
         examples: [
           {
             id: 'ex-l1-adj1',
-            sentence: 'The **ancient**, **stone** castle overlooked the **deep**, **sparkling** loch.',
+            sentence: 'The **ancient**, **stone** lighthouse overlooked the **deep**, **sparkling** bay.',
             highlightWords: ['ancient', 'stone', 'deep', 'sparkling'],
-            explanation: '**Ancient** (age) and **stone** (material) describe the castle. **Deep** and **sparkling** describe the loch.',
-            contextNote: 'Scottish loch landscape'
+            explanation: '**Ancient** (age) and **stone** (material) describe the lighthouse. **Deep** and **sparkling** describe the bay.',
+            contextNote: 'Cornish coastal landscape'
           },
           {
             id: 'ex-l1-adj2',
-            sentence: 'Fiona wore a **cosy**, **tartan** scarf on the **frosty** winter morning in Aberdeen.',
-            highlightWords: ['cosy', 'tartan', 'frosty'],
-            explanation: '**Cosy** and **tartan** describe the scarf, while **frosty** describes the morning.',
-            contextNote: 'Scottish winter morning'
+            sentence: 'Fiona wore a **cosy**, **woollen** scarf on the **frosty** winter morning in York.',
+            highlightWords: ['cosy', 'woollen', 'frosty'],
+            explanation: '**Cosy** and **woollen** describe the scarf, while **frosty** describes the morning.',
+            contextNote: 'Northern winter morning'
           },
           {
             id: 'ex-l1-adj3',
-            sentence: 'The **wild**, **rugged** peaks of the Cuillin range appeared **dramatic** under dark storm clouds.',
+            sentence: 'The **wild**, **rugged** peaks of the Lake District appeared **dramatic** under dark storm clouds.',
             highlightWords: ['wild', 'rugged', 'dramatic'],
             explanation: '**Wild** and **rugged** sit before the noun *peaks*, while **dramatic** follows the linking verb *appeared*.',
-            contextNote: 'Isle of Skye mountain scenery'
+            contextNote: 'Cumbrian mountain scenery'
           }
         ],
         ruleSummary: 'Adjectives usually sit directly before the noun they describe or after a linking verb.'
@@ -334,7 +334,7 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
       {
         id: 'tip-l1-adj1',
         title: 'The Sense Check for Adjectives',
-        trick: 'Ask your five senses: What does it look, sound, smell, taste, or feel like? (for example: *the roaring waterfall*, *the sweet heather honey*).',
+        trick: 'Ask your five senses: What does it look, sound, smell, taste, or feel like? (for example: *the roaring waterfall*, *the sweet wildflower honey*).',
         mnemonic: 'Adjectives ADD colour and detail to Nouns!',
         commonMistake: 'Using too many adjectives in a row without commas (for example: *the big brown fluffy friendly dog*).',
         correctWay: 'Pick one or two powerful adjectives and separate them with a comma (for example: *the scruffy, energetic terrier*).',
@@ -358,11 +358,11 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
         difficultyStep: 2,
         prompt: 'Tap on all the ADJECTIVES in this sentence.',
         instruction: 'Click the describing words.',
-        sentence: 'The curious seal swam through the crystal waters near the rocky Scottish cove.',
-        words: ['The', 'curious', 'seal', 'swam', 'through', 'the', 'crystal', 'waters', 'near', 'the', 'rocky', 'Scottish', 'cove.'],
+        sentence: 'The curious seal swam through the crystal waters near the rocky coastal cove.',
+        words: ['The', 'curious', 'seal', 'swam', 'through', 'the', 'crystal', 'waters', 'near', 'the', 'rocky', 'coastal', 'cove.'],
         targetIndices: [1, 6, 10, 11],
         targetCategoryLabel: 'Adjective',
-        explanation: '**Curious** describes the seal, **crystal** describes the waters, **rocky** describes the cove, and **Scottish** is a proper adjective describing the cove.'
+        explanation: '**Curious** describes the seal, **crystal** describes the waters, **rocky** and **coastal** describe the cove.'
       }
     ]
   },
@@ -387,31 +387,31 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
         title: '1. When to Use a Capital Letter',
         content: 'Always use a capital letter in these three vital places:',
         bulletPoints: [
-          '**Start of a sentence:** **T**he ferry sailed out into the Firth of Forth.',
-          '**Proper nouns (names of people, places, days, and months):** **F**iona, **E**dinburgh, **S**cottish **H**ighlands, **A**ugust, **T**uesday (for example: *On **M**onday, **C**ameron climbed **B**en **N**evis*).',
-          '**The personal pronoun "I":** When referring to yourself, **I** is ALWAYS capitalised, even in the middle of a sentence (for example: *"Isla and **I** watched the dolphins jump at Chanonry Point"*).'
+          '**Start of a sentence:** **T**he ferry sailed out into the English Channel.',
+          '**Proper nouns (names of people, places, days, and months):** **F**iona, **L**ondon, **C**ardiff, **B**elfast, **A**ugust, **T**uesday (for example: *On **M**onday, **C**ameron climbed **S**nowdon*).',
+          '**The personal pronoun "I":** When referring to yourself, **I** is ALWAYS capitalised, even in the middle of a sentence (for example: *"Isla and **I** watched the dolphins jump along the coast"*).'
         ],
         examples: [
           {
             id: 'ex-l1-p1',
-            sentence: '**M**orag and **I** visited the **N**ational **M**useum of **S**cotland in **E**dinburgh.',
-            highlightWords: ['Morag', 'I', 'National Museum of Scotland', 'Edinburgh'],
-            explanation: 'Starts the sentence (Morag), personal pronoun (I), museum title (Proper noun), and city (Edinburgh).',
-            contextNote: 'Scottish cultural trip'
+            sentence: '**M**orag and **I** visited the **B**ritish **M**useum in **L**ondon.',
+            highlightWords: ['Morag', 'I', 'British Museum', 'London'],
+            explanation: 'Starts the sentence (Morag), personal pronoun (I), museum title (Proper noun), and city (London).',
+            contextNote: 'London cultural trip'
           },
           {
             id: 'ex-l1-p2',
-            sentence: '**T**he red squirrel gathered hazelnuts beneath the pine trees of the **C**airngorms.**',
-            highlightWords: ['The', 'Cairngorms', '.'],
-            explanation: 'Starts with a capital **T**, capitalises the national park name (**Cairngorms**), and finishes with a clear **full stop (.)**.',
-            contextNote: 'Highland wildlife'
+            sentence: '**T**he red squirrel gathered hazelnuts beneath the oak trees of the **L**ake **D**istrict.**',
+            highlightWords: ['The', 'Lake District', '.'],
+            explanation: 'Starts with a capital **T**, capitalises the national park name (**Lake District**), and finishes with a clear **full stop (.)**.',
+            contextNote: 'Cumbrian wildlife'
           },
           {
             id: 'ex-l1-p3',
-            sentence: '**D**id you spot the seals resting on the rocks of the **I**sle of **M**ay**?**',
-            highlightWords: ['Did', 'Isle of May', '?'],
+            sentence: '**D**id you spot the puffins nesting on the cliffs of the **F**arne **I**slands**?**',
+            highlightWords: ['Did', 'Farne Islands', '?'],
             explanation: 'Starts with a capital letter, capitalises the island name, and finishes with a question mark (?) because it asks a question.',
-            contextNote: 'Scottish island enquiry'
+            contextNote: 'Coastal island enquiry'
           }
         ],
         ruleSummary: 'Every sentence starts with a Capital Letter and ends with a Full Stop (or ? / !).'
@@ -421,7 +421,7 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
       {
         id: 'tip-l1-p1',
         title: 'The Breath Test for Full Stops',
-        trick: 'Read your work out loud. Where your voice naturally drops and takes a full breath, you have finished a complete thought and need a full stop (for example: *The piper finished his tune. The crowd cheered loudly.*).',
+        trick: 'Read your work out loud. Where your voice naturally drops and takes a full breath, you have finished a complete thought and need a full stop (for example: *The musicians finished their tune. The audience cheered loudly.*).',
         mnemonic: 'Capitals start the journey, Full Stops park the car!',
         commonMistake: 'Writing lowercase "i" for yourself (for example: *me and i went to the shop*).',
         correctWay: 'Always write capital **I** (for example: *Isla and I went to the shop*).',
@@ -435,8 +435,8 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
         difficultyStep: 1,
         prompt: 'Find the word that is missing a capital letter.',
         instruction: 'Click on the lowercase word that should be capitalised.',
-        sentenceWithMistake: 'every morning, the pipers practise along the Royal Mile.',
-        words: ['every', 'morning,', 'the', 'pipers', 'practise', 'along', 'the', 'Mile.'],
+        sentenceWithMistake: 'every morning, the guards march outside Buckingham Palace.',
+        words: ['every', 'morning,', 'the', 'guards', 'march', 'outside', 'Buckingham', 'Palace.'],
         errorWordIndex: 0,
         correctedWord: 'Every',
         ruleViolated: 'The first word of a sentence must start with a capital letter.',
@@ -449,13 +449,13 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
         prompt: 'Which of the following sentences is punctuated 100% correctly?',
         instruction: 'Select the correctly punctuated British English sentence.',
         options: [
-          'on saturdays i visit Stirling with Jack',
-          'On Saturdays, I visit Stirling with Jack.',
-          'on Saturdays, i visit stirling with jack.',
-          'On saturdays, I visit Stirling with jack.'
+          'on saturdays i visit York with Jack',
+          'On Saturdays, I visit York with Jack.',
+          'on Saturdays, i visit york with jack.',
+          'On saturdays, I visit York with jack.'
         ],
         correctIndex: 1,
-        explanation: '**On Saturdays, I visit Stirling with Jack.** is correct because "On" starts the sentence, "Saturdays", "Stirling", and "Jack" are proper nouns, and "I" is capitalised.'
+        explanation: '**On Saturdays, I visit York with Jack.** is correct because "On" starts the sentence, "Saturdays", "York", and "Jack" are proper nouns, and "I" is capitalised.'
       }
     ]
   },
@@ -480,31 +480,31 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
         title: '1. The Core Halves of a Simple Sentence',
         content: 'Every complete simple sentence has two core components (and often an optional receiver of the action called an object):',
         bulletPoints: [
-          '**The Subject (Who or what performs the action):** A person, animal, place, or thing (for example: ***The golden eagle** banked sharply in the sky*).',
-          '**The Verb (Predicate action or state):** The doing or being word (for example: *The Jacobite steam train **rumbled** across the Glenfinnan Viaduct*).',
-          '**The Direct Object (Optional receiver):** The person or thing receiving the action (for example: *Hamish caught **a leaping silver salmon** in the River Tay*).'
+          '**The Subject (Who or what performs the action):** A person, animal, place, or thing (for example: ***The red kite** banked sharply in the sky*).',
+          '**The Verb (Predicate action or state):** The doing or being word (for example: *The Flying Scotsman steam train **rumbled** across the viaduct*).',
+          '**The Direct Object (Optional receiver):** The person or thing receiving the action (for example: *Arthur caught **a bouncing football** in the park*).'
         ],
         examples: [
           {
             id: 'ex-l1-s1',
-            sentence: '**The Jacobite steam train** **whistled** proudly as it crossed the viaduct.',
-            highlightWords: ['The Jacobite steam train', 'whistled'],
-            explanation: '**The Jacobite steam train** is the subject performing the action. **Whistled** is the finite verb.',
-            contextNote: 'Scottish Highland railway'
+            sentence: '**The Flying Scotsman steam train** **whistled** proudly as it crossed the viaduct.',
+            highlightWords: ['The Flying Scotsman steam train', 'whistled'],
+            explanation: '**The Flying Scotsman steam train** is the subject performing the action. **Whistled** is the finite verb.',
+            contextNote: 'British railway heritage'
           },
           {
             id: 'ex-l1-s2',
-            sentence: '**Callum** **played** an old Scottish tune on his bagpipes.',
-            highlightWords: ['Callum', 'played'],
-            explanation: '**Callum** is the subject. **Played** is the action verb, and "an old Scottish tune" is the object.',
-            contextNote: 'Traditional music'
+            sentence: '**Dylan** **played** a cheerful folk tune on his violin.',
+            highlightWords: ['Dylan', 'played'],
+            explanation: '**Dylan** is the subject. **Played** is the action verb, and "a cheerful folk tune" is the object.',
+            contextNote: 'Musical performance'
           },
           {
             id: 'ex-l1-s3',
-            sentence: '**The red deer stag** **stood** proudly on the rocky crest.',
-            highlightWords: ['The red deer stag', 'stood'],
-            explanation: '**The red deer stag** is the subject. **Stood** is the verb expressing position.',
-            contextNote: 'Highland wildlife'
+            sentence: '**The wild pony** **stood** quietly beside the gorse bushes.',
+            highlightWords: ['The wild pony', 'stood'],
+            explanation: '**The wild pony** is the subject. **Stood** is the verb expressing position.',
+            contextNote: 'National park wildlife'
           }
         ],
         ruleSummary: 'A simple sentence = 1 Subject + 1 Finite Verb expressing one complete thought.'
@@ -514,10 +514,10 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
       {
         id: 'tip-l1-s1',
         title: 'Spotting Sentence Fragments',
-        trick: 'If a group of words is missing either a subject or a verb, it is only a **fragment** (for example: *"Running across the Scottish moors"* is a fragment because it does not state WHO is running!).',
+        trick: 'If a group of words is missing either a subject or a verb, it is only a **fragment** (for example: *"Running across the open fields"* is a fragment because it does not state WHO is running!).',
         mnemonic: 'Who does what? That makes a sentence!',
-        commonMistake: 'Leaving off the verb and writing just a phrase (for example: *"The Highland pony in the stable"*).',
-        correctWay: 'Add the verb: *"The Highland pony slept peacefully in the stable."*',
+        commonMistake: 'Leaving off the verb and writing just a phrase (for example: *"The friendly pony in the stable"*).',
+        correctWay: 'Add the verb: *"The friendly pony slept peacefully in the stable."*',
         explanation: 'A complete sentence must stand alone and make complete sense.'
       }
     ],
@@ -529,10 +529,10 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
         prompt: 'Which of the following is a COMPLETE simple sentence?',
         instruction: 'Pick the option that has both a subject and a verb.',
         options: [
-          'Under the stone bridge of the River Forth.',
+          'Under the old stone bridge by the river.',
           'The noisy tractor rumbled down the farm lane.',
-          'Eating delicious butter shortbread.',
-          'The shaggy Highland cow by the loch.'
+          'Eating delicious warm apple crumble.',
+          'The gentle pony beside the hedge.'
         ],
         correctIndex: 1,
         explanation: '**The noisy tractor rumbled down the farm lane.** has both a clear subject (The noisy tractor) and a finite verb (rumbled).'

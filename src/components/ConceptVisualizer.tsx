@@ -122,17 +122,17 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
                 >
                   <span className="px-4 py-2.5 rounded-2xl bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 border border-emerald-400/40 shadow-xs flex items-center gap-1.5">
                     <span className="text-xs bg-emerald-600 text-white px-1.5 py-0.5 rounded uppercase font-black tracking-widest">DOER</span>
-                    <span>Robert the Bruce</span>
+                    <span>Sir Christopher Wren</span>
                   </span>
                   <ArrowRight size={20} className="text-amber-600 hidden sm:inline" />
                   <span className="px-4 py-2.5 rounded-2xl bg-amber-500/20 text-amber-800 dark:text-amber-300 border border-amber-400/40 shadow-xs flex items-center gap-1.5">
                     <span className="text-xs bg-amber-600 text-white px-1.5 py-0.5 rounded uppercase font-black tracking-widest">ACTION</span>
-                    <span>led</span>
+                    <span>designed</span>
                   </span>
                   <ArrowRight size={20} className="text-amber-600 hidden sm:inline" />
                   <span className="px-4 py-2.5 rounded-2xl bg-blue-500/20 text-blue-800 dark:text-blue-300 border border-blue-400/40 shadow-xs flex items-center gap-1.5">
                     <span className="text-xs bg-blue-600 text-white px-1.5 py-0.5 rounded uppercase font-black tracking-widest">RECEIVER</span>
-                    <span>the Scottish army</span>
+                    <span>St Paul's Cathedral</span>
                   </span>
                 </motion.div>
               ) : (
@@ -146,17 +146,17 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
                 >
                   <span className="px-4 py-2.5 rounded-2xl bg-blue-500/20 text-blue-800 dark:text-blue-300 border border-blue-400/40 shadow-xs flex items-center gap-1.5">
                     <span className="text-xs bg-blue-600 text-white px-1.5 py-0.5 rounded uppercase font-black tracking-widest">SUBJECT</span>
-                    <span>The Scottish army</span>
+                    <span>St Paul's Cathedral</span>
                   </span>
                   <ArrowRight size={20} className="text-purple-600 hidden sm:inline" />
                   <span className="px-4 py-2.5 rounded-2xl bg-purple-500/20 text-purple-800 dark:text-purple-300 border border-purple-400/40 shadow-xs flex items-center gap-1.5">
                     <span className="text-xs bg-purple-600 text-white px-1.5 py-0.5 rounded uppercase font-black tracking-widest">BE + V3</span>
-                    <span>was led</span>
+                    <span>was designed</span>
                   </span>
                   <ArrowRight size={20} className="text-purple-600 hidden sm:inline" />
                   <span className="px-4 py-2.5 rounded-2xl bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 border border-emerald-400/40 shadow-xs flex items-center gap-1.5">
                     <span className="text-xs bg-emerald-600 text-white px-1.5 py-0.5 rounded uppercase font-black tracking-widest">AGENT</span>
-                    <span>by Robert the Bruce</span>
+                    <span>by Sir Christopher Wren</span>
                   </span>
                 </motion.div>
               )}
@@ -166,11 +166,11 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
           <div className="mt-4 pt-4 border-t border-black/5 dark:border-white/5 flex items-center justify-between gap-3 text-xs sm:text-sm opacity-85">
             <span className="font-medium">
               💡 {isPassive 
-                ? 'Notice how the auxiliary verb "was" + past participle "led" are paired, and the agent phrase "by..." can even be omitted!' 
-                : 'Notice how the King directly acts upon the army, creating direct narrative drive and punch!'}
+                ? 'Notice how the auxiliary verb "was" + past participle "designed" are paired, and the agent phrase "by..." can even be omitted!' 
+                : 'Notice how the architect directly acts upon the building, creating direct narrative drive and punch!'}
             </span>
             <AudioButton
-              text={isPassive ? 'The Scottish army was led by Robert the Bruce.' : 'Robert the Bruce led the Scottish army.'}
+              text={isPassive ? "St Paul's Cathedral was designed by Sir Christopher Wren." : "Sir Christopher Wren designed St Paul's Cathedral."}
               textId={`audio-voice-transformer-${isPassive ? 'passive' : 'active'}`}
               speechRate={speechRate}
               size="sm"
@@ -190,25 +190,25 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
         phrase: 'At the stroke of midnight,',
         type: 'Time',
         color: 'from-indigo-600 to-blue-600',
-        sentenceEnd: 'a lone bagpiper played atop Edinburgh Castle.',
+        sentenceEnd: 'Big Ben chimed across the River Thames in London.',
       },
       {
-        phrase: 'High above the misty loch,',
+        phrase: 'High above the rugged valley,',
         type: 'Place',
         color: 'from-emerald-600 to-teal-600',
-        sentenceEnd: 'a golden eagle soared over Ben Nevis.',
+        sentenceEnd: 'a red kite glided over the Welsh peaks of Eryri.',
       },
       {
-        phrase: 'With tremendous speed,',
+        phrase: 'With patient determination,',
         type: 'Manner',
         color: 'from-amber-600 to-orange-600',
-        sentenceEnd: 'the Scottish athlete tossed the wooden caber.',
+        sentenceEnd: 'geologists examined the basalt columns at Giant\'s Causeway.',
       },
       {
-        phrase: 'Braving the ferocious squalls,',
+        phrase: 'Braving the brisk morning wind,',
         type: 'Condition',
         color: 'from-rose-600 to-purple-600',
-        sentenceEnd: 'the CalMac ferry navigated into Stornoway.',
+        sentenceEnd: 'the ferry sailed smoothly toward the Isle of Skye.',
       },
     ];
 
@@ -396,7 +396,7 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
                     <span className="block text-[11px] uppercase tracking-wider text-sky-700 dark:text-sky-300 font-extrabold mb-1">
                       Independent Clause 1
                     </span>
-                    "Thick fog blanketed the Cairngorms"
+                    "Thick fog blanketed the Yorkshire moors"
                   </div>
 
                   <div className="md:col-span-1 flex flex-col items-center justify-center">
@@ -413,7 +413,7 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
                     <span className="block text-[11px] uppercase tracking-wider text-sky-700 dark:text-sky-300 font-extrabold mb-1">
                       Independent Clause 2
                     </span>
-                    "hikers checked their compass diligently."
+                    "hikers checked their map diligently."
                   </div>
                 </div>
 
@@ -438,7 +438,7 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
                     <span className="block text-[11px] uppercase tracking-wider text-amber-700 dark:text-amber-300 font-extrabold mb-1">
                       Complete Clause Before
                     </span>
-                    "Robert the Bruce made a resolute vow"
+                    "The National Trust warden issued a reminder"
                   </div>
 
                   <motion.div 
@@ -453,7 +453,7 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
                     <span className="block text-[11px] uppercase tracking-wider text-amber-700 dark:text-amber-300 font-extrabold mb-1">
                       Direct Explanation / Content
                     </span>
-                    "he would fight until Scotland secured freedom."
+                    "walkers must protect the coastal wildlife."
                   </div>
                 </div>
 
@@ -473,16 +473,16 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
   // -------------------------------------------------------------
   if (topic.id === 'l3-subordinating-conjunctions') {
     const wabubData = [
-      { letter: 'I', word: 'If', example: 'If the sea swells rise, the ferry anchors safely in Tobermory.' },
-      { letter: 'S', word: 'Since', example: 'Since Robert arrived in Edinburgh, he has walked the Royal Mile daily.' },
-      { letter: 'A', word: 'As', example: 'As the bagpiper finished his tune, the crowd erupted into cheers.' },
-      { letter: 'W', word: 'When', example: 'When night falls over the Highlands, the northern lights emerge.' },
-      { letter: 'A', word: 'Although', example: 'Although the wind was freezing, the hikers reached Ben Nevis summit.' },
-      { letter: 'W', word: 'While', example: 'While the dancers reel at the ceilidh, the fiddlers play lively jigs.' },
-      { letter: 'A', word: 'After', example: 'After the rain stopped, a radiant rainbow stretched across Loch Lomond.' },
-      { letter: 'B', word: 'Before', example: 'Before we crossed the Forth Rail Bridge, we admired its crimson girders.' },
-      { letter: 'U', word: 'Until', example: 'Until the storm passes, fishing boats remain moored in Stonehaven.' },
-      { letter: 'B', word: 'Because', example: 'Because the castle was impregnable, the defenders held firm for months.' },
+      { letter: 'I', word: 'If', example: 'If the tide is low, walkers can cross safely to St Michael\'s Mount in Cornwall.' },
+      { letter: 'S', word: 'Since', example: 'Since opening in Belfast, the Titanic Museum has welcomed millions of visitors.' },
+      { letter: 'A', word: 'As', example: 'As Big Ben struck noon, crowds gathered outside Westminster Abbey.' },
+      { letter: 'W', word: 'When', example: 'When evening descends over Snowdonia, the Welsh valleys grow peaceful.' },
+      { letter: 'A', word: 'Although', example: 'Although the climb up Scafell Pike was steep, the hikers reached the peak.' },
+      { letter: 'W', word: 'While', example: 'While actors rehearsed on the Globe Theatre stage, costume makers stitched Elizabethan lace.' },
+      { letter: 'A', word: 'After', example: 'After the summer shower cleared, a bright rainbow arched over Edinburgh Castle.' },
+      { letter: 'B', word: 'Before', example: 'Before we crossed the Menai Suspension Bridge into Anglesey, we paused to admire the view.' },
+      { letter: 'U', word: 'Until', example: 'Until dusk fell, puffins nested safely along the Antrim cliffs.' },
+      { letter: 'B', word: 'Because', example: 'Because the Roman baths in Somerset were fed by natural hot springs, their waters stayed warm.' },
     ];
 
     const currentWabub = wabubData[activeWabubIndex];
@@ -580,12 +580,12 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
   // -------------------------------------------------------------
   if (topic.id === 'l1-nouns') {
     const nounsList = [
-      { word: 'Edinburgh Castle', type: 'proper', icon: '🏰', hint: 'Specific historical landmark in Scotland' },
-      { word: 'thistle', type: 'common', icon: '🌸', hint: 'National flower of Scotland' },
-      { word: 'Robert Burns', type: 'proper', icon: '📜', hint: 'Scotland\'s celebrated national poet' },
-      { word: 'bagpipe', type: 'common', icon: '🎶', hint: 'Traditional musical instrument' },
-      { word: 'Loch Ness', type: 'proper', icon: '🌊', hint: 'Specific freshwater loch in the Highlands' },
-      { word: 'red deer', type: 'common', icon: '🦌', hint: 'Native majestic Highland animal' },
+      { word: 'Tower of London', type: 'proper', icon: '🏰', hint: 'Specific royal fortress on the River Thames' },
+      { word: 'steam train', type: 'common', icon: '🚂', hint: 'Everyday noun for a heritage railway engine' },
+      { word: 'Giant\'s Causeway', type: 'proper', icon: '🌊', hint: 'Famous UNESCO natural landmark in Northern Ireland' },
+      { word: 'oak tree', type: 'common', icon: '🌳', hint: 'Everyday noun for a classic British woodland tree' },
+      { word: 'Cardiff Castle', type: 'proper', icon: '🐉', hint: 'Specific historic landmark in Wales' },
+      { word: 'red squirrel', type: 'common', icon: '🐿️', hint: 'Everyday noun for a protected native mammal' },
     ];
 
     const filteredNouns = nounFilter === 'all' 
@@ -603,13 +603,13 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
             </div>
             <div>
               <h3 className="text-base sm:text-lg font-heading font-extrabold flex items-center gap-2">
-                <span>The Highland Noun Treasure Box</span>
+                <span>The UK Noun Treasure Chest</span>
                 <span className="text-xs px-2 py-0.5 rounded-full bg-amber-600 text-white font-bold uppercase tracking-wider">
                   Fun Explorer
                 </span>
               </h3>
               <p className="text-xs sm:text-sm opacity-75">
-                Common nouns name everyday things; Proper nouns name specific places and people with CAPITAL letters!
+                Common nouns name everyday things; Proper nouns name specific places and people across the UK with CAPITAL letters!
               </p>
             </div>
           </div>
@@ -741,19 +741,19 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-400/30">
-                  <div className="text-xl mb-1">🏃‍♂️</div>
-                  <div className="font-bold text-sm">"The pipers **marched**"</div>
-                  <p className="text-xs opacity-75">Physical action with energy</p>
+                  <div className="text-xl mb-1">🚣</div>
+                  <div className="font-bold text-sm">"Rowers **pulled** hard"</div>
+                  <p className="text-xs opacity-75">Physical action along the River Thames</p>
                 </div>
                 <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-400/30">
-                  <div className="text-xl mb-1">🪵</div>
-                  <div className="font-bold text-sm">"Hamish **tossed** the caber"</div>
-                  <p className="text-xs opacity-75">Highland Games athletic action</p>
+                  <div className="text-xl mb-1">🎶</div>
+                  <div className="font-bold text-sm">"The choir **sang** sweetly"</div>
+                  <p className="text-xs opacity-75">Vocal performance in Cardiff Cathedral</p>
                 </div>
                 <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-400/30">
-                  <div className="text-xl mb-1">🦅</div>
-                  <div className="font-bold text-sm">"The eagle **soared**"</div>
-                  <p className="text-xs opacity-75">Graceful movement through air</p>
+                  <div className="text-xl mb-1">🐿️</div>
+                  <div className="font-bold text-sm">"Red squirrels **dashed**"</div>
+                  <p className="text-xs opacity-75">Agile sprint through Lake District woods</p>
                 </div>
               </div>
             </motion.div>
@@ -769,18 +769,18 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-400/30">
                   <div className="text-xl mb-1">⛰️</div>
-                  <div className="font-bold text-sm">"Ben Nevis **is** towering"</div>
-                  <p className="text-xs opacity-75">Verb "to be" expressing existence</p>
+                  <div className="font-bold text-sm">"Snowdon **is** towering"</div>
+                  <p className="text-xs opacity-75">Verb "to be" expressing existence in Wales</p>
                 </div>
                 <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-400/30">
-                  <div className="text-xl mb-1">🏰</div>
-                  <div className="font-bold text-sm">"Stirling Castle **was** strong"</div>
-                  <p className="text-xs opacity-75">Past state of being</p>
+                  <div className="text-xl mb-1">🪨</div>
+                  <div className="font-bold text-sm">"Stonehenge **looked** ancient"</div>
+                  <p className="text-xs opacity-75">Sensory linking verb in Wiltshire</p>
                 </div>
                 <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-400/30">
                   <div className="text-xl mb-1">🌊</div>
-                  <div className="font-bold text-sm">"Loch Ness **remains** calm"</div>
-                  <p className="text-xs opacity-75">Linking verb connecting subject to quality</p>
+                  <div className="font-bold text-sm">"The Giant's Causeway **remains**"</div>
+                  <p className="text-xs opacity-75">Linking verb connecting timeless landmark</p>
                 </div>
               </div>
             </motion.div>
@@ -799,28 +799,28 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
         name: 'Zero Conditional',
         badge: 'Universal Fact',
         formula: 'If + Present Simple, Present Simple',
-        example: 'If winter arrives in the Cairngorms, mountain lochs freeze solid.',
+        example: 'If heavy rain falls on Dartmoor, the peat bogs absorb the water.',
         bg: 'from-blue-600 to-cyan-600',
       },
       {
         name: '1st Conditional',
         badge: 'Real Future Probability',
         formula: 'If + Present Simple, will + base verb',
-        example: 'If the ferry departs Oban on time, we will arrive on Mull by noon.',
+        example: 'If the ferry departs Dover on schedule, we will reach the harbour by noon.',
         bg: 'from-emerald-600 to-teal-600',
       },
       {
         name: '2nd Conditional',
         badge: 'Hypothetical Dream',
         formula: 'If + Past Simple, would + base verb',
-        example: 'If I owned an ancient Scottish estate, I would establish a red squirrel sanctuary.',
+        example: 'If I lived in a cottage in the Lake District, I would write poetry every afternoon.',
         bg: 'from-purple-600 to-pink-600',
       },
       {
         name: '3rd Conditional',
         badge: 'Past Alternate Reality',
         formula: 'If + Past Perfect, would have + past participle',
-        example: 'If the rescue team had not acted swiftly, the climbers would have succumbed.',
+        example: 'If the engineers had not strengthened the Forth Bridge, it would not have survived the storm.',
         bg: 'from-rose-600 to-orange-600',
       },
     ];
@@ -838,7 +838,7 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
             </div>
             <div>
               <h3 className="text-base sm:text-lg font-heading font-extrabold flex items-center gap-2">
-                <span>The Scottish Conditionals Reality Slider</span>
+                <span>The Conditionals Timeline Lab</span>
                 <span className="text-xs px-2 py-0.5 rounded-full bg-purple-600 text-white font-bold uppercase tracking-wider">
                   Timeline Lab
                 </span>
