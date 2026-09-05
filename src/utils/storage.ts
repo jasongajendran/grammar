@@ -16,7 +16,6 @@ const DEFAULT_PROGRESS: UserProgress = {
   studyTheme: 'pastel-warm',
   fontSize: 'large',
   soundEffectsEnabled: true,
-  selectedExplorerId: 'barnaby-cartographer',
   streakCount: 1,
   lastActiveDate: new Date().toISOString().split('T')[0],
 };

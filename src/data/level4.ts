@@ -91,6 +91,23 @@ export const LEVEL_4_TOPICS: GrammarTopic[] = [
         targetCategoryLabel: 'Passive Verb Phrase',
         explanation: '**was engineered** forms the passive verb phrase (be + past participle).'
       }
+    
+    ,
+      {
+        id: 'gen-act-1',
+        type: 'multiple-choice',
+        difficultyStep: 3,
+        prompt: 'Identify the sentence written in the passive voice.',
+        instruction: 'Select the passive sentence.',
+        options: [
+          'The dog bit the postman.',
+          'The chef cooked a delicious meal.',
+          'The new bridge was designed by a famous architect.',
+          'The choir sang beautifully.'
+        ],
+        correctIndex: 2,
+        explanation: 'In the passive voice, the subject of the sentence (the new bridge) receives the action, and the agent (by a famous architect) is introduced with "by".'
+      }
     ]
   },
   {
@@ -205,6 +222,23 @@ export const LEVEL_4_TOPICS: GrammarTopic[] = [
         ruleViolated: 'Do not place a colon directly after a verb like "includes" or "are".',
         explanation: 'A colon cannot directly follow the verb "includes" because the clause before it is grammatically incomplete.'
       }
+    
+    ,
+      {
+        id: 'gen-semi-1',
+        type: 'multiple-choice',
+        difficultyStep: 4,
+        prompt: 'Which sentence correctly uses a semicolon?',
+        instruction: 'Select the correct sentence.',
+        options: [
+          'I have a big test tomorrow; I can\'t go out tonight.',
+          'I have a big test tomorrow; because I need to study.',
+          'I have a big test tomorrow; and I can\'t go out.',
+          'I have a big test tomorrow; so I can\'t go out.'
+        ],
+        correctIndex: 0,
+        explanation: 'A semicolon is used to link two independent but closely related clauses without a coordinating conjunction (like and, but, so).'
+      }
     ]
   },
   {
@@ -296,6 +330,23 @@ export const LEVEL_4_TOPICS: GrammarTopic[] = [
         correctIndex: 2,
         explanation: 'Use **be**: "The local council proposed that the historic pier **be** restored."'
       }
+    
+    ,
+      {
+        id: 'gen-subj-1',
+        type: 'multiple-choice',
+        difficultyStep: 4,
+        prompt: 'Select the sentence that correctly uses the subjunctive mood.',
+        instruction: 'Choose the grammatically correct option.',
+        options: [
+          'The doctor recommended that he rests for a few days.',
+          'The doctor recommended that he rest for a few days.',
+          'The doctor recommended that he resting for a few days.',
+          'The doctor recommended that he will rest for a few days.'
+        ],
+        correctIndex: 1,
+        explanation: 'The subjunctive mood requires the base form of the verb ("rest") after verbs like "recommend", "suggest", or "insist" in a "that" clause.'
+      }
     ]
   },
   {
@@ -370,6 +421,20 @@ export const LEVEL_4_TOPICS: GrammarTopic[] = [
         options: ['are', 'is', 'were', 'have been'],
         correctIndex: 1,
         explanation: '**is** is correct because "Every one" is a singular subject.'
+      }
+    
+    ,
+      {
+        id: 'gen-sva-1',
+        type: 'error-detective',
+        difficultyStep: 4,
+        prompt: 'Find the subject-verb agreement error.',
+        instruction: 'Click the incorrect verb.',
+        sentenceWithMistake: 'A bouquet of yellow roses lend colour and fragrance to the room.',
+        words: ['A', 'bouquet', 'of', 'yellow', 'roses', 'lend', 'colour', 'and', 'fragrance', 'to', 'the', 'room.'],
+        errorWordIndex: 5,
+        correctedWord: 'lends',
+        explanation: 'The subject is "bouquet" (singular), not "roses" (which is part of the prepositional phrase). Therefore, the verb should be "lends".'
       }
     ]
   }

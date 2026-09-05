@@ -11,13 +11,12 @@ import {
   Type,
   Target,
   Maximize,
-  Minimize,
-  Compass
+  Minimize
 } from 'lucide-react';
 import { DifficultyLevel, UserProgress, StudyTheme, FontSizePreference, GrammarTopic } from '../types';
 import { ALL_TOPICS, LEVEL_METADATA } from '../data/curriculum';
 import { AudioButton } from './AudioButton';
-import { APP_IMAGES, getExplorer } from '../utils/assets';
+import { APP_IMAGES } from '../utils/assets';
 
 interface HeaderProps {
   currentLevel: DifficultyLevel;
@@ -37,8 +36,6 @@ interface HeaderProps {
   onChangeFontSize?: (size: FontSizePreference) => void;
   isFullscreen?: boolean;
   onToggleFullscreen?: () => void;
-  selectedExplorerId?: string;
-  onOpenExplorerModal?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -59,10 +56,7 @@ export const Header: React.FC<HeaderProps> = ({
   onChangeFontSize,
   isFullscreen = false,
   onToggleFullscreen,
-  selectedExplorerId = progress.selectedExplorerId || 'barnaby-cartographer',
-  onOpenExplorerModal,
 }) => {
-  const currentExplorer = getExplorer(selectedExplorerId);
   const [showSpeedMenu, setShowSpeedMenu] = useState(false);
   const [showThemeMenu, setShowThemeMenu] = useState(false);
   const [showFontMenu, setShowFontMenu] = useState(false);
@@ -412,28 +406,6 @@ export const Header: React.FC<HeaderProps> = ({
                 {progress.totalCorrectAnswers * 10}
               </span>
             </button>
-
-            {/* Active Explorer Guide Button */}
-            {onOpenExplorerModal && (
-              <button
-                type="button"
-                id="btn-open-explorer-header"
-                onClick={onOpenExplorerModal}
-                title={`Active Explorer Guide: ${currentExplorer.name} (${currentExplorer.title}) - Tap to switch!`}
-                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full border border-amber-500/40 bg-gradient-to-r from-amber-500/20 via-orange-500/20 to-amber-500/20 hover:from-amber-500/35 hover:to-orange-500/35 text-amber-900 dark:text-amber-200 transition-all cursor-pointer shadow-2xs group active:scale-95"
-              >
-                <div className="w-5 h-5 rounded-full overflow-hidden border border-amber-500 shrink-0">
-                  <img
-                    src={currentExplorer.avatar}
-                    alt={currentExplorer.name}
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <span className="text-xs font-black hidden xl:inline">{currentExplorer.name.split(' ')[0]}</span>
-                <Compass size={13} className="text-amber-600 group-hover:rotate-45 transition-transform" />
-              </button>
-            )}
 
             {/* Overall Progress Pill */}
             <button

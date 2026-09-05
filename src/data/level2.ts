@@ -120,6 +120,18 @@ export const LEVEL_2_TOPICS: GrammarTopic[] = [
         targetCategoryLabel: 'Pronoun',
         explanation: '**She** (subject), **him** (object), **they** (subject), and **his** (possessive pronoun) are all pronouns.'
       }
+    
+    ,
+      {
+        id: 'gen-pro-1',
+        type: 'multiple-choice',
+        difficultyStep: 2,
+        prompt: 'Choose the correct pronoun to complete the sentence: "The teacher asked John and ___ to hand out the books."',
+        instruction: 'Select the correct pronoun.',
+        options: ['I', 'me', 'myself', 'mine'],
+        correctIndex: 1,
+        explanation: '"me" is the correct object pronoun here because it receives the action of the verb "asked" (along with John).'
+      }
     ]
   },
   {
@@ -208,6 +220,20 @@ export const LEVEL_2_TOPICS: GrammarTopic[] = [
         targetCategoryLabel: 'Adverb of Place',
         explanation: '**Everywhere** answers the question "Where did they search?".'
       }
+    
+    ,
+      {
+        id: 'gen-adv-1',
+        type: 'word-clicker',
+        difficultyStep: 2,
+        prompt: 'Select the adverb of manner in this sentence.',
+        instruction: 'Click the adverb that describes HOW an action is performed.',
+        sentence: 'The choir sang beautifully during the evening performance.',
+        words: ['The', 'choir', 'sang', 'beautifully', 'during', 'the', 'evening', 'performance.'],
+        targetIndices: [3],
+        targetCategoryLabel: 'Adverb of Manner',
+        explanation: '"beautifully" tells us how the choir sang, making it an adverb of manner.'
+      }
     ]
   },
   {
@@ -294,6 +320,18 @@ export const LEVEL_2_TOPICS: GrammarTopic[] = [
         targetIndices: [3, 7],
         targetCategoryLabel: 'Preposition',
         explanation: '**Through** and **into** show movement and direction as the salmon swims upriver.'
+      }
+    
+    ,
+      {
+        id: 'gen-prep-1',
+        type: 'multiple-choice',
+        difficultyStep: 2,
+        prompt: 'Which preposition correctly completes this sentence? "The concert starts ___ 8:00 PM ___ Saturday."',
+        instruction: 'Select the correct pair of prepositions.',
+        options: ['at / on', 'in / on', 'on / at', 'at / in'],
+        correctIndex: 0,
+        explanation: 'We use "at" for specific times (at 8:00 PM) and "on" for days of the week (on Saturday).'
       }
     ]
   },
@@ -383,6 +421,20 @@ export const LEVEL_2_TOPICS: GrammarTopic[] = [
         options: ['nor', 'yet', 'so', 'for'],
         correctIndex: 2,
         explanation: '**So** shows the direct consequence and result of practising diligently.'
+      }
+    
+    ,
+      {
+        id: 'gen-fan-1',
+        type: 'error-detective',
+        difficultyStep: 2,
+        prompt: 'Identify the incorrect conjunction in this sentence.',
+        instruction: 'Click the conjunction that doesn\'t logically fit the sentence.',
+        sentenceWithMistake: 'I wanted to go to the park, so it was raining heavily.',
+        words: ['I', 'wanted', 'to', 'go', 'to', 'the', 'park,', 'so', 'it', 'was', 'raining', 'heavily.'],
+        errorWordIndex: 7,
+        correctedWord: 'but',
+        explanation: '"but" should be used here to show contrast. "so" implies a result, which doesn\'t make sense in this context.'
       }
     ]
   },
@@ -475,6 +527,23 @@ export const LEVEL_2_TOPICS: GrammarTopic[] = [
         correctSentence: 'Arthur brewed the tea, and Isla baked scones.',
         explanation: 'Clause 1: "Arthur brewed the tea" + ", and" + Clause 2: "Isla baked scones".'
       }
+    
+    ,
+      {
+        id: 'gen-comp-1',
+        type: 'multiple-choice',
+        difficultyStep: 3,
+        prompt: 'Which of the following is a correctly punctuated compound sentence?',
+        instruction: 'Select the correct sentence.',
+        options: [
+          'The sun was shining we decided to go for a walk.',
+          'The sun was shining, and we decided to go for a walk.',
+          'The sun was shining and, we decided to go for a walk.',
+          'The sun was shining and we decided, to go for a walk.'
+        ],
+        correctIndex: 1,
+        explanation: 'A compound sentence needs a comma before the coordinating conjunction (and) that joins the two independent clauses.'
+      }
     ]
   },
   {
@@ -508,7 +577,7 @@ export const LEVEL_2_TOPICS: GrammarTopic[] = [
           {
             id: 'ex-l2-ap1',
             sentence: '**We\'ll** take the morning train to Cardiff if **it\'s** running on time.',
-            highlightWords: ["We'll", "it's"],
+            highlightWords: ["We'll", "it\'s"],
             explanation: "**We'll** stands for *we will*; **it's** stands for *it is*.",
             contextNote: 'UK travel planning'
           },
@@ -583,7 +652,7 @@ export const LEVEL_2_TOPICS: GrammarTopic[] = [
         difficultyStep: 1,
         prompt: 'Choose the correct form: "The clever red fox cleaned ___ paws after hunting."',
         instruction: 'Select its or it\'s.',
-        options: ["it's", "its", "its'", "it is'"],
+        options: ["it\'s", "its", "its'", "it is'"],
         correctIndex: 1,
         explanation: '**its** is the possessive pronoun showing that the fox owns its paws.'
       },
@@ -599,6 +668,20 @@ export const LEVEL_2_TOPICS: GrammarTopic[] = [
         correctedWord: 'apples',
         ruleViolated: 'Never use an apostrophe to make a simple plural noun.',
         explanation: 'The plural of apple is simply **apples** (no ownership or contraction is being shown).'
+      }
+    
+    ,
+      {
+        id: 'gen-apo-1',
+        type: 'error-detective',
+        difficultyStep: 3,
+        prompt: 'Find the word with the incorrect apostrophe.',
+        instruction: 'Click the word with the apostrophe error.',
+        sentenceWithMistake: 'The cat chased it\'s tail around the garden.',
+        words: ['The', 'cat', 'chased', 'it\'s', 'tail', 'around', 'the', 'garden.'],
+        errorWordIndex: 3,
+        correctedWord: 'its',
+        explanation: '"its" (without an apostrophe) is the possessive form. "it\'s" is a contraction for "it is" or "it has".'
       }
     ]
   }

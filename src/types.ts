@@ -167,7 +167,6 @@ export interface UserProgress {
   studyTheme?: StudyTheme; // Eye comfort pastel theme
   fontSize?: FontSizePreference; // Font size scale
   soundEffectsEnabled: boolean;
-  selectedExplorerId?: string; // Active explorer guide
   lastStudiedTopicId?: string;
   streakCount: number;
   lastActiveDate: string; // YYYY-MM-DD

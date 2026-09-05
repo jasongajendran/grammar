@@ -15,7 +15,6 @@ import { BadgesModal } from './components/BadgesModal';
 import { ProgressModal } from './components/ProgressModal';
 import { ScrollToTop } from './components/ScrollToTop';
 import { BadgeUnlockToast } from './components/BadgeUnlockToast';
-import { ExplorerSelectorModal } from './components/ExplorerSelectorModal';
 
 export default function App() {
   const [progress, setProgress] = useState<UserProgress>(() => loadUserProgress());
@@ -25,7 +24,6 @@ export default function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isBadgesModalOpen, setIsBadgesModalOpen] = useState(false);
   const [isProgressModalOpen, setIsProgressModalOpen] = useState(false);
-  const [isExplorerModalOpen, setIsExplorerModalOpen] = useState(false);
   const [newlyAwardedBadgeId, setNewlyAwardedBadgeId] = useState<string | null>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
@@ -255,13 +253,6 @@ export default function App() {
     saveUserProgress(updated);
   };
 
-  // Select Explorer Companion Guide
-  const handleSelectExplorer = (explorerId: string) => {
-    const updated = { ...progress, selectedExplorerId: explorerId };
-    setProgress(updated);
-    saveUserProgress(updated);
-  };
-
   // Reset Progress
   const handleResetProgress = () => {
     const resetState: UserProgress = {
@@ -278,7 +269,6 @@ export default function App() {
       soundEffectsEnabled: true,
       streakCount: 1,
       lastActiveDate: new Date().toISOString().split('T')[0],
-      selectedExplorerId: 'barnaby-cartographer',
     };
     setProgress(resetState);
     saveUserProgress(resetState);
@@ -331,8 +321,6 @@ export default function App() {
         onChangeFontSize={handleChangeFontSize}
         isFullscreen={isFullscreen}
         onToggleFullscreen={handleToggleFullscreen}
-        selectedExplorerId={progress.selectedExplorerId}
-        onOpenExplorerModal={() => setIsExplorerModalOpen(true)}
       />
 
       {/* 2. Main Content Layout: Native Window Scroll for zero mobile wobble */}
@@ -428,8 +416,6 @@ export default function App() {
             onToggleBookmark={handleToggleBookmark}
             speechRate={progress.speechRate}
             studyTheme={currentTheme}
-            selectedExplorerId={progress.selectedExplorerId}
-            onOpenExplorerModal={() => setIsExplorerModalOpen(true)}
           />
         </main>
       </div>
@@ -462,16 +448,6 @@ export default function App() {
           setNewlyAwardedBadgeId(null);
           setIsBadgesModalOpen(true);
         }}
-        studyTheme={currentTheme}
-      />
-
-      {/* 7. Explorer Guide Selector Modal */}
-      <ExplorerSelectorModal
-        isOpen={isExplorerModalOpen}
-        onClose={() => setIsExplorerModalOpen(false)}
-        selectedExplorerId={progress.selectedExplorerId}
-        onSelectExplorer={handleSelectExplorer}
-        speechRate={progress.speechRate}
         studyTheme={currentTheme}
       />
 

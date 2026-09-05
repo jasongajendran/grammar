@@ -88,6 +88,18 @@ export const LEVEL_3_TOPICS: GrammarTopic[] = [
         targetCategoryLabel: 'Determiner',
         explanation: '**Several** (quantifier), **their** (possessive determiner), and **the** (definite article) are all determiners.'
       }
+    
+    ,
+      {
+        id: 'gen-det-1',
+        type: 'multiple-choice',
+        difficultyStep: 3,
+        prompt: 'Choose the correct article: "She is ___ honest person and always tells the truth."',
+        instruction: 'Select the appropriate article.',
+        options: ['a', 'an', 'the', 'no article needed'],
+        correctIndex: 1,
+        explanation: 'We use "an" before a word that starts with a vowel SOUND. "Honest" starts with a silent "h", so it begins with an "o" sound.'
+      }
     ]
   },
   {
@@ -178,6 +190,18 @@ export const LEVEL_3_TOPICS: GrammarTopic[] = [
         correctedWord: 'valley,',
         ruleViolated: 'A fronted adverbial must be separated from the main clause by a comma.',
         explanation: 'There must be a comma after "valley" -> **Across the misty autumn valley,**'
+      }
+    
+    ,
+      {
+        id: 'gen-front-1',
+        type: 'sentence-builder',
+        difficultyStep: 3,
+        prompt: 'Build a sentence starting with a fronted adverbial.',
+        instruction: 'Arrange the words correctly.',
+        scrambledWords: ['Without', 'warning,', 'the', 'thunder', 'clapped', 'loudly.'],
+        correctSentence: 'Without warning, the thunder clapped loudly.',
+        explanation: '"Without warning," is a fronted adverbial describing how/when the action happened, and must be followed by a comma.'
       }
     ]
   },
@@ -273,6 +297,20 @@ export const LEVEL_3_TOPICS: GrammarTopic[] = [
         conjunctionOrConnective: 'When',
         explanation: '"When the ferry docked at Holyhead" is the subordinate clause introduced by "When", while "the excited passengers stepped onto the Welsh coast" can stand alone as the main clause.'
       }
+    
+    ,
+      {
+        id: 'gen-sub-1',
+        type: 'word-clicker',
+        difficultyStep: 3,
+        prompt: 'Identify the subordinating conjunction in this complex sentence.',
+        instruction: 'Click the subordinating conjunction.',
+        sentence: 'Although the weather was terrible, they continued their hike.',
+        words: ['Although', 'the', 'weather', 'was', 'terrible,', 'they', 'continued', 'their', 'hike.'],
+        targetIndices: [0],
+        targetCategoryLabel: 'Subordinating Conjunction',
+        explanation: '"Although" introduces the dependent clause, establishing a relationship of contrast with the main clause.'
+      }
     ]
   },
   {
@@ -362,6 +400,18 @@ export const LEVEL_3_TOPICS: GrammarTopic[] = [
         targetCategoryLabel: 'Relative Clause',
         explanation: '**which stood beside the river** is the relative clause modifying "The stone cottage".'
       }
+    
+    ,
+      {
+        id: 'gen-rel-1',
+        type: 'multiple-choice',
+        difficultyStep: 3,
+        prompt: 'Which relative pronoun correctly completes this sentence? "The scientist ___ research won the prize is speaking tonight."',
+        instruction: 'Select the correct relative pronoun.',
+        options: ['who', 'whom', 'whose', 'which'],
+        correctIndex: 2,
+        explanation: '"whose" is the possessive relative pronoun, indicating that the research belongs to the scientist.'
+      }
     ]
   },
   {
@@ -450,6 +500,23 @@ export const LEVEL_3_TOPICS: GrammarTopic[] = [
         targetIndices: [1],
         targetCategoryLabel: 'Modal Verb',
         explanation: '**Should** is a modal verb giving strong advice and recommendation.'
+      }
+    
+    ,
+      {
+        id: 'gen-mod-1',
+        type: 'multiple-choice',
+        difficultyStep: 2,
+        prompt: 'Which modal verb expresses strong obligation?',
+        instruction: 'Select the sentence showing obligation.',
+        options: [
+          'You might wear a seatbelt.',
+          'You could wear a seatbelt.',
+          'You must wear a seatbelt.',
+          'You would wear a seatbelt.'
+        ],
+        correctIndex: 2,
+        explanation: '"must" expresses a strong obligation or necessity. The others express possibility or hypothetical situations.'
       }
     ]
   },
@@ -544,6 +611,20 @@ export const LEVEL_3_TOPICS: GrammarTopic[] = [
         correctedWord: 'now,"',
         ruleViolated: 'The comma must be placed INSIDE the closing inverted commas.',
         explanation: 'The comma should be placed inside: **"The express train is arriving now,"**.'
+      }
+    
+    ,
+      {
+        id: 'gen-ds-1',
+        type: 'error-detective',
+        difficultyStep: 4,
+        prompt: 'Identify the punctuation error in this direct speech sentence.',
+        instruction: 'Click the word immediately before the missing or incorrect punctuation.',
+        sentenceWithMistake: '"I cannot believe it" she exclaimed loudly.',
+        words: ['"I', 'cannot', 'believe', 'it"', 'she', 'exclaimed', 'loudly.'],
+        errorWordIndex: 3,
+        correctedWord: 'it,"',
+        explanation: 'There should be a comma inside the closing inverted comma to separate the spoken words from the reporting clause (unless it is a question mark or exclamation mark).'
       }
     ]
   }

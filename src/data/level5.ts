@@ -86,6 +86,23 @@ export const LEVEL_5_TOPICS: GrammarTopic[] = [
         targetCategoryLabel: 'Nominalised Noun',
         explanation: '**Industrialisation** (from industrialise) and **migration** (from migrate) are nominalised nouns.'
       }
+    
+    ,
+      {
+        id: 'gen-nom-1',
+        type: 'multiple-choice',
+        difficultyStep: 4,
+        prompt: 'Which phrase is the nominalised version of "They discovered the cure quickly"?',
+        instruction: 'Select the phrase that turns the action into a noun phrase.',
+        options: [
+          'The quick discovery of the cure',
+          'Discovering the cure quickly',
+          'They quickly made a discovery of the cure',
+          'When they discovered the cure quickly'
+        ],
+        correctIndex: 0,
+        explanation: '"The quick discovery of the cure" turns the verb "discovered" into the noun "discovery", which is a hallmark of academic writing.'
+      }
     ]
   },
   {
@@ -166,6 +183,23 @@ export const LEVEL_5_TOPICS: GrammarTopic[] = [
         ],
         correctIndex: 1,
         explanation: '**Climbing Scafell Pike, we dropped our water bottle into the ravine.** is correct because "we" were the ones doing the climbing.'
+      }
+    
+    ,
+      {
+        id: 'gen-part-1',
+        type: 'multiple-choice',
+        difficultyStep: 4,
+        prompt: 'Which sentence does NOT contain a dangling modifier?',
+        instruction: 'Select the grammatically correct sentence.',
+        options: [
+          'Walking down the street, the trees were beautiful.',
+          'Having finished the assignment, the TV was turned on.',
+          'Exhausted from the marathon, she collapsed on the sofa.',
+          'To bake a cake, the oven must be preheated.'
+        ],
+        correctIndex: 2,
+        explanation: 'In option 3, the modifying phrase "Exhausted from the marathon" correctly modifies "she". The other options have modifiers that do not logically apply to the subjects that follow them.'
       }
     ]
   },
@@ -249,6 +283,23 @@ export const LEVEL_5_TOPICS: GrammarTopic[] = [
         correctIndex: 3,
         explanation: '**If the organist had tuned the cathedral pipes earlier, the harmony would have been flawless.** uses "had tuned" (past perfect) and "would have been" (modal perfect).'
       }
+    
+    ,
+      {
+        id: 'gen-cond-1',
+        type: 'multiple-choice',
+        difficultyStep: 4,
+        prompt: 'Which sentence correctly uses the third conditional (unreal past)?',
+        instruction: 'Select the correct third conditional sentence.',
+        options: [
+          'If I had studied harder, I would pass the exam.',
+          'If I studied harder, I would have passed the exam.',
+          'If I had studied harder, I would have passed the exam.',
+          'If I study harder, I will pass the exam.'
+        ],
+        correctIndex: 2,
+        explanation: 'The third conditional requires "if + past perfect (had studied)" and "would have + past participle (would have passed)" to describe a hypothetical situation in the past.'
+      }
     ]
   },
   {
@@ -329,6 +380,20 @@ export const LEVEL_5_TOPICS: GrammarTopic[] = [
         ],
         correctIndex: 1,
         explanation: '**The tour guide instructed us to stay together, to walk quietly, and not to touch artifacts.** maintains parallel infinitive verbs throughout.'
+      }
+    
+    ,
+      {
+        id: 'gen-para-1',
+        type: 'error-detective',
+        difficultyStep: 4,
+        prompt: 'Identify the word that breaks the parallel structure.',
+        instruction: 'Click the word that disrupts the pattern.',
+        sentenceWithMistake: 'She likes hiking, swimming, and to ride her bicycle.',
+        words: ['She', 'likes', 'hiking,', 'swimming,', 'and', 'to', 'ride', 'her', 'bicycle.'],
+        errorWordIndex: 5,
+        correctedWord: 'riding',
+        explanation: 'To maintain parallel structure, the items in the list should all be in the same form (gerunds: hiking, swimming, riding).'
       }
     ]
   }

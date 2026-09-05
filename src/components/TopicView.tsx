@@ -11,7 +11,6 @@ import {
   Sparkles,
   HelpCircle,
   Clock,
-  Compass,
   Zap,
   Target
 } from 'lucide-react';
@@ -21,9 +20,6 @@ import { InteractiveQuiz } from './InteractiveQuiz';
 import { LEVEL_METADATA, getNextTopic, getPrevTopic } from '../data/curriculum';
 import { getThematicImageForLevel } from '../utils/assets';
 import { ConceptVisualizer } from './ConceptVisualizer';
-import { MascotCard } from './MascotCard';
-import { VisualExplorerDecoder } from './VisualExplorerDecoder';
-import { getExplorer } from '../utils/assets';
 
 interface TopicViewProps {
   topic: GrammarTopic;
@@ -33,8 +29,6 @@ interface TopicViewProps {
   onToggleBookmark: (topicId: string) => void;
   speechRate: number;
   studyTheme?: StudyTheme;
-  selectedExplorerId?: string;
-  onOpenExplorerModal?: () => void;
 }
 
 export const TopicView: React.FC<TopicViewProps> = ({
@@ -45,13 +39,10 @@ export const TopicView: React.FC<TopicViewProps> = ({
   onToggleBookmark,
   speechRate,
   studyTheme = 'pastel-warm',
-  selectedExplorerId = progress.selectedExplorerId || 'barnaby-cartographer',
-  onOpenExplorerModal,
 }) => {
   const isCompleted = progress.completedTopics.includes(topic.id);
   const isBookmarked = progress.bookmarkedTopics.includes(topic.id);
   const userScore = progress.quizScores[topic.id];
-  const explorer = getExplorer(selectedExplorerId);
 
   const prevTopic = getPrevTopic(topic.id);
   const nextTopic = getNextTopic(topic.id);
@@ -205,15 +196,7 @@ export const TopicView: React.FC<TopicViewProps> = ({
         </div>
       </div>
 
-      {/* 2. Visual Explorer Decoder (Intuitive visual representation, syntax anatomy & expedition trail) */}
-      <VisualExplorerDecoder
-        topic={topic}
-        studyTheme={studyTheme}
-        speechRate={speechRate}
-        selectedExplorerId={selectedExplorerId}
-      />
-
-      {/* 3. Interactive Concept Visualizer (Innovative animated lab) */}
+      {/* 2. Interactive Concept Visualizer (Innovative animated lab) */}
       <ConceptVisualizer
         topic={topic}
         studyTheme={studyTheme}
@@ -441,15 +424,6 @@ export const TopicView: React.FC<TopicViewProps> = ({
           </div>
         </div>
       )}
-
-      {/* Explorer Companion Card */}
-      <MascotCard 
-        topic={topic}
-        studyTheme={studyTheme}
-        speechRate={speechRate}
-        selectedExplorerId={selectedExplorerId}
-        onOpenExplorerModal={onOpenExplorerModal}
-      />
 
       {/* 4. Progressive Interactive Exercises */}
       <div id="quiz-section" className="space-y-3 pt-2">

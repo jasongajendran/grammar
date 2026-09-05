@@ -145,6 +145,35 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
         correctSentence: 'Arthur poured the hot tea.',
         explanation: '**Arthur** is the proper noun subject, followed by the verb "poured" and the common noun "tea".'
       }
+    
+    ,
+      {
+        id: 'gen-noun-1',
+        type: 'error-detective',
+        difficultyStep: 2,
+        prompt: 'Identify the noun that should NOT be capitalised in this sentence.',
+        instruction: 'Click the word that is incorrectly capitalised.',
+        sentenceWithMistake: 'The famous University professor gave a lecture on modern Philosophy.',
+        words: ['The', 'famous', 'University', 'professor', 'gave', 'a', 'lecture', 'on', 'modern', 'Philosophy.'],
+        errorWordIndex: 2,
+        correctedWord: 'university',
+        explanation: 'When used generally, "university" is a common noun. It is only capitalised when referring to a specific institution (e.g., Oxford University).'
+      },
+      {
+        id: 'gen-noun-2',
+        type: 'multiple-choice',
+        difficultyStep: 3,
+        prompt: 'Which sentence demonstrates the correct usage of abstract nouns?',
+        instruction: 'Select the sentence where the abstract noun is used properly.',
+        options: [
+          'She has a great knowledges of history.',
+          'His courage in the face of danger was admirable.',
+          'We need more informations before making a decision.',
+          'The sadnesses he felt was overwhelming.'
+        ],
+        correctIndex: 1,
+        explanation: '"Courage" is an uncountable abstract noun correctly used in the singular. "Knowledge", "information", and "sadness" are uncountable and do not normally take an "s".'
+      }
     ]
   },
   {
@@ -276,6 +305,35 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
         correctSentence: 'The fox swam across the river.',
         explanation: 'Sentence order: Subject (The fox) + Action Verb (swam) + Prepositional phrase (across the river).'
       }
+    
+    ,
+      {
+        id: 'gen-verb-1',
+        type: 'word-clicker',
+        difficultyStep: 2,
+        prompt: 'Select the two auxiliary (helping) verbs in this sentence.',
+        instruction: 'Click the helping verbs.',
+        sentence: 'The committee has been working tirelessly on the new public health initiative.',
+        words: ['The', 'committee', 'has', 'been', 'working', 'tirelessly', 'on', 'the', 'new', 'public', 'health', 'initiative.'],
+        targetIndices: [2, 3],
+        targetCategoryLabel: 'Auxiliary Verb',
+        explanation: '"has" and "been" are auxiliary verbs that help form the present perfect continuous tense with the main action verb "working".'
+      },
+      {
+        id: 'gen-verb-2',
+        type: 'multiple-choice',
+        difficultyStep: 3,
+        prompt: 'Which of these sentences features a stative verb (a verb that describes a state of being, not an action)?',
+        instruction: 'Pick the sentence containing a stative verb.',
+        options: [
+          'The chef is tasting the soup to see if it needs salt.',
+          'I am thinking about going to the cinema tonight.',
+          'She completely understands the complex mathematical theory.',
+          'They are having a great time at the festival.'
+        ],
+        correctIndex: 2,
+        explanation: '"understands" is a stative verb representing a mental state. "tasting", "thinking" (as an active process), and "having" (experiencing) are used as action verbs here.'
+      }
     ]
   },
   {
@@ -363,6 +421,23 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
         targetIndices: [1, 6, 10, 11],
         targetCategoryLabel: 'Adjective',
         explanation: '**Curious** describes the seal, **crystal** describes the waters, **rocky** and **coastal** describe the cove.'
+      }
+    
+    ,
+      {
+        id: 'gen-adj-1',
+        type: 'multiple-choice',
+        difficultyStep: 2,
+        prompt: 'Identify the sentence with the correct order of adjectives.',
+        instruction: 'Choose the grammatically correct option.',
+        options: [
+          'He bought a red beautiful Italian sports car.',
+          'He bought a beautiful red Italian sports car.',
+          'He bought an Italian beautiful red sports car.',
+          'He bought a sports red beautiful Italian car.'
+        ],
+        correctIndex: 1,
+        explanation: 'The standard order of adjectives in English is: Opinion (beautiful), Colour (red), Origin (Italian), Purpose (sports).'
       }
     ]
   },
@@ -457,6 +532,20 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
         correctIndex: 1,
         explanation: '**On Saturdays, I visit York with Jack.** is correct because "On" starts the sentence, "Saturdays", "York", and "Jack" are proper nouns, and "I" is capitalised.'
       }
+    
+    ,
+      {
+        id: 'gen-cap-1',
+        type: 'error-detective',
+        difficultyStep: 2,
+        prompt: 'Find the word that is missing a capital letter.',
+        instruction: 'Click the word that should start with a capital.',
+        sentenceWithMistake: 'My friend sarah is moving to London next month.',
+        words: ['My', 'friend', 'sarah', 'is', 'moving', 'to', 'London', 'next', 'month.'],
+        errorWordIndex: 2,
+        correctedWord: 'Sarah',
+        explanation: 'Proper nouns, such as names of people (Sarah), must always start with a capital letter.'
+      }
     ]
   },
   {
@@ -546,6 +635,18 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
         scrambledWords: ['in', 'The', 'owl', 'hooted', 'the', 'night.'],
         correctSentence: 'The owl hooted in the night.',
         explanation: 'Subject: The owl | Verb: hooted | Prepositional phrase: in the night.'
+      }
+    
+    ,
+      {
+        id: 'gen-sim-1',
+        type: 'sentence-builder',
+        difficultyStep: 3,
+        prompt: 'Reconstruct the simple sentence correctly.',
+        instruction: 'Arrange the scrambled words to form a complete simple sentence.',
+        scrambledWords: ['The', 'quick', 'brown', 'fox', 'jumps', 'over', 'the', 'lazy', 'dog.'],
+        correctSentence: 'The quick brown fox jumps over the lazy dog.',
+        explanation: 'This famous pangram forms a simple sentence: "The quick brown fox" is the subject, and "jumps over the lazy dog" is the predicate.'
       }
     ]
   }
