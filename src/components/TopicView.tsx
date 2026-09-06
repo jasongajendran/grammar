@@ -12,14 +12,16 @@ import {
   HelpCircle,
   Clock,
   Zap,
-  Target
+  Target,
+  Volume2
 } from 'lucide-react';
 import { GrammarTopic, UserProgress, DifficultyLevel, StudyTheme } from '../types';
-import { AudioButton } from './AudioButton';
+import { ReadableBox, ReadableIcon } from './ReadableBox';
 import { InteractiveQuiz } from './InteractiveQuiz';
 import { LEVEL_METADATA, getNextTopic, getPrevTopic } from '../data/curriculum';
 import { getThematicImageForLevel } from '../utils/assets';
 import { ConceptVisualizer } from './ConceptVisualizer';
+import { formatMarkdown } from '../utils/formatText';
 
 interface TopicViewProps {
   topic: GrammarTopic;
@@ -163,37 +165,36 @@ export const TopicView: React.FC<TopicViewProps> = ({
         </div>
 
         {/* Title and Voice Narration */}
-        <div className="flex items-start justify-between gap-3 mb-2">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-extrabold tracking-tight flex items-center gap-2">
+        <div className="mb-2">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-heading font-extrabold tracking-tight">
             <span>{topic.title}</span>
           </h1>
-
-          <AudioButton
-            text={`${topic.title}. ${topic.subtitle}. ${topic.overview}`}
-            textId={`topic-header-${topic.id}`}
-            speechRate={speechRate}
-            size="md"
-            showLabel
-            label="Listen"
-          />
         </div>
 
         <p className="text-base sm:text-lg opacity-85 font-medium leading-relaxed mb-5">
           {topic.subtitle}
         </p>
 
-        {/* Overview definition box with comfortable typography */}
-        <div className={`p-4 sm:p-6 rounded-2xl border text-sm sm:text-base leading-relaxed ${getSubBoxStyle()}`}>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-950 mb-2.5 shadow-2xs">
-            Grammar Definition
+        {/* Overview definition box - clickable to read aloud */}
+        <ReadableBox
+          text={`${topic.title}. ${topic.subtitle}. ${topic.overview}`}
+          textId={`topic-header-${topic.id}`}
+          speechRate={speechRate}
+          className={`p-4 sm:p-6 rounded-2xl border text-sm sm:text-base leading-relaxed ${getSubBoxStyle()}`}
+        >
+          <div className="flex items-center justify-between mb-2.5">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-950 shadow-2xs">
+              Grammar Definition
+            </span>
+            <ReadableIcon size={16} className="text-slate-600 dark:text-slate-400 opacity-60 group-hover:opacity-100 transition-opacity" />
           </div>
           <p 
             className="text-slate-900 dark:text-slate-100 leading-relaxed font-normal"
             dangerouslySetInnerHTML={{ 
-              __html: topic.overview.replace(/\*\*(.*?)\*\*/g, '<strong class="font-extrabold text-slate-950 dark:text-white bg-amber-400/25 dark:bg-amber-400/20 px-1 py-0.5 rounded border-b-2 border-amber-600 dark:border-amber-400">$1</strong>') 
+              __html: formatMarkdown(topic.overview, { boldClass: 'font-extrabold text-slate-950 dark:text-white bg-amber-400/25 dark:bg-amber-400/20 px-1 py-0.5 rounded border-b-2 border-amber-600 dark:border-amber-400' })
             }} 
           />
-        </div>
+        </ReadableBox>
       </div>
 
       {/* 2. Interactive Concept Visualizer (Innovative animated lab) */}
@@ -206,53 +207,53 @@ export const TopicView: React.FC<TopicViewProps> = ({
       {/* 3. Structured Sections with Highlighted Examples */}
       <div className="space-y-6">
         {topic.sections.map((section) => (
-          <div
+          <section
             key={section.id}
             className={`rounded-3xl border p-5 sm:p-8 shadow-xs space-y-5 transition-colors ${getCardStyle()}`}
           >
-            {/* Section Header */}
-            <div className={`flex items-center justify-between gap-3 border-b pb-3 ${
-              isDark ? 'border-[#343E4E]' : 'border-[#DDD4C5]'
-            }`}>
-              <h2 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 dark:text-white">
-                {section.title}
-              </h2>
-
-              <AudioButton
-                text={`${section.title}. ${section.content}. ${section.bulletPoints?.join('. ') || ''}`}
-                textId={`sec-audio-${topic.id}-${section.id}`}
-                speechRate={speechRate}
-                size="sm"
-                label="Listen"
-              />
-            </div>
-
-            {/* Section Content with Bold Emphasis */}
-            <div 
-              className="text-sm sm:text-base lg:text-lg leading-relaxed text-slate-900 dark:text-slate-100 opacity-95"
-              dangerouslySetInnerHTML={{
-                __html: section.content.replace(/\*\*(.*?)\*\*/g, '<strong class="font-extrabold text-slate-950 dark:text-white underline decoration-amber-600 dark:decoration-amber-400 decoration-2">$1</strong>')
-              }}
-            />
-
-            {/* Bullet Points with Highlighted Keywords */}
-            {section.bulletPoints && section.bulletPoints.length > 0 && (
-              <div className={`p-4 sm:p-5 rounded-2xl border ${getSubBoxStyle()}`}>
-                <ul className="space-y-2.5 text-sm sm:text-base">
-                  {section.bulletPoints.map((bp, bIndex) => (
-                    <li key={bIndex} className="flex items-start gap-2.5">
-                      <span className="w-2 h-2 rounded-full bg-amber-600 mt-2 shrink-0" />
-                      <span 
-                        dangerouslySetInnerHTML={{
-                          __html: bp.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold">$1</strong>')
-                                    .replace(/\*(.*?)\*/g, '<em class="italic opacity-85">$1</em>')
-                        }}
-                      />
-                    </li>
-                  ))}
-                </ul>
+            {/* Section Explanation Box - Individually Readable */}
+            <ReadableBox
+              text={`${section.title}. ${section.content}. ${section.bulletPoints?.join('. ') || ''}`}
+              textId={`sec-audio-${topic.id}-${section.id}`}
+              speechRate={speechRate}
+              className={`p-4 sm:p-5 rounded-2xl border transition-colors space-y-3 ${getSubBoxStyle()}`}
+            >
+              {/* Section Header */}
+              <div className={`flex items-center justify-between gap-3 border-b pb-2.5 ${
+                isDark ? 'border-[#343E4E]' : 'border-[#DDD4C5]'
+              }`}>
+                <h2 className="text-xl sm:text-2xl font-heading font-bold text-slate-900 dark:text-white">
+                  {section.title}
+                </h2>
+                <ReadableIcon size={18} className="text-amber-600 dark:text-amber-400 opacity-60 group-hover:opacity-100 transition-opacity shrink-0" />
               </div>
-            )}
+
+              {/* Section Content with Bold Emphasis */}
+              <div 
+                className="text-sm sm:text-base lg:text-lg leading-relaxed text-slate-900 dark:text-slate-100 opacity-95"
+                dangerouslySetInnerHTML={{
+                  __html: formatMarkdown(section.content, { boldClass: 'font-extrabold text-slate-950 dark:text-white underline decoration-amber-600 dark:decoration-amber-400 decoration-2' })
+                }}
+              />
+
+              {/* Bullet Points with Highlighted Keywords */}
+              {section.bulletPoints && section.bulletPoints.length > 0 && (
+                <div className="pt-2">
+                  <ul className="space-y-2.5 text-sm sm:text-base">
+                    {section.bulletPoints.map((bp, bIndex) => (
+                      <li key={bIndex} className="flex items-start gap-2.5">
+                        <span className="w-2 h-2 rounded-full bg-amber-600 mt-2 shrink-0" />
+                        <span 
+                          dangerouslySetInnerHTML={{
+                            __html: formatMarkdown(bp, { boldClass: 'font-bold text-slate-950 dark:text-white' })
+                          }}
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </ReadableBox>
 
             {/* Illustrated British Examples Section */}
             <div className="space-y-3 pt-2">
@@ -264,8 +265,11 @@ export const TopicView: React.FC<TopicViewProps> = ({
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {section.examples.map((example, eIndex) => {
                   return (
-                    <div
+                    <ReadableBox
                       key={example.id}
+                      text={`Example ${eIndex + 1}. ${example.sentence}. Explanation: ${example.explanation}`}
+                      textId={`ex-audio-${topic.id}-${example.id}`}
+                      speechRate={speechRate}
                       className={`p-4 sm:p-5 rounded-2xl border transition-colors space-y-3 flex flex-col justify-between ${getSubBoxStyle()}`}
                     >
                       <div className="space-y-2">
@@ -274,22 +278,13 @@ export const TopicView: React.FC<TopicViewProps> = ({
                             <span className="w-2 h-2 rounded-full bg-amber-600 dark:bg-amber-400 inline-block shrink-0" />
                             Example {eIndex + 1}: {example.contextNote ? example.contextNote.split(' ')[0] : 'Pattern'}
                           </p>
-
-                          <AudioButton
-                            text={example.sentence}
-                            textId={`ex-audio-${topic.id}-${example.id}`}
-                            speechRate={speechRate}
-                            size="sm"
-                          />
+                          <ReadableIcon size={15} className="text-amber-600 dark:text-amber-400 opacity-60 group-hover:opacity-100 transition-opacity shrink-0" />
                         </div>
 
                         <div className="text-base sm:text-lg font-bold leading-snug text-slate-950 dark:text-white">
                           <span
                             dangerouslySetInnerHTML={{
-                              __html: example.sentence.replace(
-                                /\*\*(.*?)\*\*/g,
-                                '<strong class="font-extrabold text-slate-950 dark:text-white underline decoration-amber-600 dark:decoration-amber-400 decoration-2">$1</strong>'
-                              ),
+                              __html: formatMarkdown(example.sentence, { boldClass: 'font-extrabold text-slate-950 dark:text-white underline decoration-amber-600 dark:decoration-amber-400 decoration-2' })
                             }}
                           />
                         </div>
@@ -299,14 +294,11 @@ export const TopicView: React.FC<TopicViewProps> = ({
                         <b className="font-bold text-slate-900 dark:text-slate-100">Explanation: </b>
                         <span
                           dangerouslySetInnerHTML={{
-                            __html: example.explanation.replace(
-                              /\*\*(.*?)\*\*/g,
-                              '<strong class="font-bold">$1</strong>'
-                            ),
+                            __html: formatMarkdown(example.explanation, { boldClass: 'font-bold text-slate-900 dark:text-slate-100' })
                           }}
                         />
                       </div>
-                    </div>
+                    </ReadableBox>
                   );
                 })}
               </div>
@@ -314,27 +306,30 @@ export const TopicView: React.FC<TopicViewProps> = ({
 
             {/* Rule Summary Badge - high visibility & accessible */}
             {section.ruleSummary && (
-              <div className={`px-4 sm:px-5 py-3 rounded-2xl text-xs sm:text-sm font-medium flex items-center justify-between gap-2 shadow-xs border ${
-                isDark
-                  ? 'bg-[#171B22] border-[#384254] text-white'
-                  : 'bg-[#292D38] border-[#1C2028] text-white'
-              }`}>
-                <div className="flex items-center gap-2.5">
-                  <span className="px-2.5 py-0.5 rounded bg-amber-500 text-slate-950 font-black uppercase tracking-wider text-xs shadow-2xs">
+              <ReadableBox
+                text={`Rule summary: ${section.ruleSummary}`}
+                textId={`rule-audio-${section.id}`}
+                speechRate={speechRate}
+                activeClassName="ring-2 ring-amber-400 border-amber-400 shadow-xl bg-slate-950 text-amber-100"
+                className={`px-4 sm:px-5 py-3.5 rounded-2xl text-xs sm:text-sm font-medium flex items-center justify-between gap-3 shadow-md border transition-all ${
+                  isDark
+                    ? 'bg-slate-900 border-amber-500/40 text-amber-100'
+                    : 'bg-slate-900 border-slate-800 text-amber-100'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <span className="px-2.5 py-1 rounded-md bg-amber-500 text-slate-950 font-black uppercase tracking-wider text-xs shadow-xs shrink-0">
                     RULE
                   </span>
-                  <span className="font-semibold text-white">{section.ruleSummary}</span>
+                  <span 
+                    className="font-semibold text-amber-100 dark:text-amber-100 leading-snug"
+                    dangerouslySetInnerHTML={{ __html: formatMarkdown(section.ruleSummary, { boldClass: 'font-extrabold text-white' }) }}
+                  />
                 </div>
-                <AudioButton
-                  text={`Rule summary: ${section.ruleSummary}`}
-                  textId={`rule-audio-${section.id}`}
-                  speechRate={speechRate}
-                  size="sm"
-                  className="bg-white/10 text-white border-white/20 hover:bg-white/20"
-                />
-              </div>
+                <ReadableIcon size={18} className="text-amber-400 opacity-90 group-hover:opacity-100 shrink-0" />
+              </ReadableBox>
             )}
-          </div>
+          </section>
         ))}
       </div>
 
@@ -353,32 +348,29 @@ export const TopicView: React.FC<TopicViewProps> = ({
                 </p>
               </div>
             </div>
-
-            <AudioButton
-              text={topic.tipsAndTricks.map(t => `${t.title}. ${t.trick}. ${t.commonMistake}. ${t.correctWay}.`).join(' ')}
-              textId={`tips-audio-${topic.id}`}
-              speechRate={speechRate}
-              size="sm"
-              showLabel
-              label="Listen to Tips"
-            />
           </div>
 
           <div className="space-y-4">
             {topic.tipsAndTricks.map(tip => (
-              <div
+              <ReadableBox
                 key={tip.id}
+                text={`${tip.title}. ${tip.trick}. ${tip.mnemonic ? 'Mnemonic: ' + tip.mnemonic : ''}. Common trap: ${tip.commonMistake}. Correct British form: ${tip.correctWay}.`}
+                textId={`tip-box-${tip.id}`}
+                speechRate={speechRate}
                 className={`rounded-2xl border p-4 sm:p-5 space-y-3 shadow-2xs ${getSubBoxStyle()}`}
               >
-                <div className="font-extrabold text-sm sm:text-base text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
-                  <Zap size={16} className="text-amber-600 dark:text-amber-400" />
-                  <span>{tip.title}</span>
+                <div className="font-extrabold text-sm sm:text-base text-slate-900 dark:text-slate-100 flex items-center justify-between gap-1.5">
+                  <div className="flex items-center gap-1.5">
+                    <Zap size={16} className="text-amber-600 dark:text-amber-400" />
+                    <span>{tip.title}</span>
+                  </div>
+                  <ReadableIcon size={15} className="text-amber-600 dark:text-amber-400 opacity-60 group-hover:opacity-100 transition-opacity shrink-0" />
                 </div>
 
                 <p 
                   className="text-xs sm:text-sm lg:text-base text-slate-900 dark:text-slate-100 leading-relaxed"
                   dangerouslySetInnerHTML={{
-                    __html: tip.trick.replace(/\*\*(.*?)\*\*/g, '<strong class="font-extrabold text-slate-950 dark:text-white bg-amber-400/25 dark:bg-amber-400/20 px-1 py-0.5 rounded border-b border-amber-600 dark:border-amber-400">$1</strong>')
+                    __html: formatMarkdown(tip.trick, { boldClass: 'font-extrabold text-slate-950 dark:text-white bg-amber-400/25 dark:bg-amber-400/20 px-1 py-0.5 rounded border-b border-amber-600 dark:border-amber-400' })
                   }}
                 />
 
@@ -391,7 +383,10 @@ export const TopicView: React.FC<TopicViewProps> = ({
                     <span className="text-[10px] sm:text-xs uppercase tracking-wider bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-950 px-2.5 py-0.5 rounded-full font-extrabold">
                       Mnemonic
                     </span>
-                    <span className="font-bold text-slate-900 dark:text-slate-100">{tip.mnemonic}</span>
+                    <span 
+                      className="font-bold text-slate-900 dark:text-slate-100"
+                      dangerouslySetInnerHTML={{ __html: formatMarkdown(tip.mnemonic) }}
+                    />
                   </div>
                 )}
 
@@ -405,7 +400,10 @@ export const TopicView: React.FC<TopicViewProps> = ({
                     <div className="font-extrabold text-xs uppercase tracking-wider flex items-center gap-1 text-rose-800 dark:text-rose-300 mb-1">
                       <AlertCircle size={14} /> Common Trap
                     </div>
-                    <div className="font-medium">{tip.commonMistake}</div>
+                    <div 
+                      className="font-medium"
+                      dangerouslySetInnerHTML={{ __html: formatMarkdown(tip.commonMistake) }}
+                    />
                   </div>
 
                   <div className={`p-3.5 rounded-xl border ${
@@ -416,10 +414,13 @@ export const TopicView: React.FC<TopicViewProps> = ({
                     <div className="font-extrabold text-xs uppercase tracking-wider flex items-center gap-1 text-emerald-800 dark:text-emerald-300 mb-1">
                       <CheckCircle2 size={14} /> Correct British Form
                     </div>
-                    <div className="font-medium">{tip.correctWay}</div>
+                    <div 
+                      className="font-medium"
+                      dangerouslySetInnerHTML={{ __html: formatMarkdown(tip.correctWay) }}
+                    />
                   </div>
                 </div>
-              </div>
+              </ReadableBox>
             ))}
           </div>
         </div>

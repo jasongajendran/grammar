@@ -16,9 +16,10 @@ import {
   Star
 } from 'lucide-react';
 import { GrammarTopic, InteractiveExercise, WordClickerExercise, SentenceBuilderExercise, ErrorDetectiveExercise, MultipleChoiceExercise, ClauseMatcherExercise, StudyTheme } from '../types';
-import { AudioButton } from './AudioButton';
+import { ReadableBox, ReadableIcon } from './ReadableBox';
 import { playSound } from '../utils/storage';
 import { APP_IMAGES } from '../utils/assets';
+import { formatMarkdown } from '../utils/formatText';
 
 interface InteractiveQuizProps {
   topic: GrammarTopic;
@@ -165,7 +166,7 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
       setCurrentIndex(prev => prev + 1);
       handleResetCurrent();
     } else {
-      const finalCorrect = isCorrect ? correctAnswersCount + 1 : correctAnswersCount;
+      const finalCorrect = correctAnswersCount;
       const scorePercent = Math.round((finalCorrect / exercises.length) * 100);
       setQuizFinished(true);
       playSound('complete');
@@ -261,7 +262,12 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
 
         {/* Score Ring & Audio Praise */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-          <div className={`p-4 sm:p-5 rounded-2xl border ${getQuizHeaderStyle()} flex items-center gap-4 shadow-sm`}>
+          <ReadableBox
+            text={celebrationPraise}
+            textId={`quiz-praise-${topic.id}-${finalScore}`}
+            speechRate={speechRate}
+            className={`p-4 sm:p-5 rounded-2xl border ${getQuizHeaderStyle()} flex items-center gap-4 shadow-sm`}
+          >
             <div className="text-4xl sm:text-5xl font-heading font-black text-amber-600 dark:text-amber-400">
               {finalScore}%
             </div>
@@ -273,16 +279,7 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
                 Target: 80% to claim badge
               </div>
             </div>
-          </div>
-
-          <AudioButton
-            text={celebrationPraise}
-            textId={`quiz-praise-${topic.id}-${finalScore}`}
-            speechRate={speechRate}
-            size="md"
-            showLabel
-            label="Listen to Praise"
-          />
+          </ReadableBox>
         </div>
 
         <div className="flex flex-wrap items-center justify-center gap-3">
@@ -319,16 +316,6 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
             Step {currentExercise.difficultyStep}/4
           </span>
         </div>
-
-        {/* Question Audio Button */}
-        <AudioButton
-          text={`${currentExercise.prompt} ${currentExercise.instruction}`}
-          textId={`quiz-prompt-${topic.id}-${currentExercise.id}`}
-          speechRate={speechRate}
-          size="sm"
-          showLabel
-          label="Listen"
-        />
       </div>
 
       {/* Progress Dots */}
@@ -349,12 +336,30 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
 
       {/* Question Body */}
       <div className="p-5 sm:p-7">
-        <h4 className="text-lg sm:text-xl lg:text-2xl font-bold mb-1.5">
-          {currentExercise.prompt}
-        </h4>
-        <p className="text-sm sm:text-base opacity-75 mb-6">
-          {currentExercise.instruction}
-        </p>
+        {/* Readable Prompt Box */}
+        <ReadableBox
+          text={`${currentExercise.prompt}. ${currentExercise.instruction || ''}`}
+          textId={`quiz-prompt-${topic.id}-${currentExercise.id}`}
+          speechRate={speechRate}
+          className={`p-4 sm:p-5 rounded-2xl border mb-6 ${getExerciseBoxStyle()}`}
+        >
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-xs font-black uppercase tracking-wider text-amber-700 dark:text-amber-400">
+              Question Prompt
+            </span>
+            <ReadableIcon size={15} className="text-amber-600 dark:text-amber-400 opacity-60 group-hover:opacity-100 transition-opacity" />
+          </div>
+          <h4 
+            className="text-lg sm:text-xl lg:text-2xl font-bold mb-1.5 text-slate-950 dark:text-white"
+            dangerouslySetInnerHTML={{ __html: formatMarkdown(currentExercise.prompt) }}
+          />
+          {currentExercise.instruction && (
+            <p 
+              className="text-sm sm:text-base opacity-85 font-medium"
+              dangerouslySetInnerHTML={{ __html: formatMarkdown(currentExercise.instruction) }}
+            />
+          )}
+        </ReadableBox>
 
         {/* 1. Multiple Choice Interface */}
         {currentExercise.type === 'multiple-choice' && (
@@ -408,7 +413,7 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
                     }`}>
                       {String.fromCharCode(65 + idx)}
                     </span>
-                    <span>{option}</span>
+                    <span dangerouslySetInnerHTML={{ __html: formatMarkdown(option) }} />
                   </div>
                   {isSubmitted && idx === mc.correctIndex && (
                     <CheckCircle2 size={20} className="text-emerald-600 shrink-0" />
@@ -609,11 +614,16 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
 
         {/* Explanation & Instant Feedback Box */}
         {isSubmitted && (
-          <div className={`p-5 rounded-2xl border mb-6 transition-all ${
-            isCorrect 
-              ? isDark ? 'bg-emerald-950/40 border-emerald-700 text-emerald-200' : 'bg-emerald-100/80 border-emerald-300 text-emerald-950'
-              : isDark ? 'bg-rose-950/40 border-rose-700 text-rose-200' : 'bg-rose-100/80 border-rose-300 text-rose-950'
-          }`}>
+          <ReadableBox
+            text={`${isCorrect ? 'Spot On! Perfectly Correct.' : 'Not quite right this time.'} ${currentExercise.explanation}`}
+            textId={`quiz-expl-${currentExercise.id}`}
+            speechRate={speechRate}
+            className={`p-5 rounded-2xl border mb-6 transition-all ${
+              isCorrect 
+                ? isDark ? 'bg-emerald-950/40 border-emerald-700 text-emerald-200' : 'bg-emerald-100/80 border-emerald-300 text-emerald-950'
+                : isDark ? 'bg-rose-950/40 border-rose-700 text-rose-200' : 'bg-rose-100/80 border-rose-300 text-rose-950'
+            }`}
+          >
             <div className="flex items-start justify-between gap-2 mb-2">
               <div className="flex items-center gap-2">
                 {isCorrect ? (
@@ -633,12 +643,7 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
                 )}
               </div>
 
-              <AudioButton
-                text={currentExercise.explanation}
-                textId={`quiz-expl-${currentExercise.id}`}
-                speechRate={speechRate}
-                size="sm"
-              />
+              <ReadableIcon size={16} className="opacity-70 group-hover:opacity-100 transition-opacity shrink-0" />
             </div>
 
             {/* Selection Breakdown for Clarity */}
@@ -720,7 +725,7 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
                   return (
                     <div key={lIdx} className="flex items-start gap-1.5 text-emerald-900 dark:text-emerald-200 font-medium">
                       <span className="font-black text-emerald-600 dark:text-emerald-400 shrink-0 select-none">✔</span>
-                      <span dangerouslySetInnerHTML={{ __html: trimmed.substring(1).trim().replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />
+                      <span dangerouslySetInnerHTML={{ __html: formatMarkdown(trimmed.substring(1).trim()) }} />
                     </div>
                   );
                 }
@@ -728,16 +733,16 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
                   return (
                     <div key={lIdx} className="flex items-start gap-1.5 text-rose-900 dark:text-rose-200 font-medium">
                       <span className="font-black text-rose-600 dark:text-rose-400 shrink-0 select-none">✖</span>
-                      <span dangerouslySetInnerHTML={{ __html: trimmed.substring(1).trim().replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />
+                      <span dangerouslySetInnerHTML={{ __html: formatMarkdown(trimmed.substring(1).trim()) }} />
                     </div>
                   );
                 }
                 return (
-                  <div key={lIdx} dangerouslySetInnerHTML={{ __html: trimmed.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />
+                  <div key={lIdx} dangerouslySetInnerHTML={{ __html: formatMarkdown(trimmed) }} />
                 );
               })}
             </div>
-          </div>
+          </ReadableBox>
         )}
 
         {/* Action Controls */}

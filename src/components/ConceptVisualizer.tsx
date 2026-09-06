@@ -10,7 +10,6 @@ import {
   Compass, 
   Check, 
   Eye, 
-  Volume2,
   Layers,
   Flame,
   ShieldCheck,
@@ -23,6 +22,8 @@ import {
 import { GrammarTopic, StudyTheme } from '../types';
 import { playSound } from '../utils/storage';
 import { AudioButton } from './AudioButton';
+import { ReadableBox, ReadableIcon } from './ReadableBox';
+import { formatMarkdown } from '../utils/formatText';
 
 interface ConceptVisualizerProps {
   topic: GrammarTopic;
@@ -60,19 +61,21 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
       <div className={`rounded-3xl border p-5 sm:p-7 space-y-5 transition-all shadow-xs ${
         isDark ? 'bg-[#1D232D] border-[#343F52]' : 'bg-gradient-to-br from-amber-500/10 via-orange-500/5 to-purple-500/10 border-amber-300/40'
       }`}>
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-600 to-orange-500 text-white flex items-center justify-center shadow-md">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div className="flex items-start gap-2.5 min-w-0">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-600 to-orange-500 text-white flex items-center justify-center shadow-md shrink-0 mt-0.5">
               <Repeat size={20} className={isPassive ? 'rotate-180 transition-transform duration-500' : 'transition-transform duration-500'} />
             </div>
-            <div>
-              <h3 className="text-base sm:text-lg font-heading font-extrabold flex items-center gap-2">
-                <span>The Voice Transformer</span>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-amber-600 text-white font-bold uppercase tracking-wider">
+            <div className="space-y-1 min-w-0">
+              <div className="flex flex-wrap items-center gap-2">
+                <h3 className="text-base sm:text-lg font-heading font-extrabold text-slate-900 dark:text-white leading-snug">
+                  The Voice Transformer
+                </h3>
+                <span className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-amber-600 text-white font-extrabold uppercase tracking-wider shrink-0">
                   Interactive Lab
                 </span>
-              </h3>
-              <p className="text-xs sm:text-sm opacity-75">
+              </div>
+              <p className="text-xs sm:text-sm opacity-80 leading-relaxed">
                 Toggle to observe how the grammatical subject and focus shift
               </p>
             </div>
@@ -223,19 +226,21 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
       <div className={`rounded-3xl border p-5 sm:p-7 space-y-5 transition-all shadow-xs ${
         isDark ? 'bg-[#1D232D] border-[#343F52]' : 'bg-gradient-to-br from-indigo-500/10 via-purple-500/5 to-pink-500/10 border-indigo-300/40'
       }`}>
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-600 to-purple-500 text-white flex items-center justify-center shadow-md">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div className="flex items-start gap-2.5 min-w-0">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-600 to-purple-500 text-white flex items-center justify-center shadow-md shrink-0 mt-0.5">
               <Zap size={20} />
             </div>
-            <div>
-              <h3 className="text-base sm:text-lg font-heading font-extrabold flex items-center gap-2">
-                <span>The Fronted Adverbial Launchpad & Comma Trampoline</span>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-indigo-600 text-white font-bold uppercase tracking-wider">
+            <div className="space-y-1 min-w-0">
+              <div className="flex flex-wrap items-center gap-2">
+                <h3 className="text-base sm:text-lg font-heading font-extrabold text-slate-900 dark:text-white leading-snug">
+                  The Fronted Adverbial Launchpad & Comma Trampoline
+                </h3>
+                <span className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-indigo-600 text-white font-extrabold uppercase tracking-wider shrink-0">
                   Interactive
                 </span>
-              </h3>
-              <p className="text-xs sm:text-sm opacity-75">
+              </div>
+              <p className="text-xs sm:text-sm opacity-80 leading-relaxed">
                 Select an adverbial of time, place, or manner and watch the comma lock it in place!
               </p>
             </div>
@@ -335,19 +340,21 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
       <div className={`rounded-3xl border p-5 sm:p-7 space-y-5 transition-all shadow-xs ${
         isDark ? 'bg-[#1D232D] border-[#343F52]' : 'bg-gradient-to-br from-sky-500/10 via-blue-500/5 to-cyan-500/10 border-sky-300/40'
       }`}>
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-sky-600 to-blue-500 text-white flex items-center justify-center shadow-md">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div className="flex items-start gap-2.5 min-w-0">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-sky-600 to-blue-500 text-white flex items-center justify-center shadow-md shrink-0 mt-0.5">
               <Sliders size={20} />
             </div>
-            <div>
-              <h3 className="text-base sm:text-lg font-heading font-extrabold flex items-center gap-2">
-                <span>The Punctuation Balance Beam & Revealer</span>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-sky-600 text-white font-bold uppercase tracking-wider">
+            <div className="space-y-1 min-w-0">
+              <div className="flex flex-wrap items-center gap-2">
+                <h3 className="text-base sm:text-lg font-heading font-extrabold text-slate-900 dark:text-white leading-snug">
+                  The Punctuation Balance Beam & Revealer
+                </h3>
+                <span className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-sky-600 text-white font-extrabold uppercase tracking-wider shrink-0">
                   Interactive
                 </span>
-              </h3>
-              <p className="text-xs sm:text-sm opacity-75">
+              </div>
+              <p className="text-xs sm:text-sm opacity-80 leading-relaxed">
                 Toggle between the Semicolon Balance and Colon Revelation
               </p>
             </div>
@@ -513,19 +520,21 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
       <div className={`rounded-3xl border p-5 sm:p-7 space-y-5 transition-all shadow-xs ${
         isDark ? 'bg-[#1D232D] border-[#343F52]' : 'bg-gradient-to-br from-emerald-500/10 via-teal-500/5 to-cyan-500/10 border-emerald-300/40'
       }`}>
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-500 text-white flex items-center justify-center shadow-md">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div className="flex items-start gap-2.5 min-w-0">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-500 text-white flex items-center justify-center shadow-md shrink-0 mt-0.5">
               <Compass size={20} />
             </div>
-            <div>
-              <h3 className="text-base sm:text-lg font-heading font-extrabold flex items-center gap-2">
-                <span>The Interactive I SAW A WABUB Connector Deck</span>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-600 text-white font-bold uppercase tracking-wider">
+            <div className="space-y-1 min-w-0">
+              <div className="flex flex-wrap items-center gap-2">
+                <h3 className="text-base sm:text-lg font-heading font-extrabold text-slate-900 dark:text-white leading-snug">
+                  The Interactive I SAW A WABUB Connector Deck
+                </h3>
+                <span className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-emerald-600 text-white font-extrabold uppercase tracking-wider shrink-0">
                   Mnemonic
                 </span>
-              </h3>
-              <p className="text-xs sm:text-sm opacity-75">
+              </div>
+              <p className="text-xs sm:text-sm opacity-80 leading-relaxed">
                 Tap each letter of British English's most famous subordinating conjunction mnemonic!
               </p>
             </div>
@@ -624,75 +633,77 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
       <div className={`rounded-3xl border p-5 sm:p-7 space-y-5 transition-all shadow-xs ${
         isDark ? 'bg-[#1D232D] border-[#343F52]' : 'bg-gradient-to-br from-amber-500/10 via-yellow-500/5 to-emerald-500/10 border-amber-300/40'
       }`}>
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-600 to-yellow-500 text-white flex items-center justify-center shadow-md">
-              <Sparkles size={20} />
+        <ReadableBox
+          text="The UK Noun Treasure Chest Fun Explorer. Common nouns name everyday things like tree or train. Proper nouns name specific places and people across the UK with CAPITAL letters."
+          textId="audio-noun-explorer-header"
+          speechRate={speechRate}
+          className="p-3 rounded-2xl transition-all border border-transparent hover:border-amber-400/40"
+        >
+          <div className="flex items-start justify-between gap-3">
+            <div className="flex items-start gap-2.5 min-w-0">
+              <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-600 to-yellow-500 text-white flex items-center justify-center shadow-md shrink-0 mt-0.5">
+                <Sparkles size={20} />
+              </div>
+              <div className="space-y-1 min-w-0">
+                <div className="flex flex-wrap items-center gap-2">
+                  <h3 className="text-base sm:text-lg font-heading font-extrabold text-slate-900 dark:text-white leading-snug">
+                    The UK Noun Treasure Chest
+                  </h3>
+                  <span className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-amber-600 text-white font-extrabold uppercase tracking-wider shrink-0">
+                    Fun Explorer
+                  </span>
+                </div>
+                <p className="text-xs sm:text-sm opacity-80 leading-relaxed">
+                  Common nouns name everyday things; Proper nouns name specific places and people across the UK with CAPITAL letters!
+                </p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-base sm:text-lg font-heading font-extrabold flex items-center gap-2">
-                <span>The UK Noun Treasure Chest</span>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-amber-600 text-white font-bold uppercase tracking-wider">
-                  Fun Explorer
-                </span>
-              </h3>
-              <p className="text-xs sm:text-sm opacity-75">
-                Common nouns name everyday things; Proper nouns name specific places and people across the UK with CAPITAL letters!
-              </p>
-            </div>
+            <ReadableIcon size={18} className="text-amber-600 dark:text-amber-400 opacity-70 group-hover:opacity-100 shrink-0 mt-1" />
           </div>
+        </ReadableBox>
 
-          <div className="flex items-center gap-2">
-            <div className="inline-flex p-1 rounded-full bg-black/10 dark:bg-white/10 border border-black/10 dark:border-white/10 text-xs font-bold">
-              <button
-                type="button"
-                onClick={() => { setNounFilter('all'); playSound('click'); }}
-                className={`px-3 py-1 rounded-full transition-all cursor-pointer ${nounFilter === 'all' ? 'bg-amber-600 text-white' : 'opacity-70'}`}
-              >
-                All Nouns
-              </button>
-              <button
-                type="button"
-                onClick={() => { setNounFilter('proper'); playSound('click'); }}
-                className={`px-3 py-1 rounded-full transition-all cursor-pointer ${nounFilter === 'proper' ? 'bg-amber-600 text-white' : 'opacity-70'}`}
-              >
-                Proper Nouns (Capitals)
-              </button>
-              <button
-                type="button"
-                onClick={() => { setNounFilter('common'); playSound('click'); }}
-                className={`px-3 py-1 rounded-full transition-all cursor-pointer ${nounFilter === 'common' ? 'bg-amber-600 text-white' : 'opacity-70'}`}
-              >
-                Common Nouns
-              </button>
-            </div>
-
-            <AudioButton
-              text="The UK Noun Treasure Chest Fun Explorer. Common nouns name everyday things like tree or train. Proper nouns name specific places and people like Tower of London or Cardiff Castle."
-              textId="audio-noun-explorer-header"
-              speechRate={speechRate}
-              size="sm"
-            />
+        <div className="flex justify-end" data-no-speech="true">
+          <div className="inline-flex p-1 rounded-full bg-black/10 dark:bg-white/10 border border-black/10 dark:border-white/10 text-xs font-bold">
+            <button
+              type="button"
+              onClick={() => { setNounFilter('all'); playSound('click'); }}
+              className={`px-3 py-1 rounded-full transition-all cursor-pointer ${nounFilter === 'all' ? 'bg-amber-600 text-white' : 'opacity-70'}`}
+            >
+              All Nouns
+            </button>
+            <button
+              type="button"
+              onClick={() => { setNounFilter('proper'); playSound('click'); }}
+              className={`px-3 py-1 rounded-full transition-all cursor-pointer ${nounFilter === 'proper' ? 'bg-amber-600 text-white' : 'opacity-70'}`}
+            >
+              Proper Nouns (Capitals)
+            </button>
+            <button
+              type="button"
+              onClick={() => { setNounFilter('common'); playSound('click'); }}
+              className={`px-3 py-1 rounded-full transition-all cursor-pointer ${nounFilter === 'common' ? 'bg-amber-600 text-white' : 'opacity-70'}`}
+            >
+              Common Nouns
+            </button>
           </div>
         </div>
 
         {/* Floating Interactive Noun Badges */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {filteredNouns.map(item => (
-            <motion.div
+            <ReadableBox
               key={item.word}
-              layout
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ type: 'spring', damping: 18 }}
+              text={`${item.word}. ${item.type === 'proper' ? 'Proper Noun' : 'Common Noun'}. ${item.hint}`}
+              textId={`audio-noun-item-${item.word.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase()}`}
+              speechRate={speechRate}
               className={`p-3.5 rounded-2xl border transition-all ${
                 item.type === 'proper'
                   ? isDark
-                    ? 'bg-purple-950/30 border-purple-800/40 text-purple-200'
-                    : 'bg-purple-50 border-purple-200 text-purple-950'
+                    ? 'bg-purple-950/30 border-purple-800/40 text-purple-200 hover:border-purple-600'
+                    : 'bg-purple-50 border-purple-200 text-purple-950 hover:border-purple-400'
                   : isDark
-                    ? 'bg-emerald-950/30 border-emerald-800/40 text-emerald-200'
-                    : 'bg-emerald-50 border-emerald-200 text-emerald-950'
+                    ? 'bg-emerald-950/30 border-emerald-800/40 text-emerald-200 hover:border-emerald-600'
+                    : 'bg-emerald-50 border-emerald-200 text-emerald-950 hover:border-emerald-400'
               }`}
             >
               <div className="flex items-center justify-between gap-1 mb-1">
@@ -703,12 +714,7 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
                   }`}>
                     {item.type === 'proper' ? 'Proper Noun' : 'Common Noun'}
                   </span>
-                  <AudioButton
-                    text={`${item.word}. ${item.type === 'proper' ? 'Proper Noun' : 'Common Noun'}. ${item.hint}`}
-                    textId={`audio-noun-item-${item.word.replace(/\s+/g, '-').toLowerCase()}`}
-                    speechRate={speechRate}
-                    size="sm"
-                  />
+                  <ReadableIcon size={15} className="opacity-60 group-hover:opacity-100 shrink-0" />
                 </div>
               </div>
               <div className="font-extrabold text-sm sm:text-base mb-1">
@@ -717,7 +723,7 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
               <p className="text-[11px] opacity-75">
                 {item.hint}
               </p>
-            </motion.div>
+            </ReadableBox>
           ))}
         </div>
       </div>
@@ -732,52 +738,55 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
       <div className={`rounded-3xl border p-5 sm:p-7 space-y-5 transition-all shadow-xs ${
         isDark ? 'bg-[#1D232D] border-[#343F52]' : 'bg-gradient-to-br from-rose-500/10 via-amber-500/5 to-orange-500/10 border-rose-300/40'
       }`}>
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-rose-600 to-amber-500 text-white flex items-center justify-center shadow-md">
-              <Flame size={20} />
+        <ReadableBox
+          text="The Verb Energy Meter Fun Explorer. Action verbs show physical doing motion like pull, sang, or dashed. State of being verbs express state or existence like is, looked, or remains."
+          textId="audio-verb-explorer-header"
+          speechRate={speechRate}
+          className="p-3 rounded-2xl transition-all border border-transparent hover:border-rose-400/40"
+        >
+          <div className="flex items-start justify-between gap-3">
+            <div className="flex items-start gap-2.5 min-w-0">
+              <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-rose-600 to-amber-500 text-white flex items-center justify-center shadow-md shrink-0 mt-0.5">
+                <Flame size={20} />
+              </div>
+              <div className="space-y-1 min-w-0">
+                <div className="flex flex-wrap items-center gap-2">
+                  <h3 className="text-base sm:text-lg font-heading font-extrabold text-slate-900 dark:text-white leading-snug">
+                    The Verb Energy Meter: Action vs State of Being
+                  </h3>
+                  <span className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-rose-600 text-white font-extrabold uppercase tracking-wider shrink-0">
+                    Fun Explorer
+                  </span>
+                </div>
+                <p className="text-xs sm:text-sm opacity-80 leading-relaxed">
+                  Verbs don't just move — they also describe how things ARE!
+                </p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-base sm:text-lg font-heading font-extrabold flex items-center gap-2">
-                <span>The Verb Energy Meter: Action vs State of Being</span>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-rose-600 text-white font-bold uppercase tracking-wider">
-                  Fun Explorer
-                </span>
-              </h3>
-              <p className="text-xs sm:text-sm opacity-75">
-                Verbs don't just move — they also describe how things ARE!
-              </p>
-            </div>
+            <ReadableIcon size={18} className="text-rose-600 dark:text-rose-400 opacity-70 group-hover:opacity-100 shrink-0 mt-1" />
           </div>
+        </ReadableBox>
 
-          <div className="flex items-center gap-2">
-            <div className="inline-flex p-1 rounded-full bg-black/10 dark:bg-white/10 border border-black/10 dark:border-white/10 text-xs font-bold">
-              <button
-                type="button"
-                onClick={() => { setVerbMode('action'); playSound('click'); }}
-                className={`px-3.5 py-1.5 rounded-full transition-all cursor-pointer ${
-                  verbMode === 'action' ? 'bg-rose-600 text-white shadow-sm' : 'opacity-70'
-                }`}
-              >
-                🏃 Action Verbs (Dynamic)
-              </button>
-              <button
-                type="button"
-                onClick={() => { setVerbMode('state'); playSound('click'); }}
-                className={`px-3.5 py-1.5 rounded-full transition-all cursor-pointer ${
-                  verbMode === 'state' ? 'bg-blue-600 text-white shadow-sm' : 'opacity-70'
-                }`}
-              >
-                🧘 State-of-Being Verbs (Static)
-              </button>
-            </div>
-
-            <AudioButton
-              text="The Verb Energy Meter Fun Explorer. Action verbs show physical doing motion like pull, sang, or dashed. State of being verbs express state or existence like is, looked, or remains."
-              textId="audio-verb-explorer-header"
-              speechRate={speechRate}
-              size="sm"
-            />
+        <div className="flex justify-end" data-no-speech="true">
+          <div className="inline-flex p-1 rounded-full bg-black/10 dark:bg-white/10 border border-black/10 dark:border-white/10 text-xs font-bold">
+            <button
+              type="button"
+              onClick={() => { setVerbMode('action'); playSound('click'); }}
+              className={`px-3.5 py-1.5 rounded-full transition-all cursor-pointer ${
+                verbMode === 'action' ? 'bg-rose-600 text-white shadow-sm' : 'opacity-70'
+              }`}
+            >
+              🏃 Action Verbs (Dynamic)
+            </button>
+            <button
+              type="button"
+              onClick={() => { setVerbMode('state'); playSound('click'); }}
+              className={`px-3.5 py-1.5 rounded-full transition-all cursor-pointer ${
+                verbMode === 'state' ? 'bg-blue-600 text-white shadow-sm' : 'opacity-70'
+              }`}
+            >
+              🧘 State-of-Being Verbs (Static)
+            </button>
           </div>
         </div>
 
@@ -794,53 +803,53 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
                 Action Verbs in Motion:
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-400/30 flex flex-col justify-between space-y-2">
+                <ReadableBox
+                  text="Rowers pulled hard. Physical action along the River Thames."
+                  textId="audio-verb-action-1"
+                  speechRate={speechRate}
+                  className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-400/30 flex flex-col justify-between space-y-2 hover:bg-rose-500/20"
+                >
                   <div>
                     <div className="flex items-center justify-between">
                       <span className="text-xl">🚣</span>
-                      <AudioButton
-                        text="Rowers pulled hard. Physical action along the River Thames."
-                        textId="audio-verb-action-1"
-                        speechRate={speechRate}
-                        size="sm"
-                      />
+                      <ReadableIcon size={15} className="text-rose-600 dark:text-rose-400 opacity-60 group-hover:opacity-100 shrink-0" />
                     </div>
-                    <div className="font-bold text-sm sm:text-base mt-1">"Rowers **pulled** hard"</div>
+                    <div className="font-bold text-sm sm:text-base mt-1">"Rowers <strong>pulled</strong> hard"</div>
                   </div>
                   <p className="text-xs opacity-75">Physical action along the River Thames</p>
-                </div>
+                </ReadableBox>
 
-                <div className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-400/30 flex flex-col justify-between space-y-2">
+                <ReadableBox
+                  text="The choir sang sweetly. Vocal performance in Cardiff Cathedral."
+                  textId="audio-verb-action-2"
+                  speechRate={speechRate}
+                  className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-400/30 flex flex-col justify-between space-y-2 hover:bg-rose-500/20"
+                >
                   <div>
                     <div className="flex items-center justify-between">
                       <span className="text-xl">🎶</span>
-                      <AudioButton
-                        text="The choir sang sweetly. Vocal performance in Cardiff Cathedral."
-                        textId="audio-verb-action-2"
-                        speechRate={speechRate}
-                        size="sm"
-                      />
+                      <ReadableIcon size={15} className="text-rose-600 dark:text-rose-400 opacity-60 group-hover:opacity-100 shrink-0" />
                     </div>
-                    <div className="font-bold text-sm sm:text-base mt-1">"The choir **sang** sweetly"</div>
+                    <div className="font-bold text-sm sm:text-base mt-1">"The choir <strong>sang</strong> sweetly"</div>
                   </div>
                   <p className="text-xs opacity-75">Vocal performance in Cardiff Cathedral</p>
-                </div>
+                </ReadableBox>
 
-                <div className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-400/30 flex flex-col justify-between space-y-2">
+                <ReadableBox
+                  text="Red squirrels dashed. Agile sprint through Lake District woods."
+                  textId="audio-verb-action-3"
+                  speechRate={speechRate}
+                  className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-400/30 flex flex-col justify-between space-y-2 hover:bg-rose-500/20"
+                >
                   <div>
                     <div className="flex items-center justify-between">
                       <span className="text-xl">🐿️</span>
-                      <AudioButton
-                        text="Red squirrels dashed. Agile sprint through Lake District woods."
-                        textId="audio-verb-action-3"
-                        speechRate={speechRate}
-                        size="sm"
-                      />
+                      <ReadableIcon size={15} className="text-rose-600 dark:text-rose-400 opacity-60 group-hover:opacity-100 shrink-0" />
                     </div>
-                    <div className="font-bold text-sm sm:text-base mt-1">"Red squirrels **dashed**"</div>
+                    <div className="font-bold text-sm sm:text-base mt-1">"Red squirrels <strong>dashed</strong>"</div>
                   </div>
                   <p className="text-xs opacity-75">Agile sprint through Lake District woods</p>
-                </div>
+                </ReadableBox>
               </div>
             </motion.div>
           ) : (
@@ -853,53 +862,53 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
                 State of Being & Linking Verbs (Is, Was, Look, Remain):
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div className="p-3.5 rounded-xl bg-blue-500/10 border border-blue-400/30 flex flex-col justify-between space-y-2">
+                <ReadableBox
+                  text="Snowdon is towering. Verb to be expressing existence in Wales."
+                  textId="audio-verb-state-1"
+                  speechRate={speechRate}
+                  className="p-3.5 rounded-xl bg-blue-500/10 border border-blue-400/30 flex flex-col justify-between space-y-2 hover:bg-blue-500/20"
+                >
                   <div>
                     <div className="flex items-center justify-between">
                       <span className="text-xl">⛰️</span>
-                      <AudioButton
-                        text="Snowdon is towering. Verb to be expressing existence in Wales."
-                        textId="audio-verb-state-1"
-                        speechRate={speechRate}
-                        size="sm"
-                      />
+                      <ReadableIcon size={15} className="text-blue-600 dark:text-blue-400 opacity-60 group-hover:opacity-100 shrink-0" />
                     </div>
-                    <div className="font-bold text-sm sm:text-base mt-1">"Snowdon **is** towering"</div>
+                    <div className="font-bold text-sm sm:text-base mt-1">"Snowdon <strong>is</strong> towering"</div>
                   </div>
                   <p className="text-xs opacity-75">Verb "to be" expressing existence in Wales</p>
-                </div>
+                </ReadableBox>
 
-                <div className="p-3.5 rounded-xl bg-blue-500/10 border border-blue-400/30 flex flex-col justify-between space-y-2">
+                <ReadableBox
+                  text="Stonehenge looked ancient. Sensory linking verb in Wiltshire."
+                  textId="audio-verb-state-2"
+                  speechRate={speechRate}
+                  className="p-3.5 rounded-xl bg-blue-500/10 border border-blue-400/30 flex flex-col justify-between space-y-2 hover:bg-blue-500/20"
+                >
                   <div>
                     <div className="flex items-center justify-between">
                       <span className="text-xl">🪨</span>
-                      <AudioButton
-                        text="Stonehenge looked ancient. Sensory linking verb in Wiltshire."
-                        textId="audio-verb-state-2"
-                        speechRate={speechRate}
-                        size="sm"
-                      />
+                      <ReadableIcon size={15} className="text-blue-600 dark:text-blue-400 opacity-60 group-hover:opacity-100 shrink-0" />
                     </div>
-                    <div className="font-bold text-sm sm:text-base mt-1">"Stonehenge **looked** ancient"</div>
+                    <div className="font-bold text-sm sm:text-base mt-1">"Stonehenge <strong>looked</strong> ancient"</div>
                   </div>
                   <p className="text-xs opacity-75">Sensory linking verb in Wiltshire</p>
-                </div>
+                </ReadableBox>
 
-                <div className="p-3.5 rounded-xl bg-blue-500/10 border border-blue-400/30 flex flex-col justify-between space-y-2">
+                <ReadableBox
+                  text="The Giant's Causeway remains. Linking verb connecting timeless landmark."
+                  textId="audio-verb-state-3"
+                  speechRate={speechRate}
+                  className="p-3.5 rounded-xl bg-blue-500/10 border border-blue-400/30 flex flex-col justify-between space-y-2 hover:bg-blue-500/20"
+                >
                   <div>
                     <div className="flex items-center justify-between">
                       <span className="text-xl">🌊</span>
-                      <AudioButton
-                        text="The Giant's Causeway remains. Linking verb connecting timeless landmark."
-                        textId="audio-verb-state-3"
-                        speechRate={speechRate}
-                        size="sm"
-                      />
+                      <ReadableIcon size={15} className="text-blue-600 dark:text-blue-400 opacity-60 group-hover:opacity-100 shrink-0" />
                     </div>
-                    <div className="font-bold text-sm sm:text-base mt-1">"The Giant's Causeway **remains**"</div>
+                    <div className="font-bold text-sm sm:text-base mt-1">"The Giant's Causeway <strong>remains</strong>"</div>
                   </div>
                   <p className="text-xs opacity-75">Linking verb connecting timeless landmark</p>
-                </div>
+                </ReadableBox>
               </div>
             </motion.div>
           )}
@@ -925,33 +934,36 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
       <div className={`rounded-3xl border p-5 sm:p-7 space-y-5 transition-all shadow-xs ${
         isDark ? 'bg-[#1D232D] border-[#343F52]' : 'bg-gradient-to-br from-pink-500/10 via-purple-500/5 to-amber-500/10 border-pink-300/40'
       }`}>
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-pink-600 to-purple-500 text-white flex items-center justify-center shadow-md">
-              <Sparkles size={20} />
+        <ReadableBox
+          text="The Adjective Color and Texture Palette Fun Explorer. Adjectives describe nouns by giving details about size, touch, color, and taste."
+          textId="audio-adj-palette-header"
+          speechRate={speechRate}
+          className="p-3 rounded-2xl transition-all border border-transparent hover:border-pink-400/40"
+        >
+          <div className="flex items-start justify-between gap-3">
+            <div className="flex items-start gap-2.5 min-w-0">
+              <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-pink-600 to-purple-500 text-white flex items-center justify-center shadow-md shrink-0 mt-0.5">
+                <Sparkles size={20} />
+              </div>
+              <div className="space-y-1 min-w-0">
+                <div className="flex flex-wrap items-center gap-2">
+                  <h3 className="text-base sm:text-lg font-heading font-extrabold text-slate-900 dark:text-white leading-snug">
+                    The Adjective Color & Texture Palette
+                  </h3>
+                  <span className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-pink-600 text-white font-extrabold uppercase tracking-wider shrink-0">
+                    Fun Explorer
+                  </span>
+                </div>
+                <p className="text-xs sm:text-sm opacity-80 leading-relaxed">
+                  Adjectives paint vivid details about size, touch, color, and taste!
+                </p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-base sm:text-lg font-heading font-extrabold flex items-center gap-2">
-                <span>The Adjective Color & Texture Palette</span>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-pink-600 text-white font-bold uppercase tracking-wider">
-                  Fun Explorer
-                </span>
-              </h3>
-              <p className="text-xs sm:text-sm opacity-75">
-                Adjectives paint vivid details about size, touch, color, and taste!
-              </p>
-            </div>
+            <ReadableIcon size={18} className="text-pink-600 dark:text-pink-400 opacity-70 group-hover:opacity-100 shrink-0 mt-1" />
           </div>
+        </ReadableBox>
 
-          <AudioButton
-            text="The Adjective Color and Texture Palette Fun Explorer. Adjectives describe nouns by giving details about size, touch, color, and taste."
-            textId="audio-adj-palette-header"
-            speechRate={speechRate}
-            size="sm"
-          />
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2" data-no-speech="true">
           {adjPalette.map((item, idx) => (
             <button
               key={item.word}
@@ -971,25 +983,25 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
           ))}
         </div>
 
-        <div className={`p-5 rounded-2xl border ${
-          isDark ? 'bg-[#151921] border-[#2C3646]' : 'bg-white/95 border-pink-200 shadow-sm'
-        }`}>
+        <ReadableBox
+          text={currentAdj.phrase}
+          textId={`audio-adj-phrase-${selectedAdjIndex}`}
+          speechRate={speechRate}
+          className={`p-5 rounded-2xl border transition-all ${
+            isDark ? 'bg-[#151921] border-[#2C3646] hover:border-pink-500/40' : 'bg-white/95 border-pink-200 shadow-sm hover:border-pink-400'
+          }`}
+        >
           <div className="flex items-center justify-between gap-2 mb-2">
             <span className="text-xs font-black uppercase tracking-wider px-2.5 py-1 rounded bg-pink-500/20 text-pink-700 dark:text-pink-300">
               Describing Word: {currentAdj.word}
             </span>
-            <AudioButton
-              text={currentAdj.phrase}
-              textId={`audio-adj-phrase-${selectedAdjIndex}`}
-              speechRate={speechRate}
-              size="sm"
-            />
+            <ReadableIcon size={16} className="text-pink-600 dark:text-pink-400 opacity-70 group-hover:opacity-100 shrink-0" />
           </div>
 
           <div className="text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100 py-1">
             "{currentAdj.phrase}"
           </div>
-        </div>
+        </ReadableBox>
       </div>
     );
   }
@@ -1022,63 +1034,79 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
       <div className={`rounded-3xl border p-5 sm:p-7 space-y-5 transition-all shadow-xs ${
         isDark ? 'bg-[#1D232D] border-[#343F52]' : 'bg-gradient-to-br from-indigo-500/10 via-blue-500/5 to-cyan-500/10 border-indigo-300/40'
       }`}>
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-600 to-blue-500 text-white flex items-center justify-center shadow-md">
-              <Type size={20} />
+        <ReadableBox
+          text={`Punctuation Patrol Fun Explorer. Sentence before punctuation: ${currentPunct.before}. Sentence after punctuation: ${currentPunct.after}. Explanation: ${currentPunct.explanation}`}
+          textId={`audio-punct-patrol-header-${punctSentenceIndex}`}
+          speechRate={speechRate}
+          className="p-3 rounded-2xl border border-transparent hover:border-indigo-400/40"
+        >
+          <div className="flex items-start justify-between gap-3">
+            <div className="flex items-start gap-2.5 min-w-0">
+              <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-600 to-blue-500 text-white flex items-center justify-center shadow-md shrink-0 mt-0.5">
+                <Type size={20} />
+              </div>
+              <div className="space-y-1 min-w-0">
+                <div className="flex flex-wrap items-center gap-2">
+                  <h3 className="text-base sm:text-lg font-heading font-extrabold text-slate-900 dark:text-white leading-snug">
+                    The Punctuation Patrol Transformer
+                  </h3>
+                  <span className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-indigo-600 text-white font-extrabold uppercase tracking-wider shrink-0">
+                    Fun Explorer
+                  </span>
+                </div>
+                <p className="text-xs sm:text-sm opacity-80 leading-relaxed">
+                  Observe how capital letters and full stops transform messy text into proper English!
+                </p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-base sm:text-lg font-heading font-extrabold flex items-center gap-2">
-                <span>The Punctuation Patrol Transformer</span>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-indigo-600 text-white font-bold uppercase tracking-wider">
-                  Fun Explorer
-                </span>
-              </h3>
-              <p className="text-xs sm:text-sm opacity-75">
-                Observe how capital letters and full stops transform messy text into proper English!
-              </p>
-            </div>
+            <ReadableIcon size={18} className="text-indigo-600 dark:text-indigo-400 opacity-70 group-hover:opacity-100 shrink-0 mt-1" />
           </div>
+        </ReadableBox>
 
-          <div className="flex items-center gap-2">
-            <div className="inline-flex p-1 rounded-full bg-black/10 dark:bg-white/10 border border-black/10 text-xs font-bold">
-              {punctSentences.map((_, idx) => (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => { setPunctSentenceIndex(idx); playSound('click'); }}
-                  className={`px-3 py-1 rounded-full transition-all cursor-pointer ${
-                    punctSentenceIndex === idx ? 'bg-indigo-600 text-white' : 'opacity-70'
-                  }`}
-                >
-                  Sentence {idx + 1}
-                </button>
-              ))}
-            </div>
-
-            <AudioButton
-              text={`Before: ${currentPunct.before}. After: ${currentPunct.after}. ${currentPunct.explanation}`}
-              textId={`audio-punct-patrol-${punctSentenceIndex}`}
-              speechRate={speechRate}
-              size="sm"
-            />
+        <div className="flex justify-end" data-no-speech="true">
+          <div className="inline-flex p-1 rounded-full bg-black/10 dark:bg-white/10 border border-black/10 text-xs font-bold">
+            {punctSentences.map((_, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => { setPunctSentenceIndex(idx); playSound('click'); }}
+                className={`px-3 py-1 rounded-full transition-all cursor-pointer ${
+                  punctSentenceIndex === idx ? 'bg-indigo-600 text-white' : 'opacity-70'
+                }`}
+              >
+                Sentence {idx + 1}
+              </button>
+            ))}
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="p-4 rounded-2xl border bg-rose-500/10 border-rose-400/30 text-rose-950 dark:text-rose-100">
-            <div className="text-xs font-black uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-1">
-              ✖ Messy (Missing Capitals & Full Stop)
+          <ReadableBox
+            text={`Incorrect sentence: ${currentPunct.before}`}
+            textId={`audio-punct-before-${punctSentenceIndex}`}
+            speechRate={speechRate}
+            className="p-4 rounded-2xl border bg-rose-500/10 border-rose-400/30 text-rose-950 dark:text-rose-100 hover:bg-rose-500/20"
+          >
+            <div className="flex items-center justify-between text-xs font-black uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-1">
+              <span>✖ Messy (Missing Capitals & Full Stop)</span>
+              <ReadableIcon size={15} className="opacity-60 group-hover:opacity-100 shrink-0" />
             </div>
             <div className="text-base sm:text-lg font-mono">{currentPunct.before}</div>
-          </div>
+          </ReadableBox>
 
-          <div className="p-4 rounded-2xl border bg-emerald-500/10 border-emerald-400/30 text-emerald-950 dark:text-emerald-100">
-            <div className="text-xs font-black uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-1">
-              ✔ Perfect British Punctuation
+          <ReadableBox
+            text={`Correct sentence: ${currentPunct.after}. ${currentPunct.explanation}`}
+            textId={`audio-punct-after-${punctSentenceIndex}`}
+            speechRate={speechRate}
+            className="p-4 rounded-2xl border bg-emerald-500/10 border-emerald-400/30 text-emerald-950 dark:text-emerald-100 hover:bg-emerald-500/20"
+          >
+            <div className="flex items-center justify-between text-xs font-black uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-1">
+              <span>✔ Perfect British Punctuation</span>
+              <ReadableIcon size={15} className="opacity-60 group-hover:opacity-100 shrink-0" />
             </div>
-            <div className="text-base sm:text-lg font-extrabold">{currentPunct.after}</div>
-          </div>
+            <div className="text-base sm:text-lg font-extrabold mb-1">{currentPunct.after}</div>
+            <p className="text-xs opacity-80">{currentPunct.explanation}</p>
+          </ReadableBox>
         </div>
       </div>
     );
@@ -1097,33 +1125,36 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
       <div className={`rounded-3xl border p-5 sm:p-7 space-y-5 transition-all shadow-xs ${
         isDark ? 'bg-[#1D232D] border-[#343F52]' : 'bg-gradient-to-br from-emerald-500/10 via-teal-500/5 to-cyan-500/10 border-emerald-300/40'
       }`}>
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-500 text-white flex items-center justify-center shadow-md">
-              <Layers size={20} />
+        <ReadableBox
+          text={`The Simple Sentence Constructor Fun Explorer. Pair a Subject with a Verb action to build a sentence. Current sentence: ${fullSentence}`}
+          textId={`audio-simple-builder-header-${simpleSubjIndex}-${simpleVerbIndex}`}
+          speechRate={speechRate}
+          className="p-3 rounded-2xl border border-transparent hover:border-emerald-400/40"
+        >
+          <div className="flex items-start justify-between gap-3">
+            <div className="flex items-start gap-2.5 min-w-0">
+              <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-500 text-white flex items-center justify-center shadow-md shrink-0 mt-0.5">
+                <Layers size={20} />
+              </div>
+              <div className="space-y-1 min-w-0">
+                <div className="flex flex-wrap items-center gap-2">
+                  <h3 className="text-base sm:text-lg font-heading font-extrabold text-slate-900 dark:text-white leading-snug">
+                    The Simple Sentence Constructor
+                  </h3>
+                  <span className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-emerald-600 text-white font-extrabold uppercase tracking-wider shrink-0">
+                    Fun Explorer
+                  </span>
+                </div>
+                <p className="text-xs sm:text-sm opacity-80 leading-relaxed">
+                  Pair a Subject (Who/What) with a Verb (Action) to build a complete simple sentence!
+                </p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-base sm:text-lg font-heading font-extrabold flex items-center gap-2">
-                <span>The Simple Sentence Constructor</span>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-600 text-white font-bold uppercase tracking-wider">
-                  Fun Explorer
-                </span>
-              </h3>
-              <p className="text-xs sm:text-sm opacity-75">
-                Pair a Subject (Who/What) with a Verb (Action) to build a complete simple sentence!
-              </p>
-            </div>
+            <ReadableIcon size={18} className="text-emerald-600 dark:text-emerald-400 opacity-70 group-hover:opacity-100 shrink-0 mt-1" />
           </div>
+        </ReadableBox>
 
-          <AudioButton
-            text={`Built Simple Sentence: ${fullSentence}`}
-            textId={`audio-simple-builder-${simpleSubjIndex}-${simpleVerbIndex}`}
-            speechRate={speechRate}
-            size="sm"
-          />
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4" data-no-speech="true">
           <div className="space-y-2">
             <div className="text-xs font-black uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
               Select Subject (Who / What):
@@ -1165,16 +1196,22 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
           </div>
         </div>
 
-        <div className={`p-5 rounded-2xl border text-center ${
-          isDark ? 'bg-[#151921] border-[#2C3646]' : 'bg-white/95 border-emerald-200 shadow-sm'
-        }`}>
-          <div className="text-xs font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-1">
-            Resulting Simple Sentence:
+        <ReadableBox
+          text={`Built Simple Sentence: ${fullSentence}`}
+          textId={`audio-simple-builder-result-${simpleSubjIndex}-${simpleVerbIndex}`}
+          speechRate={speechRate}
+          className={`p-5 rounded-2xl border text-center transition-all ${
+            isDark ? 'bg-[#151921] border-[#2C3646] hover:border-emerald-500/40' : 'bg-white/95 border-emerald-200 shadow-sm hover:border-emerald-400'
+          }`}
+        >
+          <div className="flex items-center justify-between text-xs font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-1">
+            <span>Resulting Simple Sentence</span>
+            <ReadableIcon size={16} className="opacity-70 group-hover:opacity-100 shrink-0" />
           </div>
           <div className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 dark:text-white">
             "{fullSentence}"
           </div>
-        </div>
+        </ReadableBox>
       </div>
     );
   }
@@ -1220,19 +1257,21 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
       <div className={`rounded-3xl border p-5 sm:p-7 space-y-5 transition-all shadow-xs ${
         isDark ? 'bg-[#1D232D] border-[#343F52]' : 'bg-gradient-to-br from-purple-500/10 via-indigo-500/5 to-blue-500/10 border-purple-300/40'
       }`}>
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-500 text-white flex items-center justify-center shadow-md">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div className="flex items-start gap-2.5 min-w-0">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-500 text-white flex items-center justify-center shadow-md shrink-0 mt-0.5">
               <SplitSquareVertical size={20} />
             </div>
-            <div>
-              <h3 className="text-base sm:text-lg font-heading font-extrabold flex items-center gap-2">
-                <span>The Conditionals Timeline Lab</span>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-purple-600 text-white font-bold uppercase tracking-wider">
+            <div className="space-y-1 min-w-0">
+              <div className="flex flex-wrap items-center gap-2">
+                <h3 className="text-base sm:text-lg font-heading font-extrabold text-slate-900 dark:text-white leading-snug">
+                  The Conditionals Timeline Lab
+                </h3>
+                <span className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-purple-600 text-white font-extrabold uppercase tracking-wider shrink-0">
                   Timeline Lab
                 </span>
-              </h3>
-              <p className="text-xs sm:text-sm opacity-75">
+              </div>
+              <p className="text-xs sm:text-sm opacity-80 leading-relaxed">
                 From universal scientific laws to imaginary past counterfactuals
               </p>
             </div>
