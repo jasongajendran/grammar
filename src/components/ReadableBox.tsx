@@ -57,7 +57,9 @@ export const ReadableBox: React.FC<ReadableBoxProps> = ({
   onClick,
   as: Component = 'div',
 }) => {
-  const [isSpeakingThis, setIsSpeakingThis] = useState(false);
+  const [isSpeakingThis, setIsSpeakingThis] = useState(() => {
+    return speechService.isSpeaking() && speechService.getCurrentTextId() === textId;
+  });
 
   useEffect(() => {
     const unsubscribe = speechService.addSpeakingListener((isSpeaking, activeId) => {
@@ -71,7 +73,7 @@ export const ReadableBox: React.FC<ReadableBoxProps> = ({
     const target = e.target as HTMLElement | null;
     if (target) {
       const interactiveEl = target.closest('button, a, input, textarea, select, [role="button"], [data-no-speech="true"]');
-      if (interactiveEl) {
+      if (interactiveEl && interactiveEl !== e.currentTarget) {
         if (onClick) onClick(e);
         return;
       }

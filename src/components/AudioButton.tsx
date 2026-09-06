@@ -21,7 +21,9 @@ export const AudioButton: React.FC<AudioButtonProps> = ({
   className = '',
   showLabel = false,
 }) => {
-  const [isSpeakingThis, setIsSpeakingThis] = useState(false);
+  const [isSpeakingThis, setIsSpeakingThis] = useState(() => {
+    return speechService.isSpeaking() && speechService.getCurrentTextId() === textId;
+  });
 
   useEffect(() => {
     const unsubscribe = speechService.addSpeakingListener((isSpeaking, activeId) => {
