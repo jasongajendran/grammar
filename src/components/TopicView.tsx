@@ -21,6 +21,7 @@ import { InteractiveQuiz } from './InteractiveQuiz';
 import { LEVEL_METADATA, getNextTopic, getPrevTopic } from '../data/curriculum';
 import { getThematicImageForLevel } from '../utils/assets';
 import { ConceptVisualizer } from './ConceptVisualizer';
+import { VisualStudyPrepCard } from './VisualStudyPrepCard';
 import { formatMarkdown } from '../utils/formatText';
 
 interface TopicViewProps {
@@ -197,14 +198,7 @@ export const TopicView: React.FC<TopicViewProps> = ({
         </ReadableBox>
       </div>
 
-      {/* 2. Interactive Concept Visualizer (Innovative animated lab) */}
-      <ConceptVisualizer
-        topic={topic}
-        studyTheme={studyTheme}
-        speechRate={speechRate}
-      />
-
-      {/* 3. Structured Sections with Highlighted Examples */}
+      {/* 2. Structured Sections with Highlighted Examples (Actual Study Content) */}
       <div className="space-y-6">
         {topic.sections.map((section) => (
           <section
@@ -426,7 +420,22 @@ export const TopicView: React.FC<TopicViewProps> = ({
         </div>
       )}
 
-      {/* 4. Progressive Interactive Exercises */}
+      {/* 4. Interactive Concept Visualizer (Hands-on animated experiment lab) */}
+      <ConceptVisualizer
+        topic={topic}
+        studyTheme={studyTheme}
+        speechRate={speechRate}
+      />
+
+      {/* 5. Visual Study Prep & Memory Anchor Card (Illustrated revision & mnemonic memory anchors) */}
+      <VisualStudyPrepCard
+        topicId={topic.id}
+        level={topic.level}
+        speechRate={speechRate}
+        studyTheme={studyTheme}
+      />
+
+      {/* 6. Progressive Interactive Exercises */}
       <div id="quiz-section" className="space-y-3 pt-2">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-600 text-white flex items-center justify-center font-bold shadow-sm">

@@ -27,9 +27,8 @@ export const ReadableIcon: React.FC<ReadableIconProps> = ({
 
   if (isSpeaking) {
     return (
-      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-amber-500 text-slate-950 shadow-md ring-2 ring-amber-300 animate-pulse shrink-0">
-        <Volume2 size={13} className="shrink-0" />
-        <span className="hidden sm:inline">Speaking</span>
+      <span className="inline-flex items-center justify-center p-1 rounded-full bg-amber-500 text-slate-950 shadow-xs ring-2 ring-amber-300 animate-pulse shrink-0">
+        <Volume2 size={size > 14 ? size - 2 : size} className="shrink-0" />
       </span>
     );
   }
@@ -54,7 +53,7 @@ export const ReadableBox: React.FC<ReadableBoxProps> = ({
   speechRate = 1.0,
   children,
   className = '',
-  activeClassName = 'ring-2 ring-amber-500 border-amber-500 shadow-lg bg-amber-500/10 dark:bg-amber-400/15',
+  activeClassName = 'ring-3 ring-amber-500 border-amber-500 shadow-md bg-amber-500/15 dark:bg-amber-400/20',
   onClick,
   as: Component = 'div',
 }) => {
@@ -96,7 +95,9 @@ export const ReadableBox: React.FC<ReadableBoxProps> = ({
         onClick={handleContainerClick}
         title={isSpeakingThis ? 'Stop listening' : 'Listen with British voice'}
         className={`relative transition-all duration-300 cursor-pointer group hover:ring-1 hover:ring-amber-500/50 ${
-          isSpeakingThis ? activeClassName : ''
+          isSpeakingThis
+            ? `${activeClassName} ring-offset-2 ring-offset-amber-50 dark:ring-offset-slate-900`
+            : ''
         } ${className}`}
       >
         {children}
