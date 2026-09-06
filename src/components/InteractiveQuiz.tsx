@@ -641,6 +641,77 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
               />
             </div>
 
+            {/* Selection Breakdown for Clarity */}
+            {currentExercise.type === 'word-clicker' && (
+              <div className="text-xs sm:text-sm font-medium mb-3 p-2.5 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 space-y-1">
+                <div>
+                  <span className="font-bold opacity-75">Your Selection: </span>
+                  <span className="font-bold text-amber-800 dark:text-amber-300">
+                    {selectedWordIndices.length > 0 
+                      ? selectedWordIndices.map(i => (currentExercise as WordClickerExercise).words[i]).join(', ')
+                      : 'None'}
+                  </span>
+                </div>
+                <div>
+                  <span className="font-bold opacity-75">Correct Answer(s): </span>
+                  <span className="font-bold text-emerald-800 dark:text-emerald-300">
+                    {(currentExercise as WordClickerExercise).targetIndices.map(i => (currentExercise as WordClickerExercise).words[i]).join(', ')}
+                  </span>
+                </div>
+              </div>
+            )}
+
+            {currentExercise.type === 'multiple-choice' && selectedOption !== null && (
+              <div className="text-xs sm:text-sm font-medium mb-3 p-2.5 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 space-y-1">
+                <div>
+                  <span className="font-bold opacity-75">Your Choice: </span>
+                  <span className="font-bold text-amber-800 dark:text-amber-300">
+                    {(currentExercise as MultipleChoiceExercise).options[selectedOption]}
+                  </span>
+                </div>
+                <div>
+                  <span className="font-bold opacity-75">Correct Choice: </span>
+                  <span className="font-bold text-emerald-800 dark:text-emerald-300">
+                    {(currentExercise as MultipleChoiceExercise).options[(currentExercise as MultipleChoiceExercise).correctIndex]}
+                  </span>
+                </div>
+              </div>
+            )}
+
+            {currentExercise.type === 'error-detective' && selectedWordIndices.length > 0 && (
+              <div className="text-xs sm:text-sm font-medium mb-3 p-2.5 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 space-y-1">
+                <div>
+                  <span className="font-bold opacity-75">Your Selection: </span>
+                  <span className="font-bold text-amber-800 dark:text-amber-300">
+                    {(currentExercise as ErrorDetectiveExercise).words[selectedWordIndices[0]]}
+                  </span>
+                </div>
+                <div>
+                  <span className="font-bold opacity-75">Correct Error Word: </span>
+                  <span className="font-bold text-emerald-800 dark:text-emerald-300">
+                    {(currentExercise as ErrorDetectiveExercise).words[(currentExercise as ErrorDetectiveExercise).errorWordIndex]} → {(currentExercise as ErrorDetectiveExercise).correctedWord}
+                  </span>
+                </div>
+              </div>
+            )}
+
+            {currentExercise.type === 'sentence-builder' && builtSentenceWords.length > 0 && (
+              <div className="text-xs sm:text-sm font-medium mb-3 p-2.5 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 space-y-1">
+                <div>
+                  <span className="font-bold opacity-75">Your Sentence: </span>
+                  <span className="font-bold text-amber-800 dark:text-amber-300">
+                    {builtSentenceWords.join(' ')}
+                  </span>
+                </div>
+                <div>
+                  <span className="font-bold opacity-75">Correct Sentence: </span>
+                  <span className="font-bold text-emerald-800 dark:text-emerald-300">
+                    {(currentExercise as SentenceBuilderExercise).correctSentence}
+                  </span>
+                </div>
+              </div>
+            )}
+
             <div className="text-sm sm:text-base opacity-95 leading-relaxed space-y-1.5 mt-1">
               {currentExercise.explanation.split('\n').map((line, lIdx) => {
                 const trimmed = line.trim();

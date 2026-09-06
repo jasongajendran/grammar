@@ -4,7 +4,8 @@ export type Category =
   | 'parts-of-speech' 
   | 'sentence-structure' 
   | 'punctuation-mechanics' 
-  | 'advanced-syntax';
+  | 'advanced-syntax'
+  | 'word-classes';
 
 export interface ExampleSentence {
   id: string;

@@ -206,9 +206,9 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
         "id": "ex-add-noun-2",
         "type": "word-clicker",
         "difficultyStep": 2,
-        "prompt": "Identify the common noun for an object.",
-        "instruction": "Click on the word that names an object.",
-        "sentence": "The girl put her pencil into her school bag.",
+        "prompt": "Tap on the common nouns for objects in the sentence below.",
+        "instruction": "Click on the words that name everyday objects.",
+        "sentence": "The girl put her pencil into her bag.",
         "words": [
                 "The",
                 "girl",
@@ -217,14 +217,14 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
                 "pencil",
                 "into",
                 "her",
-                "school",
                 "bag."
         ],
         "targetIndices": [
-                4
+                4,
+                7
         ],
         "targetCategoryLabel": "common noun (object)",
-        "explanation": "✔ pencil: Everyday object noun.\n✖ girl: Noun for person.\n✖ bag: Noun for container."
+        "explanation": "✔ pencil & bag.: Both pencil and bag are common nouns naming everyday objects.\n✖ girl: Common noun for a person.\n✖ put: Action verb."
 },
       {
         "id": "ex-add-noun-3",
