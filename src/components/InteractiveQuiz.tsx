@@ -13,13 +13,29 @@ import {
   Volume2,
   ShieldAlert,
   ThumbsUp,
-  Star
+  Star,
+  AlertTriangle,
+  Lightbulb,
+  Check,
+  RotateCcw,
+  BookOpen,
+  Filter
 } from 'lucide-react';
 import { GrammarTopic, InteractiveExercise, WordClickerExercise, SentenceBuilderExercise, ErrorDetectiveExercise, MultipleChoiceExercise, ClauseMatcherExercise, StudyTheme } from '../types';
 import { ReadableBox, ReadableIcon } from './ReadableBox';
 import { playSound } from '../utils/storage';
 import { APP_IMAGES } from '../utils/assets';
 import { formatMarkdown } from '../utils/formatText';
+
+interface IncorrectQuestionRecord {
+  questionNumber: number;
+  originalIndex: number;
+  exercise: InteractiveExercise;
+  userAnswerSummary: string;
+  correctAnswerSummary: string;
+  explanation: string;
+  ruleViolated?: string;
+}
 
 interface InteractiveQuizProps {
   topic: GrammarTopic;
@@ -34,7 +50,9 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
   speechRate,
   studyTheme = 'pastel-warm',
 }) => {
-  const exercises = topic.exercises;
+  const [customExercises, setCustomExercises] = useState<InteractiveExercise[] | null>(null);
+  const exercises = customExercises || topic.exercises;
+  
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [selectedWordIndices, setSelectedWordIndices] = useState<number[]>([]);
@@ -43,9 +61,12 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
   const [isCorrect, setIsCorrect] = useState(false);
   const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
   const [quizFinished, setQuizFinished] = useState(false);
+  const [incorrectQuestions, setIncorrectQuestions] = useState<IncorrectQuestionRecord[]>([]);
+  const [isPracticingMistakesOnly, setIsPracticingMistakesOnly] = useState(false);
 
   // Reset all quiz state when switching to a new topic
   useEffect(() => {
+    setCustomExercises(null);
     setCurrentIndex(0);
     setSelectedOption(null);
     setSelectedWordIndices([]);
@@ -54,6 +75,8 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
     setIsCorrect(false);
     setCorrectAnswersCount(0);
     setQuizFinished(false);
+    setIncorrectQuestions([]);
+    setIsPracticingMistakesOnly(false);
   }, [topic.id]);
 
   const currentExercise = exercises[currentIndex];
@@ -128,10 +151,14 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
     if (isSubmitted || !currentExercise) return;
 
     let correct = false;
+    let userAnswerSummary = '';
+    let correctAnswerSummary = '';
 
     if (currentExercise.type === 'multiple-choice') {
       const mc = currentExercise as MultipleChoiceExercise;
       correct = selectedOption === mc.correctIndex;
+      userAnswerSummary = selectedOption !== null ? mc.options[selectedOption] : 'No option selected';
+      correctAnswerSummary = mc.options[mc.correctIndex];
     } else if (currentExercise.type === 'word-clicker') {
       const wc = currentExercise as WordClickerExercise;
       const sortedSelected = [...selectedWordIndices].sort((a, b) => a - b);
@@ -139,15 +166,28 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
       correct = 
         sortedSelected.length === sortedTargets.length &&
         sortedSelected.every((val, i) => val === sortedTargets[i]);
+      userAnswerSummary = selectedWordIndices.length > 0 
+        ? selectedWordIndices.map(i => wc.words[i]).join(', ') 
+        : 'No words selected';
+      correctAnswerSummary = wc.targetIndices.map(i => wc.words[i]).join(', ');
     } else if (currentExercise.type === 'sentence-builder') {
       const sb = currentExercise as SentenceBuilderExercise;
       const constructed = builtSentenceWords.join(' ').trim();
       correct = constructed === sb.correctSentence.trim();
+      userAnswerSummary = builtSentenceWords.length > 0 ? builtSentenceWords.join(' ') : 'Incomplete sentence';
+      correctAnswerSummary = sb.correctSentence;
     } else if (currentExercise.type === 'error-detective') {
       const ed = currentExercise as ErrorDetectiveExercise;
       correct = selectedWordIndices.length === 1 && selectedWordIndices[0] === ed.errorWordIndex;
+      userAnswerSummary = selectedWordIndices.length > 0 
+        ? ed.words[selectedWordIndices[0]] 
+        : 'No word selected';
+      correctAnswerSummary = `"${ed.words[ed.errorWordIndex]}" → "${ed.correctedWord}"`;
     } else if (currentExercise.type === 'clause-matcher') {
+      const cm = currentExercise as ClauseMatcherExercise;
       correct = true;
+      userAnswerSummary = 'Matched';
+      correctAnswerSummary = `Main: ${cm.mainClause} | Sub: ${cm.subordinateClause}`;
     }
 
     setIsCorrect(correct);
@@ -156,8 +196,23 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
     if (correct) {
       playSound('correct');
       setCorrectAnswersCount(prev => prev + 1);
+      // Remove from incorrect list if re-answering correctly
+      setIncorrectQuestions(prev => prev.filter(r => r.originalIndex !== currentIndex));
     } else {
       playSound('incorrect');
+      const newRecord: IncorrectQuestionRecord = {
+        questionNumber: currentIndex + 1,
+        originalIndex: currentIndex,
+        exercise: currentExercise,
+        userAnswerSummary,
+        correctAnswerSummary,
+        explanation: currentExercise.explanation,
+        ruleViolated: currentExercise.type === 'error-detective' ? (currentExercise as ErrorDetectiveExercise).ruleViolated : undefined,
+      };
+      setIncorrectQuestions(prev => {
+        const filtered = prev.filter(r => r.originalIndex !== currentIndex);
+        return [...filtered, newRecord].sort((a, b) => a.questionNumber - b.questionNumber);
+      });
     }
   };
 
@@ -187,9 +242,24 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
   };
 
   const handleRetryEntireQuiz = () => {
+    setCustomExercises(null);
     setCurrentIndex(0);
     setCorrectAnswersCount(0);
     setQuizFinished(false);
+    setIncorrectQuestions([]);
+    setIsPracticingMistakesOnly(false);
+    handleResetCurrent();
+  };
+
+  const handlePracticeMistakesOnly = () => {
+    if (incorrectQuestions.length === 0) return;
+    const mistakeExercises = incorrectQuestions.map(r => r.exercise);
+    setCustomExercises(mistakeExercises);
+    setCurrentIndex(0);
+    setCorrectAnswersCount(0);
+    setQuizFinished(false);
+    setIncorrectQuestions([]);
+    setIsPracticingMistakesOnly(true);
     handleResetCurrent();
   };
 
@@ -201,101 +271,286 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
     );
   }
 
-  // Finished Summary View
+  // Finished Summary View with Dedicated Wrong Questions Snapshot
   if (quizFinished) {
     const finalScore = Math.round((correctAnswersCount / exercises.length) * 100);
     const isMastered = finalScore >= 80;
 
     const celebrationPraise = isMastered 
       ? `Splendid mastery! You scored ${finalScore} percent and conquered ${topic.title} with outstanding grammar accuracy!`
-      : `Good effort! You scored ${finalScore} percent on ${topic.title}. Practise once more to claim full mastery!`;
+      : `Good effort! You scored ${finalScore} percent on ${topic.title}. Review the questions you missed below to master the rules!`;
 
     return (
       <motion.div 
-        initial={{ scale: 0.9, opacity: 0 }}
+        initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ type: 'spring', damping: 20 }}
-        className={`p-6 sm:p-10 rounded-3xl border shadow-md text-center relative overflow-hidden ${getQuizCardStyle()}`}
+        className={`p-5 sm:p-8 rounded-3xl border shadow-md text-left relative overflow-hidden space-y-6 ${getQuizCardStyle()}`}
       >
-        {/* Animated Trophy Artwork */}
-        <div className="flex justify-center mb-5 relative">
-          <motion.div 
-            animate={{ 
-              scale: [1, 1.05, 1],
-              rotate: [0, -2, 2, 0]
-            }}
-            transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut' }}
-            className="w-28 h-28 sm:w-36 sm:h-36 rounded-3xl overflow-hidden border-4 border-amber-500 shadow-xl relative"
-          >
-            <img 
-              src={APP_IMAGES.trophy}
-              alt="Golden Grammar Trophy"
-              referrerPolicy="no-referrer"
-              className="w-full h-full object-cover"
-            />
-          </motion.div>
+        {/* Celebration & Score Header */}
+        <div className="text-center">
+          {/* Animated Trophy Artwork */}
+          <div className="flex justify-center mb-4 relative">
+            <motion.div 
+              animate={{ 
+                scale: [1, 1.05, 1],
+                rotate: [0, -2, 2, 0]
+              }}
+              transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut' }}
+              className="w-24 h-24 sm:w-32 sm:h-32 rounded-3xl overflow-hidden border-4 border-amber-500 shadow-xl relative"
+            >
+              <img 
+                src={APP_IMAGES.trophy}
+                alt="Golden Grammar Trophy"
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover"
+              />
+            </motion.div>
 
-          {/* Floating Stars */}
-          <motion.div 
-            animate={{ y: [0, -8, 0], rotate: [0, 15, 0] }}
-            transition={{ repeat: Infinity, duration: 2.5 }}
-            className="absolute -top-2 right-1/4 text-amber-500"
-          >
-            <Star size={28} className="fill-amber-400" />
-          </motion.div>
-          <motion.div 
-            animate={{ y: [0, 8, 0], rotate: [0, -15, 0] }}
-            transition={{ repeat: Infinity, duration: 3, delay: 0.5 }}
-            className="absolute -bottom-2 left-1/4 text-amber-500"
-          >
-            <Sparkles size={24} className="fill-amber-400" />
-          </motion.div>
-        </div>
+            {/* Floating Stars */}
+            <motion.div 
+              animate={{ y: [0, -8, 0], rotate: [0, 15, 0] }}
+              transition={{ repeat: Infinity, duration: 2.5 }}
+              className="absolute -top-2 right-1/4 text-amber-500"
+            >
+              <Star size={24} className="fill-amber-400" />
+            </motion.div>
+            <motion.div 
+              animate={{ y: [0, 8, 0], rotate: [0, -15, 0] }}
+              transition={{ repeat: Infinity, duration: 3, delay: 0.5 }}
+              className="absolute -bottom-2 left-1/4 text-amber-500"
+            >
+              <Sparkles size={22} className="fill-amber-400" />
+            </motion.div>
+          </div>
 
-        <h3 className="text-2xl sm:text-3xl font-heading font-extrabold mb-1.5 flex items-center justify-center gap-2">
-          <span>{isMastered ? '🏆 Lesson Mastered!' : '⭐ Great Effort!'}</span>
-        </h3>
-        <p className="text-sm sm:text-base opacity-85 mb-6 max-w-md mx-auto">
-          You answered <strong className="font-extrabold">{correctAnswersCount}</strong> out of{' '}
-          <strong className="font-extrabold">{exercises.length}</strong> challenges correctly in {topic.title}.
-        </p>
+          <h3 className="text-2xl sm:text-3xl font-heading font-extrabold mb-1 flex items-center justify-center gap-2">
+            <span>{isMastered ? '🏆 Lesson Mastered!' : '⭐ Great Effort!'}</span>
+          </h3>
+          <p className="text-sm sm:text-base opacity-85 mb-4 max-w-md mx-auto">
+            {isPracticingMistakesOnly ? 'Mistakes Practice Round: ' : ''}
+            You answered <strong className="font-extrabold">{correctAnswersCount}</strong> out of{' '}
+            <strong className="font-extrabold">{exercises.length}</strong> questions correctly in {topic.title}.
+          </p>
 
-        {/* Score Ring & Audio Praise */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-          <ReadableBox
-            text={celebrationPraise}
-            textId={`quiz-praise-${topic.id}-${finalScore}`}
-            speechRate={speechRate}
-            className={`p-4 sm:p-5 rounded-2xl border ${getQuizHeaderStyle()} flex items-center gap-4 shadow-sm`}
-          >
-            <div className="text-4xl sm:text-5xl font-heading font-black text-amber-600 dark:text-amber-400">
-              {finalScore}%
-            </div>
-            <div className="text-left border-l border-black/10 dark:border-white/10 pl-3">
-              <div className="text-xs font-black uppercase tracking-wider opacity-90">
-                {isMastered ? 'Mastery Tier' : 'Practice Tier'}
+          {/* Score Badge & Audio Praise */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-6">
+            <ReadableBox
+              text={celebrationPraise}
+              textId={`quiz-praise-${topic.id}-${finalScore}`}
+              speechRate={speechRate}
+              className={`p-3.5 sm:p-4 rounded-2xl border ${getQuizHeaderStyle()} flex items-center gap-4 shadow-xs`}
+            >
+              <div className="text-3xl sm:text-4xl font-heading font-black text-amber-600 dark:text-amber-400">
+                {finalScore}%
               </div>
-              <div className="text-xs opacity-75">
-                Target: 80% to claim badge
+              <div className="text-left border-l border-black/10 dark:border-white/10 pl-3">
+                <div className="text-xs font-black uppercase tracking-wider opacity-90">
+                  {isMastered ? 'Mastery Tier' : 'Practice Tier'}
+                </div>
+                <div className="text-xs opacity-75">
+                  {incorrectQuestions.length === 0 ? '0 Mistakes • 100% Perfect Accuracy' : `${incorrectQuestions.length} Incorrect • See Snapshot Below`}
+                </div>
               </div>
-            </div>
-          </ReadableBox>
+            </ReadableBox>
+          </div>
+
+          {/* Top Quick Actions */}
+          <div className="flex flex-wrap items-center justify-center gap-3 pb-2">
+            {incorrectQuestions.length > 0 && (
+              <button
+                type="button"
+                onClick={handlePracticeMistakesOnly}
+                className="px-5 py-2.5 rounded-full font-extrabold text-sm sm:text-base transition-all flex items-center gap-2 cursor-pointer bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-md hover:shadow-lg"
+              >
+                <Zap size={16} className="fill-white" />
+                Practice Only My {incorrectQuestions.length} Mistake{incorrectQuestions.length > 1 ? 's' : ''}
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={handleRetryEntireQuiz}
+              className={`px-5 py-2.5 rounded-full font-bold text-sm sm:text-base transition-all flex items-center gap-2 cursor-pointer border shadow-xs ${
+                isDark
+                  ? 'bg-[#29303D] hover:bg-[#343D4E] text-slate-200 border-[#3D475B]'
+                  : 'bg-[#DCD2C3] hover:bg-[#D0C5B4] text-slate-900 border-[#BEB2A0]'
+              }`}
+            >
+              <RefreshCw size={15} />
+              Retake All {topic.exercises.length} Questions
+            </button>
+          </div>
         </div>
 
-        <div className="flex flex-wrap items-center justify-center gap-3">
-          <button
-            type="button"
-            onClick={handleRetryEntireQuiz}
-            className={`px-6 py-3 rounded-full font-bold text-sm sm:text-base transition-all flex items-center gap-2 cursor-pointer border shadow-sm ${
-              isDark
-                ? 'bg-[#29303D] hover:bg-[#343D4E] text-slate-200 border-[#3D475B]'
-                : 'bg-[#DCD2C3] hover:bg-[#D0C5B4] text-slate-900 border-[#BEB2A0]'
-            }`}
-          >
-            <RefreshCw size={16} />
-            Practise Again
-          </button>
-        </div>
+        {/* ========================================================================= */}
+        {/* SNAPSHOT OF WRONG QUESTIONS AND ANSWERS (JUST THE WRONG ONES) */}
+        {/* ========================================================================= */}
+        {incorrectQuestions.length > 0 ? (
+          <div className="pt-4 border-t border-black/10 dark:border-white/10 space-y-4">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-xl bg-rose-500/20 text-rose-700 dark:text-rose-400 flex items-center justify-center font-bold">
+                  <AlertTriangle size={18} />
+                </div>
+                <div>
+                  <h4 className="text-base sm:text-lg font-heading font-bold text-slate-950 dark:text-white flex items-center gap-2">
+                    <span>Snapshot of Mistakes ({incorrectQuestions.length} Questions)</span>
+                  </h4>
+                  <p className="text-xs text-slate-700 dark:text-slate-300">
+                    Review what went wrong on each question and check the UK grammar rule:
+                  </p>
+                </div>
+              </div>
+              <span className="text-xs px-2.5 py-1 rounded-full font-bold bg-rose-500/15 text-rose-800 dark:text-rose-300 border border-rose-300 dark:border-rose-700">
+                {incorrectQuestions.length} Wrong Answer{incorrectQuestions.length > 1 ? 's' : ''}
+              </span>
+            </div>
+
+            {/* List of Incorrect Questions */}
+            <div className="space-y-4">
+              {incorrectQuestions.map((record, index) => {
+                const spokenWrongText = `Question ${record.questionNumber}. ${record.exercise.prompt}. Your answer was ${record.userAnswerSummary}. The correct answer is ${record.correctAnswerSummary}. Explanation: ${record.explanation}`;
+
+                return (
+                  <div
+                    key={record.exercise.id}
+                    className={`p-4 sm:p-5 rounded-2xl border transition-all ${
+                      isDark 
+                        ? 'bg-[#181D25] border-rose-900/40 shadow-xs' 
+                        : 'bg-white/80 border-rose-200/90 shadow-2xs'
+                    }`}
+                  >
+                    {/* Mistake Header */}
+                    <div className="flex flex-wrap items-center justify-between gap-2 mb-3 pb-2.5 border-b border-black/5 dark:border-white/5">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs px-2.5 py-1 rounded-lg font-extrabold bg-rose-600 text-white shadow-2xs">
+                          Question {record.questionNumber} of {exercises.length}
+                        </span>
+                        <span className="text-xs px-2 py-0.5 rounded-md font-semibold bg-black/5 dark:bg-white/10 opacity-80 uppercase tracking-wide">
+                          {record.exercise.type.replace('-', ' ')}
+                        </span>
+                      </div>
+                      <ReadableBox
+                        text={spokenWrongText}
+                        textId={`audio-wrong-snap-${record.exercise.id}`}
+                        speechRate={speechRate}
+                        className="p-1 -m-1 rounded-lg"
+                      >
+                        <div className="flex items-center gap-1.5 text-xs text-amber-700 dark:text-amber-400 font-bold cursor-pointer">
+                          <ReadableIcon size={14} />
+                          <span>Listen Breakdown</span>
+                        </div>
+                      </ReadableBox>
+                    </div>
+
+                    {/* Question Prompt */}
+                    <div className="mb-3.5">
+                      <div className="text-xs font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">
+                        Question Prompt
+                      </div>
+                      <div 
+                        className="text-sm sm:text-base font-bold text-slate-900 dark:text-white"
+                        dangerouslySetInnerHTML={{ __html: formatMarkdown(record.exercise.prompt) }}
+                      />
+                      {record.exercise.instruction && (
+                        <div 
+                          className="text-xs opacity-75 mt-0.5 italic"
+                          dangerouslySetInnerHTML={{ __html: formatMarkdown(record.exercise.instruction) }}
+                        />
+                      )}
+                    </div>
+
+                    {/* Comparison Snapshot: Your Answer vs Correct Answer */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-3.5">
+                      {/* Your Answer */}
+                      <div className={`p-3 rounded-xl border ${
+                        isDark ? 'bg-rose-950/40 border-rose-800/40 text-rose-200' : 'bg-rose-50 border-rose-200 text-rose-950'
+                      }`}>
+                        <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-rose-700 dark:text-rose-400 mb-1">
+                          <XCircle size={14} className="shrink-0" />
+                          <span>Your Answer</span>
+                        </div>
+                        <div className="text-xs sm:text-sm font-bold line-through opacity-90">
+                          {record.userAnswerSummary}
+                        </div>
+                      </div>
+
+                      {/* Correct Answer */}
+                      <div className={`p-3 rounded-xl border ${
+                        isDark ? 'bg-emerald-950/40 border-emerald-800/40 text-emerald-200' : 'bg-emerald-50 border-emerald-200 text-emerald-950'
+                      }`}>
+                        <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-emerald-700 dark:text-emerald-400 mb-1">
+                          <CheckCircle2 size={14} className="shrink-0" />
+                          <span>Correct Answer</span>
+                        </div>
+                        <div className="text-xs sm:text-sm font-extrabold text-emerald-800 dark:text-emerald-300">
+                          {record.correctAnswerSummary}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* What Went Wrong / Grammar Rule Breakdown */}
+                    <div className={`p-3 rounded-xl border text-xs sm:text-sm space-y-1.5 ${
+                      isDark ? 'bg-[#202732] border-[#2F394A]' : 'bg-[#F7F2E9] border-[#DFD5C6]'
+                    }`}>
+                      <div className="flex items-center gap-1.5 font-black uppercase tracking-wider text-[11px] text-amber-700 dark:text-amber-400">
+                        <Lightbulb size={13} className="shrink-0" />
+                        <span>What Went Wrong & Key Rule</span>
+                      </div>
+
+                      {record.ruleViolated && (
+                        <div className="text-xs font-bold text-amber-800 dark:text-amber-300">
+                          Rule Focus: {record.ruleViolated}
+                        </div>
+                      )}
+
+                      <div className="opacity-90 leading-relaxed space-y-1">
+                        {record.explanation.split('\n').map((line, lIdx) => {
+                          const trimmed = line.trim();
+                          if (!trimmed) return null;
+                          if (trimmed.startsWith('✔')) {
+                            return (
+                              <div key={lIdx} className="flex items-start gap-1 text-emerald-800 dark:text-emerald-300 font-medium">
+                                <span className="font-bold text-emerald-600 shrink-0">✔</span>
+                                <span dangerouslySetInnerHTML={{ __html: formatMarkdown(trimmed.substring(1).trim()) }} />
+                              </div>
+                            );
+                          }
+                          if (trimmed.startsWith('✖')) {
+                            return (
+                              <div key={lIdx} className="flex items-start gap-1 text-rose-800 dark:text-rose-300 font-medium">
+                                <span className="font-bold text-rose-600 shrink-0">✖</span>
+                                <span dangerouslySetInnerHTML={{ __html: formatMarkdown(trimmed.substring(1).trim()) }} />
+                              </div>
+                            );
+                          }
+                          return (
+                            <div key={lIdx} dangerouslySetInnerHTML={{ __html: formatMarkdown(trimmed) }} />
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        ) : (
+          /* 100% Perfect Score Snapshot */
+          <div className={`p-5 rounded-2xl border text-center space-y-2 ${
+            isDark ? 'bg-emerald-950/30 border-emerald-800/40 text-emerald-200' : 'bg-emerald-50 border-emerald-200 text-emerald-950'
+          }`}>
+            <div className="w-12 h-12 rounded-full bg-emerald-500 text-white flex items-center justify-center mx-auto shadow-sm">
+              <Check size={26} className="stroke-[3]" />
+            </div>
+            <h4 className="text-lg font-heading font-extrabold text-emerald-800 dark:text-emerald-300">
+              Flawless Score! Zero Mistakes Made
+            </h4>
+            <p className="text-xs sm:text-sm opacity-90 max-w-md mx-auto">
+              You answered every single question in this challenge set correctly on the very first try. Outstanding grammar accuracy!
+            </p>
+          </div>
+        )}
       </motion.div>
     );
   }
@@ -306,6 +561,7 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
       <div className={`px-5 py-3.5 border-b flex items-center justify-between gap-2 ${getQuizHeaderStyle()}`}>
         <div className="flex items-center gap-2.5">
           <span className="text-xs sm:text-sm font-bold">
+            {isPracticingMistakesOnly ? '⚡ Mistakes Practice • ' : ''}
             Exercise {currentIndex + 1} of {exercises.length}
           </span>
           <span className={`text-xs px-2.5 py-0.5 rounded-full font-bold border ${
@@ -316,6 +572,16 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
             Step {currentExercise.difficultyStep}/4
           </span>
         </div>
+
+        {isPracticingMistakesOnly && (
+          <button
+            type="button"
+            onClick={handleRetryEntireQuiz}
+            className="text-xs px-2.5 py-1 rounded-lg border border-amber-500/40 text-amber-700 dark:text-amber-300 font-bold hover:bg-amber-500/10 cursor-pointer"
+          >
+            Exit to Full Quiz
+          </button>
+        )}
       </div>
 
       {/* Progress Dots */}

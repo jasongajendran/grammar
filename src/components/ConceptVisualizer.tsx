@@ -24,100 +24,12 @@ import { playSound } from '../utils/storage';
 import { AudioButton } from './AudioButton';
 import { ReadableBox, ReadableIcon } from './ReadableBox';
 import { formatMarkdown } from '../utils/formatText';
-import { getVisualStudyCard } from '../utils/assets';
 
 interface ConceptVisualizerProps {
   topic: GrammarTopic;
   studyTheme?: StudyTheme;
   speechRate: number;
 }
-
-const VisualLabMemoryAnchor: React.FC<{
-  topicId: string;
-  speechRate: number;
-  isDark: boolean;
-}> = ({ topicId, speechRate, isDark }) => {
-  const card = getVisualStudyCard(topicId);
-  const [showAnchor, setShowAnchor] = useState(false);
-  const spokenAnchorText = `Visual Memory Anchor for ${card.title}. Mnemonic: ${card.mnemonic}. Visual Cue: ${card.illustratedClue}. Anchor: ${card.visualAnchor}`;
-
-  return (
-    <div className={`mt-4 rounded-2xl border p-3.5 sm:p-4 transition-all ${
-      isDark ? 'bg-[#141820] border-[#2A3444]' : 'bg-amber-50/90 border-amber-200/90 shadow-2xs'
-    }`}>
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <ReadableBox
-          text={spokenAnchorText}
-          textId={`audio-lab-anchor-${topicId}`}
-          speechRate={speechRate}
-          className="flex items-center gap-2.5 min-w-0 flex-1 rounded-xl p-1 -m-1"
-        >
-          <img
-            src={card.image}
-            alt={card.imageAlt}
-            referrerPolicy="no-referrer"
-            className="w-10 h-10 rounded-xl object-cover border border-amber-300/40 shadow-xs shrink-0"
-          />
-          <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-wider text-amber-700 dark:text-amber-400">
-              <Eye size={12} className="shrink-0" />
-              <span>Illustrated Visual Memory Anchor</span>
-            </div>
-            <div className="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-white truncate">
-              {card.mnemonic}
-            </div>
-          </div>
-        </ReadableBox>
-
-        <div className="flex items-center gap-2 shrink-0">
-          <button
-            type="button"
-            onClick={() => setShowAnchor(!showAnchor)}
-            className="text-xs px-2.5 py-1 rounded-lg font-bold border border-amber-300 dark:border-amber-700 text-amber-800 dark:text-amber-300 hover:bg-amber-500/10 transition-colors cursor-pointer"
-          >
-            {showAnchor ? 'Hide Image Diagram' : 'View Illustrated Diagram'}
-          </button>
-          <AudioButton
-            text={spokenAnchorText}
-            textId={`audio-lab-anchor-${topicId}`}
-            speechRate={speechRate}
-            size="sm"
-          />
-        </div>
-      </div>
-
-      {showAnchor && (
-        <div className="mt-3 pt-3 border-t border-amber-200/60 dark:border-amber-900/40 grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
-          <div className="sm:col-span-4 rounded-xl overflow-hidden border border-black/10 dark:border-white/10 shadow-sm aspect-4/3 bg-slate-950">
-            <img
-              src={card.image}
-              alt={card.imageAlt}
-              referrerPolicy="no-referrer"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <ReadableBox
-            text={`Visual Diagram Anchor: ${card.visualAnchor}. ${card.companionTip}`}
-            textId={`audio-lab-anchor-diagram-${topicId}`}
-            speechRate={speechRate}
-            className="sm:col-span-8 text-xs sm:text-sm space-y-1.5 p-2 rounded-xl"
-          >
-            <div className="flex items-center justify-between gap-1 text-[11px] font-black uppercase tracking-wider text-amber-700 dark:text-amber-400">
-              <span>Visual Breakdown</span>
-              <ReadableIcon size={14} className="text-amber-600 dark:text-amber-400 opacity-60 group-hover:opacity-100 shrink-0" />
-            </div>
-            <div className="font-bold text-slate-900 dark:text-slate-100">
-              {card.visualAnchor}
-            </div>
-            <p className="text-slate-700 dark:text-slate-300 italic">
-              {card.companionTip}
-            </p>
-          </ReadableBox>
-        </div>
-      )}
-    </div>
-  );
-};
 
 export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
   topic,
@@ -273,8 +185,6 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
             />
           </div>
         </div>
-
-        <VisualLabMemoryAnchor topicId={topic.id} speechRate={speechRate} isDark={isDark} />
       </div>
     );
   }
@@ -418,8 +328,6 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
             />
           </div>
         </div>
-
-        <VisualLabMemoryAnchor topicId={topic.id} speechRate={speechRate} isDark={isDark} />
       </div>
     );
   }
@@ -585,8 +493,6 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
             )}
           </AnimatePresence>
         </div>
-
-        <VisualLabMemoryAnchor topicId={topic.id} speechRate={speechRate} isDark={isDark} />
       </div>
     );
   }
@@ -702,8 +608,6 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
             </motion.div>
           </AnimatePresence>
         </div>
-
-        <VisualLabMemoryAnchor topicId={topic.id} speechRate={speechRate} isDark={isDark} />
       </div>
     );
   }
@@ -822,8 +726,6 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
             </ReadableBox>
           ))}
         </div>
-
-        <VisualLabMemoryAnchor topicId={topic.id} speechRate={speechRate} isDark={isDark} />
       </div>
     );
   }
@@ -1011,8 +913,6 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
             </motion.div>
           )}
         </div>
-
-        <VisualLabMemoryAnchor topicId={topic.id} speechRate={speechRate} isDark={isDark} />
       </div>
     );
   }
@@ -1102,8 +1002,6 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
             "{currentAdj.phrase}"
           </div>
         </ReadableBox>
-
-        <VisualLabMemoryAnchor topicId={topic.id} speechRate={speechRate} isDark={isDark} />
       </div>
     );
   }
@@ -1210,8 +1108,6 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
             <p className="text-xs opacity-80">{currentPunct.explanation}</p>
           </ReadableBox>
         </div>
-
-        <VisualLabMemoryAnchor topicId={topic.id} speechRate={speechRate} isDark={isDark} />
       </div>
     );
   }
@@ -1316,8 +1212,6 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
             "{fullSentence}"
           </div>
         </ReadableBox>
-
-        <VisualLabMemoryAnchor topicId={topic.id} speechRate={speechRate} isDark={isDark} />
       </div>
     );
   }
@@ -1433,8 +1327,6 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
             "{currentTier.example}"
           </div>
         </div>
-
-        <VisualLabMemoryAnchor topicId={topic.id} speechRate={speechRate} isDark={isDark} />
       </div>
     );
   }

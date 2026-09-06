@@ -86,6 +86,60 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
           }
         ],
         ruleSummary: 'Proper nouns are unique names and ALWAYS start with a capital letter.'
+      },
+      {
+        id: 'sec-concrete-abstract-nouns',
+        title: '3. Concrete Nouns vs Abstract Nouns',
+        content: 'Nouns can also be divided into things you can physically touch or see (**concrete nouns**) and things you think or feel (**abstract nouns**):',
+        bulletPoints: [
+          '**Concrete Nouns (Physical Objects):** Things you can see, touch, hear, smell, or taste (for example: *castle, tea, biscuit, badger, stream, bell*).',
+          '**Abstract Nouns (Ideas, Feelings & Qualities):** Things that exist as thoughts, emotions, or concepts that you cannot touch (for example: *courage, happiness, kindness, knowledge, sadness, honesty, truth*).',
+          '**Uncountable Abstract Nouns:** Words like *courage*, *knowledge*, and *information* are uncountable abstract nouns and do not normally take an "s" at the end (for example: *His **courage** in the face of danger was admirable*).'
+        ],
+        examples: [
+          {
+            id: 'ex-l1-n7',
+            sentence: 'The brave firefighter showed immense **courage** during the rescue.',
+            highlightWords: ['courage'],
+            explanation: '**Courage** is an abstract noun naming a personal quality you can admire but cannot physically hold in your hands.',
+            contextNote: 'Heroic qualities'
+          },
+          {
+            id: 'ex-l1-n8',
+            sentence: 'The old librarian shared his great **knowledge** of ancient history.',
+            highlightWords: ['knowledge'],
+            explanation: '**Knowledge** is an abstract noun describing information and understanding stored in the mind.',
+            contextNote: 'Learning and books'
+          }
+        ],
+        ruleSummary: 'Concrete nouns are physical objects; abstract nouns are ideas, emotions, and qualities.'
+      },
+      {
+        id: 'sec-singular-plural-nouns',
+        title: '4. Singular vs Plural Nouns (One vs Many)',
+        content: 'Nouns can tell us how many items we are talking about:',
+        bulletPoints: [
+          '**Singular (Just One):** Names one person, animal, place, or thing (for example: *one fox*, *one bus*, *one child*, *one castle*).',
+          '**Regular Plural (Adding -s or -es):** Most nouns add **-s** for more than one (*two boats, three dogs*). Nouns ending in **-ch, -sh, -s, -x, or -z** add **-es** (for example: *one fox → two **foxes***, *one bus → two **buses***, *one church → two **churches***).',
+          '**Irregular Plural Nouns:** Some nouns change their spelling completely or stay the same (for example: *child → **children***, *mouse → **mice***, *tooth → **teeth***, *person → **people***, *sheep → **sheep***, *deer → **deer***).'
+        ],
+        examples: [
+          {
+            id: 'ex-l1-n9',
+            sentence: 'Two clever **foxes** dashed past three grazing **sheep** in the valley.',
+            highlightWords: ['foxes', 'sheep'],
+            explanation: '**Foxes** adds "-es" to form the plural of fox, and **sheep** keeps the same spelling for both singular and plural.',
+            contextNote: 'Countryside wildlife'
+          },
+          {
+            id: 'ex-l1-n10',
+            sentence: 'The cheerful **children** found five shiny **pebbles** on the shore.',
+            highlightWords: ['children', 'pebbles'],
+            explanation: '**Children** is the irregular plural of child; **pebbles** adds "-s" to pebble.',
+            contextNote: 'Coastal beachcombing'
+          }
+        ],
+        ruleSummary: 'Singular means one; plural means more than one (often adding -s, -es, or using irregular forms like children).'
       }
     ],
     tipsAndTricks: [
@@ -97,6 +151,15 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
         commonMistake: 'Writing "london", "cardiff" or "monday" with lowercase letters.',
         correctWay: 'Always write **London**, **Cardiff**, and **Monday** with initial capital letters.',
         explanation: 'Names of days, months, and towns are proper nouns and require a capital letter in British English.'
+      },
+      {
+        id: 'tip-l1-n2',
+        title: 'Concrete vs Abstract Check',
+        trick: 'Can you hold it in a box? If yes, it is a **concrete noun** (like a biscuit or pebble). If it lives in your heart or mind, it is an **abstract noun** (like courage, friendship, or knowledge).',
+        mnemonic: 'Hands can touch Concrete; Hearts and minds hold Abstract!',
+        commonMistake: 'Adding "-s" to uncountable abstract nouns like "knowledges" or "informations".',
+        correctWay: 'Use "knowledge" and "information" without an "s".',
+        explanation: 'Many abstract concepts in English are uncountable nouns and stay singular.'
       }
     ],
     exercises: [
@@ -382,6 +445,53 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
           }
         ],
         ruleSummary: 'State-of-being and linking verbs (is, are, was, were, seems, remains) link subjects to their descriptions.'
+      },
+      {
+        id: 'sec-auxiliary-stative-verbs',
+        title: '3. Helping (Auxiliary) Verbs & Stative Verbs',
+        content: 'Verbs often work in teams or describe mental states rather than physical motion:',
+        bulletPoints: [
+          '**Helping (Auxiliary) Verbs:** Verbs like *has, have, had, is, was, were, will, been* assist the main verb to form different tenses (for example: *The team **has been** working tirelessly*; *The swallows **are** flying south*).',
+          '**Stative Verbs (Mental States & Belonging):** Verbs that describe thoughts, understanding, emotions, or possession rather than active motion (for example: *understand, know, love, believe, belong, prefer*). In *She **understands** the complex puzzle*, "understands" is a stative verb.',
+          '**Action (Dynamic) Verbs:** In contrast, words like *run, jump, paint, bake* are dynamic action verbs that can be actively watched in real time.'
+        ],
+        examples: [
+          {
+            id: 'ex-l1-v7',
+            sentence: 'The dedicated crew **has been** restoring the historic lifeboat for months.',
+            highlightWords: ['has', 'been', 'restoring'],
+            explanation: '**Has** and **been** are auxiliary (helping) verbs helping the main action verb **restoring**.',
+            contextNote: 'Lifeboat restoration'
+          },
+          {
+            id: 'ex-l1-v8',
+            sentence: 'The young naturalist **understands** how red squirrels survive the winter.',
+            highlightWords: ['understands'],
+            explanation: '**Understands** is a stative verb expressing knowledge and understanding in the mind.',
+            contextNote: 'Wildlife knowledge'
+          }
+        ],
+        ruleSummary: 'Helping verbs (has, have, was) assist main verbs; stative verbs (understand, love, know) express mental states.'
+      },
+      {
+        id: 'sec-verb-tenses',
+        title: '4. Verb Tenses: Present, Past & Future',
+        content: 'Verbs tell us **when** an action happens by changing their tense:',
+        bulletPoints: [
+          '**Present Tense (Happening Now / General Truth):** *The robin **sings** on the branch.* / *The birds **are flying**.*',
+          '**Past Tense (Already Happened):** Most verbs add **-ed** (*walked, played, painted*), while irregular verbs change form (*sang, swam, flew, went, was*). (for example: *The robin **sang** a sweet song yesterday*).',
+          '**Future Tense (Going to Happen):** Uses **will** or **going to** before the verb (for example: *The robin **will sing** at dawn tomorrow*).'
+        ],
+        examples: [
+          {
+            id: 'ex-l1-v9',
+            sentence: 'Yesterday, the swift horse **galloped** across the field, and tomorrow it **will run** in the race.',
+            highlightWords: ['galloped', 'will run'],
+            explanation: '**Galloped** is past tense (finished action); **will run** is future tense (upcoming action).',
+            contextNote: 'Horse riding tenses'
+          }
+        ],
+        ruleSummary: 'Verbs change form to show past (sang/jumped), present (sings/jumps), and future (will sing/will jump).'
       }
     ],
     tipsAndTricks: [
@@ -393,6 +503,15 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
         commonMistake: 'Confusing nouns with verbs in words that can be both (for example: *a run* versus *to run*).',
         correctWay: 'Look at the job the word is doing in that exact sentence.',
         explanation: 'In *"I enjoyed the run"*, run is a noun. In *"I run across the heather hills"*, run is an action verb.'
+      },
+      {
+        id: 'tip-l1-v2',
+        title: 'Spotting Helping (Auxiliary) Verbs',
+        trick: 'Look for helper words sitting right in front of the main action word: *has, have, had, is, are, was, were, been* (for example: *has eaten*, *was running*, *have been working*).',
+        mnemonic: 'Helping verbs hold hands with the main verb!',
+        commonMistake: 'Thinking only the last word is the verb in phrases like "was flying".',
+        correctWay: 'Recognize that "was" is the helping verb and "flying" is the main action verb.',
+        explanation: 'Together they create the complete verb phrase.'
       }
     ],
     exercises: [
@@ -620,7 +739,7 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
     id: 'l1-adjectives',
     slug: 'adjectives-describing-words',
     title: 'Adjectives: Describing Words',
-    subtitle: 'Bringing colour, size, texture, and detail to nouns.',
+    subtitle: 'Bringing colour, size, texture, number, and detail to nouns.',
     level: 'level-1',
     levelLabel: 'Level 1: Beginner',
     levelStage: 'Key Stage 1',
@@ -629,8 +748,8 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
     categoryLabel: 'Parts of Speech',
     iconName: 'Palette',
     estimatedMinutes: 5,
-    overview: 'An **adjective** is a word that describes, qualifies, or gives more information about a noun or pronoun. Adjectives tell us **what kind**, **which one**, or **how many**.',
-    whyItMatters: 'Adjectives paint vivid pictures in the reader\'s mind. Instead of just "a castle", we can write "a towering, storm-battered coastal fortress".',
+    overview: 'An **adjective** is a word that describes, qualifies, or gives more information about a noun or pronoun. Adjectives answer three key questions: **what kind?**, **which one?**, or **how many?** (including number words like *two*, *three*, *many*, or *few*).',
+    whyItMatters: 'Adjectives paint vivid pictures in the reader\'s mind. Instead of just "foxes in a field", we can write "two clever foxes in a frosty meadow".',
     sections: [
       {
         id: 'sec-types-adjectives',
@@ -639,7 +758,7 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
         bulletPoints: [
           '**Colours & Appearance:** crimson, emerald, golden, sparkling, gloomy, purple (for example: *The **purple** heather carpeted the **windy** Yorkshire moors*).',
           '**Size & Shape:** colossal, miniature, circular, narrow, towering, rugged (for example: *A **towering** granite cliff protects the harbour from **howling** gales*).',
-          '**Feelings & Personality:** cheerful, courageous, gentle, proud, fierce (for example: *The **courageous** lifeboat crew launched into the stormy sea*).',
+          '**Feelings & Personality:** cheerful, courageous, gentle, proud, fierce, clever (for example: *The **courageous** lifeboat crew launched into the stormy sea*).',
           '**Touch, Taste & Sound:** crunchy, scorching, deafening, silky, buttery (for example: *We enjoyed **warm**, **buttery** scones alongside hot tea*).'
         ],
         examples: [
@@ -666,6 +785,80 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
           }
         ],
         ruleSummary: 'Adjectives usually sit directly before the noun they describe or after a linking verb.'
+      },
+      {
+        id: 'sec-questions-adjectives-answer',
+        title: '2. The 3 Questions Adjectives Answer (Including Numbers!)',
+        content: 'Whenever you want to test if a word is acting as an adjective, ask which of these three questions it answers about the noun:',
+        bulletPoints: [
+          '**1. What Kind? (Quality & Description):** Tells the colour, size, texture, or character (for example: *a **clever** fox*, *a **steep** hill*, *an **ancient** castle*).',
+          '**2. How Many / How Much? (Number & Quantity Adjectives):** Number words and amount words placed directly before a noun tell us the quantity (for example: ***Two** clever foxes crossed the field*; ***Three** golden coins*; ***Many** cheerful children*). In primary grammar tests, number words before nouns function as number adjectives!',
+          '**3. Which One? (Position & Order):** Points out specific items (for example: *the **first** runner*, *the **next** train*, *the **last** biscuit*).'
+        ],
+        examples: [
+          {
+            id: 'ex-l1-adj4',
+            sentence: '**Two** **clever** foxes leaped across the **frosty** field.',
+            highlightWords: ['Two', 'clever', 'frosty'],
+            explanation: '**Two** is a number adjective telling *how many* foxes, **clever** is a quality adjective telling *what kind* of foxes, and **frosty** describes the field.',
+            contextNote: 'British wildlife count'
+          },
+          {
+            id: 'ex-l1-adj5',
+            sentence: '**Three** **cheerful** robins perched on the **wooden** garden gate.',
+            highlightWords: ['Three', 'cheerful', 'wooden'],
+            explanation: '**Three** (number adjective) and **cheerful** (quality adjective) describe *robins*; **wooden** (material adjective) describes *gate*.',
+            contextNote: 'Garden birds'
+          }
+        ],
+        ruleSummary: 'Words that tell us "What kind?", "How many?", or "Which one?" directly before a noun are adjectives.'
+      },
+      {
+        id: 'sec-position-order-adjectives',
+        title: '3. Where do Adjectives Sit? (Position & Order)',
+        content: 'In English sentences, adjectives can appear in two main positions:',
+        bulletPoints: [
+          '**1. Before the Noun (Attributive):** Directly in front of the naming word (for example: *a **blue** car*, *the **clever** detective*, *an **ancient** castle*). In English, we say "a blue car", not "a car blue".',
+          '**2. After a Linking Verb (Predicative):** Following verbs like *is, was, were, look, feel, seem, taste* (for example: *The tea was **hot**; The lemon tasted **sour**; The castle looked **dramatic***).',
+          '**Order of Multiple Adjectives:** When we use several adjectives together, we usually follow a natural order: Opinion → Size → Age → Shape → Colour → Origin → Material (for example: *a **beautiful** (opinion) **red** (colour) **Italian** (origin) sports car*).'
+        ],
+        examples: [
+          {
+            id: 'ex-l1-adj6',
+            sentence: 'The chef served a **delicious**, **steaming**, **hot** bowl of soup.',
+            highlightWords: ['delicious', 'steaming', 'hot'],
+            explanation: '**Delicious** (opinion) comes before physical descriptions (**steaming**, **hot**) directly modifying the noun *soup*.',
+            contextNote: 'Kitchen dining description'
+          },
+          {
+            id: 'ex-l1-adj7',
+            sentence: 'The old wooden bench felt **smooth** under the warm sun.',
+            highlightWords: ['smooth'],
+            explanation: '**Smooth** is an adjective describing the bench that appears after the linking verb *felt*.',
+            contextNote: 'Garden relaxation'
+          }
+        ],
+        ruleSummary: 'Adjectives usually sit before nouns (a blue car) or follow linking verbs (the tea was hot).'
+      },
+      {
+        id: 'sec-comparing-adjectives',
+        title: '4. Comparing with Adjectives (-er and -est)',
+        content: 'Adjectives can change their endings when we compare things:',
+        bulletPoints: [
+          '**Base Adjective (Describing One Thing):** *The pony is **fast**.* / *The oak tree is **tall**.*',
+          '**Comparative (-er): Comparing Two Things:** Add **-er** to compare two items (for example: *The hare is **faster** than the hedgehog*; *Ben Nevis is **taller** than Scafell Pike*).',
+          '**Superlative (-est): Comparing Three or More:** Add **-est** for the top degree (for example: *The cheetah is the **fastest** animal*; *Snowdon is the **highest** peak in Wales*).'
+        ],
+        examples: [
+          {
+            id: 'ex-l1-adj8',
+            sentence: 'The red deer is **swifter** than the badger, but the golden eagle is the **swiftest** of all.',
+            highlightWords: ['swifter', 'swiftest'],
+            explanation: '**Swifter** compares two animals (-er), while **swiftest** describes the fastest of the whole group (-est).',
+            contextNote: 'British wildlife comparison'
+          }
+        ],
+        ruleSummary: 'Add -er to compare two things (swifter) and -est to compare three or more (swiftest).'
       }
     ],
     tipsAndTricks: [
@@ -677,6 +870,24 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
         commonMistake: 'Using too many adjectives in a row without commas (for example: *the big brown fluffy friendly dog*).',
         correctWay: 'Pick one or two powerful adjectives and separate them with a comma (for example: *the scruffy, energetic terrier*).',
         explanation: 'In British primary school, this creates an **expanded noun phrase**.'
+      },
+      {
+        id: 'tip-l1-adj2',
+        title: 'Are Numbers Adjectives? (The "How Many?" Rule)',
+        trick: 'Yes! When a number word (like *one*, *two*, *three*, or *ten*) comes directly before a noun to tell you *how many* there are, it is doing the job of a number adjective! (for example: In *"Two clever foxes"*, both **Two** and **clever** are adjectives modifying the noun *foxes*).',
+        mnemonic: 'What kind? How many? Which one? Count them as Adjectives, every one!',
+        commonMistake: 'Thinking adjectives are only colors or sizes and forgetting that number words before nouns describe quantity.',
+        correctWay: 'Recognize that number words (*one, two, ten, few, many*) directly before a noun answer "How many?" and act as adjectives.',
+        explanation: 'In primary English curricula (KS1/KS2 grammar and SATs), numeral and quantity words before a noun function as adjectives describing how many items exist.'
+      },
+      {
+        id: 'tip-l1-adj3',
+        title: 'Adjective Order: Opinion before Fact',
+        trick: 'Always put what you *think* (opinion: lovely, delicious, beautiful) before physical facts (colour: red, size: big, origin: Scottish) (for example: *a lovely red apple*, not *a red lovely apple*).',
+        mnemonic: 'Opinion first, then the Facts!',
+        commonMistake: 'Placing adjectives after nouns in English (saying "a car blue").',
+        correctWay: 'Always place describing words before the noun ("a blue car").',
+        explanation: 'In English syntax, attributive adjectives sit before their noun.'
       }
     ],
     exercises: [
@@ -997,6 +1208,54 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
           }
         ],
         ruleSummary: 'Every sentence starts with a Capital Letter and ends with a Full Stop (or ? / !).'
+      },
+      {
+        id: 'sec-sentence-end-marks',
+        title: '2. Ending Every Sentence: Full Stops, Question Marks & Exclamations',
+        content: 'Every complete sentence must close with one of three terminal punctuation marks:',
+        bulletPoints: [
+          '**Full Stop (.) for Statements:** Used at the end of a regular sentence that tells facts or information (for example: *The steam train rumbled across the stone viaduct.*).',
+          '**Question Mark (?) for Questions:** Used when asking an inquiry that expects an answer (for example: *Did you spot the red squirrel in the woods?*; *Where is Tower Bridge?*).',
+          '**Exclamation Mark (!) for Excitement or Urgency:** Used for strong emotion, alarm, or surprise (for example: *Look out for the giant wave!*; *What a spectacular sunset over the castle!*).'
+        ],
+        examples: [
+          {
+            id: 'ex-l1-p4',
+            sentence: '**W**here did you put your school bag**?**',
+            highlightWords: ['Where', '?'],
+            explanation: 'Starts with capital W and finishes with a **question mark (?)** because it asks where the bag is.',
+            contextNote: 'Daily inquiry'
+          },
+          {
+            id: 'ex-l1-p5',
+            sentence: '**T**he red deer bounded across the meadow in **S**cotland.**',
+            highlightWords: ['The', 'Scotland', '.'],
+            explanation: 'Starts with a capital **T**, capitalises country name **Scotland**, and closes with a **full stop (.)**.',
+            contextNote: 'Scottish Highlands'
+          }
+        ],
+        ruleSummary: 'End statements with a full stop (.), questions with a question mark (?), and excitement with an exclamation mark (!).'
+      },
+      {
+        id: 'sec-capital-proper-nouns-i',
+        title: '3. The Golden Rules of Capital Letters',
+        content: 'Never forget to capitalise these four vital categories:',
+        bulletPoints: [
+          '**The Personal Pronoun "I":** Always a single capital **I**, never a lowercase "i" (for example: *Yesterday **I** played with my friends*; *Isla and **I** baked scones*).',
+          '**Names of People & Pets:** Oliver, Fiona, Sarah, Barnaby the dog.',
+          '**Names of Places & Countries:** London, Oxford, Cardiff, Scotland, France, England.',
+          '**Days of the Week & Calendar Months:** Monday, Wednesday, Friday, July, August, December.'
+        ],
+        examples: [
+          {
+            id: 'ex-l1-p6',
+            sentence: '**L**ast **J**uly, **S**arah and **I** travelled to **O**xford on a **W**ednesday.',
+            highlightWords: ['Last', 'July', 'Sarah', 'I', 'Oxford', 'Wednesday'],
+            explanation: 'Sentence start (**Last**), month (**July**), person (**Sarah**), pronoun (**I**), town (**Oxford**), and day (**Wednesday**) are all capitalised.',
+            contextNote: 'Summer journey'
+          }
+        ],
+        ruleSummary: 'Always capitalise the first word, the pronoun I, people\'s names, places, days, and months.'
       }
     ],
     tipsAndTricks: [
@@ -1008,6 +1267,15 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
         commonMistake: 'Writing lowercase "i" for yourself (for example: *me and i went to the shop*).',
         correctWay: 'Always write capital **I** (for example: *Isla and I went to the shop*).',
         explanation: 'In English, the personal pronoun "I" is always written as a single capital letter.'
+      },
+      {
+        id: 'tip-l1-p2',
+        title: 'The Punctuation Signal Light',
+        trick: 'Telling someone something? Use a **full stop (.)**. Asking a question? Use a **question mark (?)**. Shout or cheer? Use an **exclamation mark (!)**.',
+        mnemonic: 'Telling = Dot, Asking = Hook, Cheering = Bang!',
+        commonMistake: 'Forgetting to capitalise days of the week like "friday" or towns like "oxford".',
+        correctWay: 'Always capitalise **Friday**, **Oxford**, and **London**.',
+        explanation: 'Names of days, towns, and countries are proper nouns.'
       }
     ],
     exercises: [
@@ -1316,6 +1584,47 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
           }
         ],
         ruleSummary: 'A simple sentence = 1 Subject + 1 Finite Verb expressing one complete thought.'
+      },
+      {
+        id: 'sec-complete-vs-fragment',
+        title: '2. Complete Sentences vs Sentence Fragments',
+        content: 'To make complete sense, a sentence must have both parts of the team:',
+        bulletPoints: [
+          '**Complete Sentence:** Has a subject AND a finite verb and forms a complete thought (for example: *The fluffy white cat **purred** on the rug.*).',
+          '**Fragment (Missing the Verb):** *"The fluffy white cat on the rug"* — What did the cat do? Without a verb, this is only a noun phrase, not a sentence!',
+          '**Fragment (Missing the Subject):** *"Running swiftly across the field"* — Who was running? Without a subject, we cannot tell who performed the action.',
+          '**Fixing a Fragment:** Add the missing piece (for example: add the verb *purred* or add the subject *The fox was running*).'
+        ],
+        examples: [
+          {
+            id: 'ex-l1-s4',
+            sentence: '**The old clock** in the hallway **ticked** steadily throughout the quiet night.',
+            highlightWords: ['The old clock', 'ticked'],
+            explanation: '**The old clock** is the subject and **ticked** is the finite verb. It forms a complete sentence.',
+            contextNote: 'Household setting'
+          }
+        ],
+        ruleSummary: 'A fragment is an incomplete sentence missing either a subject or a verb.'
+      },
+      {
+        id: 'sec-sentence-word-order',
+        title: '3. Sentence Word Order & Finding the Subject',
+        content: 'Sentences can be arranged in different orders, but the subject is always who or what performs the verb:',
+        bulletPoints: [
+          '**Standard Word Order (Subject first):** *[The red squirrel] (subject) [gathered] (verb) hazelnuts.*',
+          '**Inverted / Descriptive Word Order (Location first):** *Under the bed slept [a tiny kitten] (subject).* Here, the location comes first, but "a tiny kitten" is still the subject because the kitten did the sleeping!',
+          '**The "Who or What?" Test:** To find the subject in any sentence, find the verb first and ask: *"Who or what is doing this?"*'
+        ],
+        examples: [
+          {
+            id: 'ex-l1-s5',
+            sentence: 'Beside the rushing river grazed **a herd of wild ponies**.',
+            highlightWords: ['grazed', 'a herd of wild ponies'],
+            explanation: 'The verb is **grazed**. Who was grazing? **A herd of wild ponies** is the subject.',
+            contextNote: 'River meadow wildlife'
+          }
+        ],
+        ruleSummary: 'To find the subject, find the verb and ask "Who or what did it?"'
       }
     ],
     tipsAndTricks: [
@@ -1327,6 +1636,15 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
         commonMistake: 'Leaving off the verb and writing just a phrase (for example: *"The friendly pony in the stable"*).',
         correctWay: 'Add the verb: *"The friendly pony slept peacefully in the stable."*',
         explanation: 'A complete sentence must stand alone and make complete sense.'
+      },
+      {
+        id: 'tip-l1-s2',
+        title: 'The "Who or What?" Subject Finder',
+        trick: 'Step 1: Spot the action or being verb. Step 2: Ask "Who or What performed this action?" The answer is always your subject (even if it sits at the end of the sentence!).',
+        mnemonic: 'Spot the Verb first, then ask: WHO did it?',
+        commonMistake: 'Assuming the very first word is always the subject.',
+        correctWay: 'Look for who is actually doing the action (for example: in *"In the nest slept the owl"*, the owl is the subject).',
+        explanation: 'Prepositional phrases at the start of a sentence set the scene, but the noun doing the verb remains the subject.'
       }
     ],
     exercises: [
@@ -1833,7 +2151,7 @@ export const LEVEL_1_TOPICS: GrammarTopic[] = [
         "None"
       ],
       "correctIndex": 1,
-      "explanation": "✔ Two: \"Two\" (number) & \"clever\" (quality) both describe foxes.\n✖ Other options are incorrect counts."
+      "explanation": "✔ Two: Both \"Two\" (number adjective telling how many) and \"clever\" (quality adjective telling what kind) describe the noun \"foxes\".\n✖ Other choices: \"foxes\" is a noun, \"crossed\" is a verb, and \"field\" is a noun."
     },
     {
       "id": "fa-q28",
