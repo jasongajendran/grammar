@@ -629,9 +629,31 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
               />
             </div>
 
-            <p className="text-sm sm:text-base opacity-95 leading-relaxed">
-              {currentExercise.explanation}
-            </p>
+            <div className="text-sm sm:text-base opacity-95 leading-relaxed space-y-1.5 mt-1">
+              {currentExercise.explanation.split('\n').map((line, lIdx) => {
+                const trimmed = line.trim();
+                if (!trimmed) return null;
+                if (trimmed.startsWith('✔')) {
+                  return (
+                    <div key={lIdx} className="flex items-start gap-1.5 text-emerald-900 dark:text-emerald-200 font-medium">
+                      <span className="font-black text-emerald-600 dark:text-emerald-400 shrink-0 select-none">✔</span>
+                      <span dangerouslySetInnerHTML={{ __html: trimmed.substring(1).trim().replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />
+                    </div>
+                  );
+                }
+                if (trimmed.startsWith('✖')) {
+                  return (
+                    <div key={lIdx} className="flex items-start gap-1.5 text-rose-900 dark:text-rose-200 font-medium">
+                      <span className="font-black text-rose-600 dark:text-rose-400 shrink-0 select-none">✖</span>
+                      <span dangerouslySetInnerHTML={{ __html: trimmed.substring(1).trim().replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />
+                    </div>
+                  );
+                }
+                return (
+                  <div key={lIdx} dangerouslySetInnerHTML={{ __html: trimmed.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />
+                );
+              })}
+            </div>
           </div>
         )}
 

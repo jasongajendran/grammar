@@ -14,7 +14,11 @@ import {
   Layers,
   Flame,
   ShieldCheck,
-  SplitSquareVertical
+  SplitSquareVertical,
+  Type,
+  Smile,
+  CheckCircle2,
+  Award
 } from 'lucide-react';
 import { GrammarTopic, StudyTheme } from '../types';
 import { playSound } from '../utils/storage';
@@ -34,26 +38,19 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
   const isDark = studyTheme === 'pastel-night' || studyTheme === 'dark-study';
 
   // Topic specific interactive state
-  // 1. Active vs Passive voice state
   const [isPassive, setIsPassive] = useState(false);
-
-  // 2. Fronted Adverbials state
   const [selectedAdverbial, setSelectedAdverbial] = useState(0);
-
-  // 3. Semicolons vs Colons state
   const [isColonMode, setIsColonMode] = useState(false);
-
-  // 4. I SAW A WABUB active conjunction letter
   const [activeWabubIndex, setActiveWabubIndex] = useState(0);
-
-  // 5. Noun sorter state
   const [nounFilter, setNounFilter] = useState<'all' | 'common' | 'proper'>('all');
-
-  // 6. Verbs energy state
   const [verbMode, setVerbMode] = useState<'action' | 'state'>('action');
-
-  // 7. Conditionals time travel index (0 = zero, 1 = 1st, 2 = 2nd, 3 = 3rd)
   const [conditionalTier, setConditionalTier] = useState<0 | 1 | 2 | 3>(0);
+
+  // Level 1 new state
+  const [selectedAdjIndex, setSelectedAdjIndex] = useState(0);
+  const [punctSentenceIndex, setPunctSentenceIndex] = useState(0);
+  const [simpleSubjIndex, setSimpleSubjIndex] = useState(0);
+  const [simpleVerbIndex, setSimpleVerbIndex] = useState(0);
 
   // -------------------------------------------------------------
   // VISUALIZER 1: Active vs Passive Voice (Level 4)
@@ -81,17 +78,25 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
             </div>
           </div>
 
-          <button
-            type="button"
-            onClick={() => {
-              setIsPassive(!isPassive);
-              playSound('click');
-            }}
-            className="flex items-center gap-2 px-4 py-2 rounded-full font-bold text-xs sm:text-sm bg-amber-600 hover:bg-amber-700 text-white shadow-md transition-all cursor-pointer active:scale-95"
-          >
-            <Repeat size={16} />
-            <span>Switch to {isPassive ? 'Active Voice' : 'Passive Voice'}</span>
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                setIsPassive(!isPassive);
+                playSound('click');
+              }}
+              className="flex items-center gap-2 px-4 py-2 rounded-full font-bold text-xs sm:text-sm bg-amber-600 hover:bg-amber-700 text-white shadow-md transition-all cursor-pointer active:scale-95"
+            >
+              <Repeat size={16} />
+              <span>Switch to {isPassive ? 'Active Voice' : 'Passive Voice'}</span>
+            </button>
+            <AudioButton
+              text={`The Voice Transformer. Toggle to observe how the grammatical subject and focus shift between active and passive voice.`}
+              textId="audio-voice-transformer-header"
+              speechRate={speechRate}
+              size="sm"
+            />
+          </div>
         </div>
 
         {/* Visual Stage */}
@@ -235,6 +240,12 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
               </p>
             </div>
           </div>
+          <AudioButton
+            text="The Fronted Adverbial Launchpad. Select an adverbial of time, place, or manner and watch the comma lock it in place!"
+            textId="audio-fronted-adv-header"
+            speechRate={speechRate}
+            size="sm"
+          />
         </div>
 
         {/* Adverbial Selector Tabs */}
@@ -342,35 +353,46 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
             </div>
           </div>
 
-          <div className="inline-flex p-1 rounded-full bg-black/10 dark:bg-white/10 border border-black/10 dark:border-white/10">
-            <button
-              type="button"
-              onClick={() => {
-                setIsColonMode(false);
-                playSound('click');
-              }}
-              className={`px-3.5 py-1.5 rounded-full font-bold text-xs sm:text-sm transition-all cursor-pointer ${
-                !isColonMode 
-                  ? 'bg-sky-600 text-white shadow-sm' 
-                  : 'text-slate-700 dark:text-slate-300 hover:text-black dark:hover:text-white'
-              }`}
-            >
-              Semicolon (;)
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setIsColonMode(true);
-                playSound('click');
-              }}
-              className={`px-3.5 py-1.5 rounded-full font-bold text-xs sm:text-sm transition-all cursor-pointer ${
-                isColonMode 
-                  ? 'bg-sky-600 text-white shadow-sm' 
-                  : 'text-slate-700 dark:text-slate-300 hover:text-black dark:hover:text-white'
-              }`}
-            >
-              Colon (:)
-            </button>
+          <div className="flex items-center gap-2">
+            <div className="inline-flex p-1 rounded-full bg-black/10 dark:bg-white/10 border border-black/10 dark:border-white/10">
+              <button
+                type="button"
+                onClick={() => {
+                  setIsColonMode(false);
+                  playSound('click');
+                }}
+                className={`px-3.5 py-1.5 rounded-full font-bold text-xs sm:text-sm transition-all cursor-pointer ${
+                  !isColonMode 
+                    ? 'bg-sky-600 text-white shadow-sm' 
+                    : 'text-slate-700 dark:text-slate-300 hover:text-black dark:hover:text-white'
+                }`}
+              >
+                Semicolon (;)
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsColonMode(true);
+                  playSound('click');
+                }}
+                className={`px-3.5 py-1.5 rounded-full font-bold text-xs sm:text-sm transition-all cursor-pointer ${
+                  isColonMode 
+                    ? 'bg-sky-600 text-white shadow-sm' 
+                    : 'text-slate-700 dark:text-slate-300 hover:text-black dark:hover:text-white'
+                }`}
+              >
+                Colon (:)
+              </button>
+            </div>
+
+            <AudioButton
+              text={!isColonMode 
+                ? "Thick fog blanketed the Yorkshire moors; hikers checked their map diligently."
+                : "The National Trust warden issued a reminder: walkers must protect the coastal wildlife."}
+              textId={`audio-semicolon-colon-${isColonMode ? 'colon' : 'semicolon'}`}
+              speechRate={speechRate}
+              size="sm"
+            />
           </div>
         </div>
 
@@ -508,6 +530,12 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
               </p>
             </div>
           </div>
+          <AudioButton
+            text="The I SAW A WABUB Connector Deck. Tap each letter of the mnemonic to listen to example subordinating conjunctions."
+            textId="audio-wabub-header"
+            speechRate={speechRate}
+            size="sm"
+          />
         </div>
 
         {/* 10-button letter strip */}
@@ -576,7 +604,7 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
   }
 
   // -------------------------------------------------------------
-  // VISUALIZER 5: Noun Explorer & Sorting Sparkles (Level 1)
+  // VISUALIZER 5: Noun Explorer & Sorting Sparkles (Level 1) - FUN EXPLORER
   // -------------------------------------------------------------
   if (topic.id === 'l1-nouns') {
     const nounsList = [
@@ -614,33 +642,42 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
             </div>
           </div>
 
-          <div className="inline-flex p-1 rounded-full bg-black/10 dark:bg-white/10 border border-black/10 dark:border-white/10 text-xs font-bold">
-            <button
-              type="button"
-              onClick={() => { setNounFilter('all'); playSound('click'); }}
-              className={`px-3 py-1 rounded-full transition-all cursor-pointer ${nounFilter === 'all' ? 'bg-amber-600 text-white' : 'opacity-70'}`}
-            >
-              All Nouns
-            </button>
-            <button
-              type="button"
-              onClick={() => { setNounFilter('proper'); playSound('click'); }}
-              className={`px-3 py-1 rounded-full transition-all cursor-pointer ${nounFilter === 'proper' ? 'bg-amber-600 text-white' : 'opacity-70'}`}
-            >
-              Proper Nouns (Capitals)
-            </button>
-            <button
-              type="button"
-              onClick={() => { setNounFilter('common'); playSound('click'); }}
-              className={`px-3 py-1 rounded-full transition-all cursor-pointer ${nounFilter === 'common' ? 'bg-amber-600 text-white' : 'opacity-70'}`}
-            >
-              Common Nouns
-            </button>
+          <div className="flex items-center gap-2">
+            <div className="inline-flex p-1 rounded-full bg-black/10 dark:bg-white/10 border border-black/10 dark:border-white/10 text-xs font-bold">
+              <button
+                type="button"
+                onClick={() => { setNounFilter('all'); playSound('click'); }}
+                className={`px-3 py-1 rounded-full transition-all cursor-pointer ${nounFilter === 'all' ? 'bg-amber-600 text-white' : 'opacity-70'}`}
+              >
+                All Nouns
+              </button>
+              <button
+                type="button"
+                onClick={() => { setNounFilter('proper'); playSound('click'); }}
+                className={`px-3 py-1 rounded-full transition-all cursor-pointer ${nounFilter === 'proper' ? 'bg-amber-600 text-white' : 'opacity-70'}`}
+              >
+                Proper Nouns (Capitals)
+              </button>
+              <button
+                type="button"
+                onClick={() => { setNounFilter('common'); playSound('click'); }}
+                className={`px-3 py-1 rounded-full transition-all cursor-pointer ${nounFilter === 'common' ? 'bg-amber-600 text-white' : 'opacity-70'}`}
+              >
+                Common Nouns
+              </button>
+            </div>
+
+            <AudioButton
+              text="The UK Noun Treasure Chest Fun Explorer. Common nouns name everyday things like tree or train. Proper nouns name specific places and people like Tower of London or Cardiff Castle."
+              textId="audio-noun-explorer-header"
+              speechRate={speechRate}
+              size="sm"
+            />
           </div>
         </div>
 
         {/* Floating Interactive Noun Badges */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {filteredNouns.map(item => (
             <motion.div
               key={item.word}
@@ -660,11 +697,19 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
             >
               <div className="flex items-center justify-between gap-1 mb-1">
                 <span className="text-2xl">{item.icon}</span>
-                <span className={`text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full ${
-                  item.type === 'proper' ? 'bg-purple-600 text-white' : 'bg-emerald-600 text-white'
-                }`}>
-                  {item.type === 'proper' ? 'Proper Noun' : 'Common Noun'}
-                </span>
+                <div className="flex items-center gap-1.5">
+                  <span className={`text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full ${
+                    item.type === 'proper' ? 'bg-purple-600 text-white' : 'bg-emerald-600 text-white'
+                  }`}>
+                    {item.type === 'proper' ? 'Proper Noun' : 'Common Noun'}
+                  </span>
+                  <AudioButton
+                    text={`${item.word}. ${item.type === 'proper' ? 'Proper Noun' : 'Common Noun'}. ${item.hint}`}
+                    textId={`audio-noun-item-${item.word.replace(/\s+/g, '-').toLowerCase()}`}
+                    speechRate={speechRate}
+                    size="sm"
+                  />
+                </div>
               </div>
               <div className="font-extrabold text-sm sm:text-base mb-1">
                 {item.word}
@@ -680,7 +725,7 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
   }
 
   // -------------------------------------------------------------
-  // VISUALIZER 6: Action vs State Verbs (Level 1)
+  // VISUALIZER 6: Action vs State Verbs (Level 1) - FUN EXPLORER
   // -------------------------------------------------------------
   if (topic.id === 'l1-verbs') {
     return (
@@ -696,7 +741,7 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
               <h3 className="text-base sm:text-lg font-heading font-extrabold flex items-center gap-2">
                 <span>The Verb Energy Meter: Action vs State of Being</span>
                 <span className="text-xs px-2 py-0.5 rounded-full bg-rose-600 text-white font-bold uppercase tracking-wider">
-                  Interactive
+                  Fun Explorer
                 </span>
               </h3>
               <p className="text-xs sm:text-sm opacity-75">
@@ -705,25 +750,34 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
             </div>
           </div>
 
-          <div className="inline-flex p-1 rounded-full bg-black/10 dark:bg-white/10 border border-black/10 dark:border-white/10 text-xs font-bold">
-            <button
-              type="button"
-              onClick={() => { setVerbMode('action'); playSound('click'); }}
-              className={`px-3.5 py-1.5 rounded-full transition-all cursor-pointer ${
-                verbMode === 'action' ? 'bg-rose-600 text-white shadow-sm' : 'opacity-70'
-              }`}
-            >
-              🏃 Action Verbs (Dynamic)
-            </button>
-            <button
-              type="button"
-              onClick={() => { setVerbMode('state'); playSound('click'); }}
-              className={`px-3.5 py-1.5 rounded-full transition-all cursor-pointer ${
-                verbMode === 'state' ? 'bg-blue-600 text-white shadow-sm' : 'opacity-70'
-              }`}
-            >
-              🧘 State-of-Being Verbs (Static)
-            </button>
+          <div className="flex items-center gap-2">
+            <div className="inline-flex p-1 rounded-full bg-black/10 dark:bg-white/10 border border-black/10 dark:border-white/10 text-xs font-bold">
+              <button
+                type="button"
+                onClick={() => { setVerbMode('action'); playSound('click'); }}
+                className={`px-3.5 py-1.5 rounded-full transition-all cursor-pointer ${
+                  verbMode === 'action' ? 'bg-rose-600 text-white shadow-sm' : 'opacity-70'
+                }`}
+              >
+                🏃 Action Verbs (Dynamic)
+              </button>
+              <button
+                type="button"
+                onClick={() => { setVerbMode('state'); playSound('click'); }}
+                className={`px-3.5 py-1.5 rounded-full transition-all cursor-pointer ${
+                  verbMode === 'state' ? 'bg-blue-600 text-white shadow-sm' : 'opacity-70'
+                }`}
+              >
+                🧘 State-of-Being Verbs (Static)
+              </button>
+            </div>
+
+            <AudioButton
+              text="The Verb Energy Meter Fun Explorer. Action verbs show physical doing motion like pull, sang, or dashed. State of being verbs express state or existence like is, looked, or remains."
+              textId="audio-verb-explorer-header"
+              speechRate={speechRate}
+              size="sm"
+            />
           </div>
         </div>
 
@@ -740,19 +794,51 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
                 Action Verbs in Motion:
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-400/30">
-                  <div className="text-xl mb-1">🚣</div>
-                  <div className="font-bold text-sm">"Rowers **pulled** hard"</div>
+                <div className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-400/30 flex flex-col justify-between space-y-2">
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xl">🚣</span>
+                      <AudioButton
+                        text="Rowers pulled hard. Physical action along the River Thames."
+                        textId="audio-verb-action-1"
+                        speechRate={speechRate}
+                        size="sm"
+                      />
+                    </div>
+                    <div className="font-bold text-sm sm:text-base mt-1">"Rowers **pulled** hard"</div>
+                  </div>
                   <p className="text-xs opacity-75">Physical action along the River Thames</p>
                 </div>
-                <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-400/30">
-                  <div className="text-xl mb-1">🎶</div>
-                  <div className="font-bold text-sm">"The choir **sang** sweetly"</div>
+
+                <div className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-400/30 flex flex-col justify-between space-y-2">
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xl">🎶</span>
+                      <AudioButton
+                        text="The choir sang sweetly. Vocal performance in Cardiff Cathedral."
+                        textId="audio-verb-action-2"
+                        speechRate={speechRate}
+                        size="sm"
+                      />
+                    </div>
+                    <div className="font-bold text-sm sm:text-base mt-1">"The choir **sang** sweetly"</div>
+                  </div>
                   <p className="text-xs opacity-75">Vocal performance in Cardiff Cathedral</p>
                 </div>
-                <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-400/30">
-                  <div className="text-xl mb-1">🐿️</div>
-                  <div className="font-bold text-sm">"Red squirrels **dashed**"</div>
+
+                <div className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-400/30 flex flex-col justify-between space-y-2">
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xl">🐿️</span>
+                      <AudioButton
+                        text="Red squirrels dashed. Agile sprint through Lake District woods."
+                        textId="audio-verb-action-3"
+                        speechRate={speechRate}
+                        size="sm"
+                      />
+                    </div>
+                    <div className="font-bold text-sm sm:text-base mt-1">"Red squirrels **dashed**"</div>
+                  </div>
                   <p className="text-xs opacity-75">Agile sprint through Lake District woods</p>
                 </div>
               </div>
@@ -767,19 +853,51 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
                 State of Being & Linking Verbs (Is, Was, Look, Remain):
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-400/30">
-                  <div className="text-xl mb-1">⛰️</div>
-                  <div className="font-bold text-sm">"Snowdon **is** towering"</div>
+                <div className="p-3.5 rounded-xl bg-blue-500/10 border border-blue-400/30 flex flex-col justify-between space-y-2">
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xl">⛰️</span>
+                      <AudioButton
+                        text="Snowdon is towering. Verb to be expressing existence in Wales."
+                        textId="audio-verb-state-1"
+                        speechRate={speechRate}
+                        size="sm"
+                      />
+                    </div>
+                    <div className="font-bold text-sm sm:text-base mt-1">"Snowdon **is** towering"</div>
+                  </div>
                   <p className="text-xs opacity-75">Verb "to be" expressing existence in Wales</p>
                 </div>
-                <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-400/30">
-                  <div className="text-xl mb-1">🪨</div>
-                  <div className="font-bold text-sm">"Stonehenge **looked** ancient"</div>
+
+                <div className="p-3.5 rounded-xl bg-blue-500/10 border border-blue-400/30 flex flex-col justify-between space-y-2">
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xl">🪨</span>
+                      <AudioButton
+                        text="Stonehenge looked ancient. Sensory linking verb in Wiltshire."
+                        textId="audio-verb-state-2"
+                        speechRate={speechRate}
+                        size="sm"
+                      />
+                    </div>
+                    <div className="font-bold text-sm sm:text-base mt-1">"Stonehenge **looked** ancient"</div>
+                  </div>
                   <p className="text-xs opacity-75">Sensory linking verb in Wiltshire</p>
                 </div>
-                <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-400/30">
-                  <div className="text-xl mb-1">🌊</div>
-                  <div className="font-bold text-sm">"The Giant's Causeway **remains**"</div>
+
+                <div className="p-3.5 rounded-xl bg-blue-500/10 border border-blue-400/30 flex flex-col justify-between space-y-2">
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xl">🌊</span>
+                      <AudioButton
+                        text="The Giant's Causeway remains. Linking verb connecting timeless landmark."
+                        textId="audio-verb-state-3"
+                        speechRate={speechRate}
+                        size="sm"
+                      />
+                    </div>
+                    <div className="font-bold text-sm sm:text-base mt-1">"The Giant's Causeway **remains**"</div>
+                  </div>
                   <p className="text-xs opacity-75">Linking verb connecting timeless landmark</p>
                 </div>
               </div>
@@ -791,7 +909,278 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
   }
 
   // -------------------------------------------------------------
-  // VISUALIZER 7: Conditionals Multiverse (Level 5)
+  // VISUALIZER 7: Adjectives Palette (Level 1) - FUN EXPLORER
+  // -------------------------------------------------------------
+  if (topic.id === 'l1-adjectives') {
+    const adjPalette = [
+      { category: 'Size Adjectives', word: 'Enormous', icon: '🐘', phrase: 'An enormous elephant strolled under the arch.', color: 'from-blue-600 to-indigo-600' },
+      { category: 'Touch & Texture', word: 'Fluffy', icon: '🐇', phrase: 'A soft, fluffy rabbit hopped through the clover.', color: 'from-amber-600 to-yellow-600' },
+      { category: 'Color Adjectives', word: 'Golden', icon: '🌻', phrase: 'A bright golden sunflower blossomed in the sunshine.', color: 'from-yellow-500 to-orange-500' },
+      { category: 'Taste & Quality', word: 'Sweet', icon: '🍓', phrase: 'She enjoyed a juicy, sweet strawberry from the garden.', color: 'from-rose-600 to-pink-600' },
+    ];
+
+    const currentAdj = adjPalette[selectedAdjIndex];
+
+    return (
+      <div className={`rounded-3xl border p-5 sm:p-7 space-y-5 transition-all shadow-xs ${
+        isDark ? 'bg-[#1D232D] border-[#343F52]' : 'bg-gradient-to-br from-pink-500/10 via-purple-500/5 to-amber-500/10 border-pink-300/40'
+      }`}>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-pink-600 to-purple-500 text-white flex items-center justify-center shadow-md">
+              <Sparkles size={20} />
+            </div>
+            <div>
+              <h3 className="text-base sm:text-lg font-heading font-extrabold flex items-center gap-2">
+                <span>The Adjective Color & Texture Palette</span>
+                <span className="text-xs px-2 py-0.5 rounded-full bg-pink-600 text-white font-bold uppercase tracking-wider">
+                  Fun Explorer
+                </span>
+              </h3>
+              <p className="text-xs sm:text-sm opacity-75">
+                Adjectives paint vivid details about size, touch, color, and taste!
+              </p>
+            </div>
+          </div>
+
+          <AudioButton
+            text="The Adjective Color and Texture Palette Fun Explorer. Adjectives describe nouns by giving details about size, touch, color, and taste."
+            textId="audio-adj-palette-header"
+            speechRate={speechRate}
+            size="sm"
+          />
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+          {adjPalette.map((item, idx) => (
+            <button
+              key={item.word}
+              type="button"
+              onClick={() => { setSelectedAdjIndex(idx); playSound('click'); }}
+              className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer ${
+                selectedAdjIndex === idx
+                  ? 'bg-pink-600 text-white border-pink-700 shadow-md ring-2 ring-pink-400/40'
+                  : isDark ? 'bg-[#161B23] border-[#2C3646] opacity-80' : 'bg-white/80 border-black/10 opacity-80'
+              }`}
+            >
+              <div className="text-[10px] font-black uppercase tracking-wider opacity-90">{item.category}</div>
+              <div className="text-xs sm:text-sm font-bold flex items-center gap-1">
+                <span>{item.icon}</span> <span>{item.word}</span>
+              </div>
+            </button>
+          ))}
+        </div>
+
+        <div className={`p-5 rounded-2xl border ${
+          isDark ? 'bg-[#151921] border-[#2C3646]' : 'bg-white/95 border-pink-200 shadow-sm'
+        }`}>
+          <div className="flex items-center justify-between gap-2 mb-2">
+            <span className="text-xs font-black uppercase tracking-wider px-2.5 py-1 rounded bg-pink-500/20 text-pink-700 dark:text-pink-300">
+              Describing Word: {currentAdj.word}
+            </span>
+            <AudioButton
+              text={currentAdj.phrase}
+              textId={`audio-adj-phrase-${selectedAdjIndex}`}
+              speechRate={speechRate}
+              size="sm"
+            />
+          </div>
+
+          <div className="text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100 py-1">
+            "{currentAdj.phrase}"
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // -------------------------------------------------------------
+  // VISUALIZER 8: Capital Letters & Full Stops Patrol (Level 1) - FUN EXPLORER
+  // -------------------------------------------------------------
+  if (topic.id === 'l1-capital-letters-full-stops') {
+    const punctSentences = [
+      {
+        before: 'ben visited london on monday',
+        after: 'Ben visited London on Monday.',
+        explanation: 'Capital B (sentence start), L (London city), M (Monday), plus full stop at end.'
+      },
+      {
+        before: 'owls fly quietly at night',
+        after: 'Owls fly quietly at night.',
+        explanation: 'Capital O (sentence start) and full stop at end.'
+      },
+      {
+        before: 'my dog max loves running in the park',
+        after: 'My dog Max loves running in the park.',
+        explanation: 'Capital M (start), M (Max person/pet name), and full stop.'
+      }
+    ];
+
+    const currentPunct = punctSentences[punctSentenceIndex];
+
+    return (
+      <div className={`rounded-3xl border p-5 sm:p-7 space-y-5 transition-all shadow-xs ${
+        isDark ? 'bg-[#1D232D] border-[#343F52]' : 'bg-gradient-to-br from-indigo-500/10 via-blue-500/5 to-cyan-500/10 border-indigo-300/40'
+      }`}>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-600 to-blue-500 text-white flex items-center justify-center shadow-md">
+              <Type size={20} />
+            </div>
+            <div>
+              <h3 className="text-base sm:text-lg font-heading font-extrabold flex items-center gap-2">
+                <span>The Punctuation Patrol Transformer</span>
+                <span className="text-xs px-2 py-0.5 rounded-full bg-indigo-600 text-white font-bold uppercase tracking-wider">
+                  Fun Explorer
+                </span>
+              </h3>
+              <p className="text-xs sm:text-sm opacity-75">
+                Observe how capital letters and full stops transform messy text into proper English!
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <div className="inline-flex p-1 rounded-full bg-black/10 dark:bg-white/10 border border-black/10 text-xs font-bold">
+              {punctSentences.map((_, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => { setPunctSentenceIndex(idx); playSound('click'); }}
+                  className={`px-3 py-1 rounded-full transition-all cursor-pointer ${
+                    punctSentenceIndex === idx ? 'bg-indigo-600 text-white' : 'opacity-70'
+                  }`}
+                >
+                  Sentence {idx + 1}
+                </button>
+              ))}
+            </div>
+
+            <AudioButton
+              text={`Before: ${currentPunct.before}. After: ${currentPunct.after}. ${currentPunct.explanation}`}
+              textId={`audio-punct-patrol-${punctSentenceIndex}`}
+              speechRate={speechRate}
+              size="sm"
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="p-4 rounded-2xl border bg-rose-500/10 border-rose-400/30 text-rose-950 dark:text-rose-100">
+            <div className="text-xs font-black uppercase tracking-wider text-rose-700 dark:text-rose-300 mb-1">
+              ✖ Messy (Missing Capitals & Full Stop)
+            </div>
+            <div className="text-base sm:text-lg font-mono">{currentPunct.before}</div>
+          </div>
+
+          <div className="p-4 rounded-2xl border bg-emerald-500/10 border-emerald-400/30 text-emerald-950 dark:text-emerald-100">
+            <div className="text-xs font-black uppercase tracking-wider text-emerald-700 dark:text-emerald-300 mb-1">
+              ✔ Perfect British Punctuation
+            </div>
+            <div className="text-base sm:text-lg font-extrabold">{currentPunct.after}</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // -------------------------------------------------------------
+  // VISUALIZER 9: Simple Sentences Builder Lab (Level 1) - FUN EXPLORER
+  // -------------------------------------------------------------
+  if (topic.id === 'l1-simple-sentences') {
+    const subjects = ['The wise owl', 'A speedy steam train', 'The playful puppy', 'A brave knight'];
+    const verbPhrases = ['hooted in the oak tree.', 'zoomed past the platform.', 'chased the bouncy ball.', 'guarded the castle gate.'];
+
+    const fullSentence = `${subjects[simpleSubjIndex]} ${verbPhrases[simpleVerbIndex]}`;
+
+    return (
+      <div className={`rounded-3xl border p-5 sm:p-7 space-y-5 transition-all shadow-xs ${
+        isDark ? 'bg-[#1D232D] border-[#343F52]' : 'bg-gradient-to-br from-emerald-500/10 via-teal-500/5 to-cyan-500/10 border-emerald-300/40'
+      }`}>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-500 text-white flex items-center justify-center shadow-md">
+              <Layers size={20} />
+            </div>
+            <div>
+              <h3 className="text-base sm:text-lg font-heading font-extrabold flex items-center gap-2">
+                <span>The Simple Sentence Constructor</span>
+                <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-600 text-white font-bold uppercase tracking-wider">
+                  Fun Explorer
+                </span>
+              </h3>
+              <p className="text-xs sm:text-sm opacity-75">
+                Pair a Subject (Who/What) with a Verb (Action) to build a complete simple sentence!
+              </p>
+            </div>
+          </div>
+
+          <AudioButton
+            text={`Built Simple Sentence: ${fullSentence}`}
+            textId={`audio-simple-builder-${simpleSubjIndex}-${simpleVerbIndex}`}
+            speechRate={speechRate}
+            size="sm"
+          />
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <div className="text-xs font-black uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
+              Select Subject (Who / What):
+            </div>
+            <div className="space-y-1.5">
+              {subjects.map((subj, idx) => (
+                <button
+                  key={subj}
+                  type="button"
+                  onClick={() => { setSimpleSubjIndex(idx); playSound('click'); }}
+                  className={`w-full p-2.5 rounded-xl border text-left text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+                    simpleSubjIndex === idx ? 'bg-emerald-600 text-white border-emerald-700' : 'bg-white/80 dark:bg-[#161B23] border-black/10 dark:border-[#2C3646]'
+                  }`}
+                >
+                  {subj}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <div className="text-xs font-black uppercase tracking-wider text-teal-700 dark:text-teal-400">
+              Select Verb Phrase (Action):
+            </div>
+            <div className="space-y-1.5">
+              {verbPhrases.map((vPhrase, idx) => (
+                <button
+                  key={vPhrase}
+                  type="button"
+                  onClick={() => { setSimpleVerbIndex(idx); playSound('click'); }}
+                  className={`w-full p-2.5 rounded-xl border text-left text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+                    simpleVerbIndex === idx ? 'bg-teal-600 text-white border-teal-700' : 'bg-white/80 dark:bg-[#161B23] border-black/10 dark:border-[#2C3646]'
+                  }`}
+                >
+                  {vPhrase}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className={`p-5 rounded-2xl border text-center ${
+          isDark ? 'bg-[#151921] border-[#2C3646]' : 'bg-white/95 border-emerald-200 shadow-sm'
+        }`}>
+          <div className="text-xs font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-1">
+            Resulting Simple Sentence:
+          </div>
+          <div className="text-lg sm:text-xl font-heading font-extrabold text-slate-900 dark:text-white">
+            "{fullSentence}"
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // -------------------------------------------------------------
+  // VISUALIZER 10: Conditionals Multiverse (Level 5)
   // -------------------------------------------------------------
   if (topic.id === 'l5-conditionals') {
     const tiers = [
@@ -848,6 +1237,12 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
               </p>
             </div>
           </div>
+          <AudioButton
+            text="The Conditionals Timeline Lab. From universal scientific facts to imaginary past counterfactuals."
+            textId="audio-cond-header"
+            speechRate={speechRate}
+            size="sm"
+          />
         </div>
 
         {/* 4-step buttons */}
@@ -915,9 +1310,18 @@ export const ConceptVisualizer: React.FC<ConceptVisualizerProps> = ({
           </div>
         </div>
       </div>
-      <span className="hidden sm:inline-flex items-center gap-1 text-xs font-bold px-3 py-1 rounded-full bg-amber-600/15 text-amber-800 dark:text-amber-300 border border-amber-500/20">
-        <ShieldCheck size={14} /> National Curriculum UK
-      </span>
+
+      <div className="flex items-center gap-2">
+        <span className="hidden sm:inline-flex items-center gap-1 text-xs font-bold px-3 py-1 rounded-full bg-amber-600/15 text-amber-800 dark:text-amber-300 border border-amber-500/20">
+          <ShieldCheck size={14} /> National Curriculum UK
+        </span>
+        <AudioButton
+          text={`${topic.title}. ${topic.categoryLabel}. UK National Curriculum Grammar Blueprint.`}
+          textId={`audio-fallback-badge-${topic.id}`}
+          speechRate={speechRate}
+          size="sm"
+        />
+      </div>
     </div>
   );
 };

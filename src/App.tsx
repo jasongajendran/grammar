@@ -428,6 +428,7 @@ export default function App() {
         isOpen={isBadgesModalOpen}
         onClose={() => setIsBadgesModalOpen(false)}
         progress={progress}
+        speechRate={progress.speechRate}
         studyTheme={currentTheme}
       />
 

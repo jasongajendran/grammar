@@ -18,11 +18,13 @@ import {
 } from 'lucide-react';
 import { Badge, UserProgress, StudyTheme } from '../types';
 import { BADGES } from '../data/badges';
+import { AudioButton } from './AudioButton';
 
 interface BadgesModalProps {
   isOpen: boolean;
   onClose: () => void;
   progress: UserProgress;
+  speechRate?: number;
   studyTheme?: StudyTheme;
 }
 
@@ -30,6 +32,7 @@ export const BadgesModal: React.FC<BadgesModalProps> = ({
   isOpen,
   onClose,
   progress,
+  speechRate = 1.0,
   studyTheme = 'pastel-warm',
 }) => {
   const [filterCategory, setFilterCategory] = useState<string>('all');
@@ -170,11 +173,19 @@ export const BadgesModal: React.FC<BadgesModalProps> = ({
                     <h4 className="font-bold text-sm sm:text-base leading-tight">
                       {badge.title}
                     </h4>
-                    {isUnlocked && (
-                      <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300 bg-emerald-200/80 dark:bg-emerald-950/40 px-2 py-0.5 rounded flex items-center gap-1 border border-emerald-300 dark:border-emerald-800/50">
-                        <CheckCircle2 size={12} /> Earned
-                      </span>
-                    )}
+                    <div className="flex items-center gap-1.5">
+                      {isUnlocked && (
+                        <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300 bg-emerald-200/80 dark:bg-emerald-950/40 px-2 py-0.5 rounded flex items-center gap-1 border border-emerald-300 dark:border-emerald-800/50">
+                          <CheckCircle2 size={12} /> Earned
+                        </span>
+                      )}
+                      <AudioButton
+                        text={`${badge.title}. ${badge.description}. Criteria: ${badge.unlockedCriteria}`}
+                        textId={`badge-audio-${badge.id}`}
+                        speechRate={speechRate}
+                        size="sm"
+                      />
+                    </div>
                   </div>
 
                   <p className="text-xs sm:text-sm opacity-80 mt-1 leading-snug">
