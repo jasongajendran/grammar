@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import confetti from 'canvas-confetti';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
@@ -42,6 +42,18 @@ export const InteractiveQuiz: React.FC<InteractiveQuizProps> = ({
   const [isCorrect, setIsCorrect] = useState(false);
   const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
   const [quizFinished, setQuizFinished] = useState(false);
+
+  // Reset all quiz state when switching to a new topic
+  useEffect(() => {
+    setCurrentIndex(0);
+    setSelectedOption(null);
+    setSelectedWordIndices([]);
+    setBuiltSentenceWords([]);
+    setIsSubmitted(false);
+    setIsCorrect(false);
+    setCorrectAnswersCount(0);
+    setQuizFinished(false);
+  }, [topic.id]);
 
   const currentExercise = exercises[currentIndex];
   const isDark = studyTheme === 'pastel-night' || studyTheme === 'dark-study';

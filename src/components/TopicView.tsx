@@ -445,6 +445,7 @@ export const TopicView: React.FC<TopicViewProps> = ({
         </div>
 
         <InteractiveQuiz
+          key={topic.id}
           topic={topic}
           onCompleteQuiz={score => onCompleteTopicQuiz(topic.id, score)}
           speechRate={speechRate}
